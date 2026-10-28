@@ -14,7 +14,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
 })();
 </script>
-<title>قسط‌یار ۳.۲ | شروع با اطلاعات خالی</title>
+<title>قسط‌یار ۳.۳ | حساب کاربری واضح</title>
 <script src="./ghestyar-config.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -648,6 +648,42 @@ html[data-theme="dark"] .toolbar .cloud-status::after{color:#d4cce5}
 html[data-theme="dark"] .welcome-empty-icon{background:#332c53;color:#b9a3ff}
 @media(max-width:520px){.welcome-empty{margin:10px 0;padding:30px 16px}.welcome-empty-actions{width:100%;flex-direction:column}.welcome-empty-actions .btn{width:100%}}
 
+
+/* v3.3 — explicit login/account action: no vague 'ابر' icon/text. */
+.account-trigger{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:6px 12px;border:1px solid var(--border);border-radius:13px;background:var(--white);color:var(--ink);font:800 13px Vazirmatn,Tahoma,sans-serif;white-space:nowrap;flex-shrink:0;cursor:pointer}
+.account-trigger svg{width:21px;height:21px;flex-shrink:0;color:#755bdb}
+.account-trigger-text{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;line-height:1.3;gap:2px}
+.account-main-label{font-size:13px;font-weight:900;line-height:1.35}
+.account-state-label{font-size:10px;color:var(--muted);font-weight:700;line-height:1.4}
+.account-trigger .cloud-dot{width:7px;height:7px;align-self:center}
+.account-trigger.signed-out{border-color:#9b87e9;background:#f4f0ff;color:#6245bc}
+.account-trigger.signed-out svg{color:#6245bc}
+.account-trigger.signed-in.is-ready .cloud-dot{background:#20ad89}
+.account-trigger.signed-in.is-pending .cloud-dot{background:#e9aa4b}
+.account-trigger.signed-in.is-conflict .cloud-dot,.account-trigger.signed-in.is-error .cloud-dot{background:#e06067}
+.account-trigger:focus-visible{outline:3px solid #9b87e9;outline-offset:2px}
+html[data-theme="dark"] .account-trigger{background:#23253b;border-color:#4d4662;color:#f2edff}
+html[data-theme="dark"] .account-trigger.signed-out{background:#302846;color:#e6d9ff;border-color:#745ea8}
+html[data-theme="dark"] .account-trigger svg{color:#bea8ff}
+html[data-theme="dark"] .account-trigger .account-state-label{color:#c7bed8}
+@media(max-width:720px){
+ .toolbar>.account-trigger{width:auto;height:42px;min-height:42px;max-width:none;min-width:76px;flex:0 0 auto;padding:6px 9px;gap:5px;border-radius:12px}
+ .toolbar .account-trigger svg{width:18px;height:18px}
+ .toolbar .account-main-label{font-size:12px}
+ .toolbar .account-state-label{font-size:9px}
+ .toolbar .account-trigger .cloud-dot{width:6px;height:6px}
+ .toolbar .account-trigger::after{content:none!important}
+ .toolbar .account-trigger-text{display:flex!important}
+ .topbar>div:first-child{min-width:0}
+}
+@media(max-width:370px){
+ /* On narrow phones, keep the complete page heading and a readable login button. */
+ .topbar{grid-template-columns:minmax(0,1fr);row-gap:8px}
+ .topbar>div:first-child{grid-row:1;grid-column:1}
+ .topbar .toolbar{grid-row:2;grid-column:1;justify-content:flex-start}
+ .page-title{white-space:normal;overflow:visible;text-overflow:clip}
+ .toolbar>.account-trigger{min-width:94px}
+}
 </style>
 </head>
 <body>
@@ -667,6 +703,9 @@ html[data-theme="dark"] .welcome-empty-icon{background:#332c53;color:#b9a3ff}
 <symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 11h1M14 11h1M9 15h1M14 15h1"/></symbol>
 <symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 8h16l-1 13H5L4 8zM9 9V6a3 3 0 0 1 6 0v3"/></symbol>
 <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="i-login" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></symbol>
+<symbol id="i-user-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="9" r="3"/><path d="M5.9 19a7 7 0 0 1 12.2 0"/></symbol>
+<symbol id="i-cloud-check" viewBox="0 0 24 24"><path d="M20 16.6a4.6 4.6 0 0 0-.8-8.8A7.5 7.5 0 0 0 5 9.5 4.8 4.8 0 0 0 6 19h6"/><path d="m15 17 2.2 2.2L22 14.5"/></symbol>
 <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
 <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
 <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
@@ -784,9 +823,20 @@ function applyTheme(theme, persist=true){
   document.querySelectorAll('.theme-toggle').forEach(button=>{button.innerHTML=icon(dark?'sun':'moon')+`<span class="theme-button-label">${dark?'روشن':'شب'}</span>`;button.setAttribute('aria-label',`فعال کردن حالت ${dark?'روشن':'تاریک'}`);button.title=`حالت ${dark?'روشن':'تاریک'}`;button.setAttribute('aria-pressed',String(dark));});
 }
 if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',event=>{let stored=null;try{stored=localStorage.getItem('ghestyar_theme_v1');}catch(e){}if(stored!=='light'&&stored!=='dark')applyTheme(event.matches?'dark':'light',false);});}catch(e){}}
-function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}<button class="cloud-status is-${cloud.phase}" data-action="account-open" aria-label="وضعیت حساب کاربری و همگام‌سازی" title="حساب و همگام‌سازی"><span class="cloud-dot"></span><span class="cloud-word">${cloudStatusText()}</span></button><span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn" title="مشاهده اقساط معوق" data-action="overdue" aria-label="مشاهده اقساط عقب‌افتاده">${icon('bell')}</button></div></header>`;}
+function accountAccessButton(){
+ const signedIn=Boolean(cloud.user);
+ const stateText=cloudStatusText();
+ const help=signedIn?`حساب کاربری و همگام‌سازی؛ ${stateText}`:'ورود یا ثبت‌نام در قسط‌یار';
+ const iconName=signedIn?'user-circle':'login';
+ const label=signedIn?'حساب من':'ورود';
+ // The dot only indicates the sync state; the action's label always describes its purpose.
+ const phaseClass=signedIn?'signed-in':'signed-out';
+ const detail=signedIn?`<span class="account-state-label">${cloud.phase==='ready'?'همگام':cloud.phase==='pending'?'در حال ارسال':cloud.phase==='conflict'?'تعارض':cloud.phase==='error'?'خطای اتصال':cloud.phase==='loading'?'در حال دریافت':'حساب فعال'}</span>`:'';
+ return `<button class="account-trigger ${phaseClass} is-${cloud.phase}" type="button" data-action="account-open" aria-label="${help}" title="${help}">${icon(iconName)}<span class="account-trigger-text"><span class="account-main-label">${label}</span>${detail}</span>${signedIn?'<span class="cloud-dot" aria-hidden="true"></span>':''}</button>`;
+}
+function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}${accountAccessButton()}<span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn" title="مشاهده اقساط معوق" data-action="overdue" aria-label="مشاهده اقساط عقب‌افتاده">${icon('bell')}</button></div></header>`;}
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['settings','shield','مدیریت داده']];
-function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۲</div></div></aside>`;}
+function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۳</div></div></aside>`;}
 function bottomNav(){return `<nav class="bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['add','plus','افزودن']].map(([k,ic,t])=>`<button data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
  const all=closest();const overdue=all.filter(x=>x.i.due<todayISO);
@@ -804,7 +854,7 @@ function dashboard(){
  <div class="welcome-empty-icon">${icon('wallet')}</div>
  <h2>به قسط‌یار خوش اومدی!</h2>
  <p>هنوز هیچ تعهد یا پرداختی ثبت نشده. از همین‌جا اولین وام یا خرید قسطی خودت رو اضافه کن.</p>
- <div class="welcome-empty-actions"><button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>${!cloud.user?`<button class="btn" data-action="account-open">${icon('user')} ورود یا ساخت حساب</button>`:''}</div>
+ <div class="welcome-empty-actions"><button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>${!cloud.user?`<button class="btn" data-action="account-open">${icon('login')} ورود / ثبت‌نام</button>`:''}</div>
  <div class="welcome-empty-note">${icon('shield')} ${cloud.user?'داده‌های این حساب هنوز خالی هستند.':'بدون ورود هم می‌تونی داده‌ها رو فقط در همین مرورگر ثبت کنی؛ همگام‌سازی به ورود نیاز داره.'}</div>
  </section></div>`;}
  return `<div class="dash-v2">
@@ -1020,7 +1070,7 @@ function accountModal(){
  else if(cloud.recovery){body=`<div class="cloud-banner"><strong>بازیابی رمز عبور</strong>رمز عبور جدید را وارد کن و ذخیره کن.</div><div class="field"><label for="cloud-new-password">رمز جدید</label><input type="password" id="cloud-new-password" autocomplete="new-password" dir="ltr" minlength="8"></div><button class="btn primary" data-action="cloud-reset-update">ذخیره رمز جدید</button>`;}
  else if(cloud.phase==='choose'){body=`<div class="cloud-banner"><strong>حساب ساخته شد؛ اطلاعات اولیه را انتخاب کن</strong>هیچ پرونده‌ای در ابر پیدا نشد. اطلاعات نمونه به‌صورت خودکار آپلود نمی‌شوند. می‌توانی از صفر شروع کنی یا داده‌های محلی همین مرورگر را آگاهانه منتقل کنی.</div><div class="cloud-actions"><button class="btn primary" data-action="cloud-start-empty">شروع با فضای خالی</button><button class="btn" data-action="cloud-import-local">انتقال داده‌های محلی</button></div>`;}
  else {body=`<div class="cloud-banner ${['conflict','error'].includes(cloud.phase)?'is-warning':''}"><strong>${cloudStatusText()}</strong><span class="cloud-email" dir="ltr">${escapeHTML(cloud.user.email||'')}</span><p>${escapeHTML(cloud.error|| (cloud.phase==='ready'?'تغییرات حساب در این دستگاه و دستگاه‌های واردشده با همین حساب هماهنگ می‌شوند.':cloud.phase==='pending'?'تغییرات در صف ارسال هستند؛ تا تأیید سرور از بستن مرورگر خودداری کن.':'اگر داده‌های این دستگاه با سرور متفاوت شده‌اند، قبل از جایگزینی خروجی JSON بگیر.'))}</p></div><div class="cloud-actions"><button class="btn" data-action="export">دریافت پشتیبان</button>${cloud.phase==='conflict'?'<button class="btn primary" data-action="cloud-reload">دریافت نسخه سرور</button>':''}${cloud.phase==='error'||cloud.phase==='pending'?'<button class="btn primary" data-action="cloud-retry">تلاش مجدد</button>':''}${cloud.phase==='ready'?'<button class="btn" data-action="cloud-check">بررسی تغییرات</button>':''}<button class="btn danger" data-action="cloud-logout" ${cloud.dirty||cloud.writing?'disabled':''}>خروج از حساب</button></div>`;}
- return `<div class="modal-backdrop" data-action="account-close"><section class="modal account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title"><div class="modal-head"><h2 id="account-title">${icon('shield')} حساب کاربری و همگام‌سازی</h2><button class="close-btn" data-action="account-close" aria-label="بستن">${icon('close')}</button></div><div class="cloud-panel">${body}</div></section></div>`;
+ return `<div class="modal-backdrop" data-action="account-close"><section class="modal account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title"><div class="modal-head"><h2 id="account-title">${icon('user-circle')} حساب کاربری و همگام‌سازی</h2><button class="close-btn" data-action="account-close" aria-label="بستن">${icon('close')}</button></div><div class="cloud-panel">${body}</div></section></div>`;
 }
 async function initCloud(){
  if(!cloudConfigReady()){cloud.phase='disabled';render();return;}
@@ -1053,7 +1103,7 @@ window.addEventListener('DOMContentLoaded',initCloud);
 
 function legacyArchiveExists(){try{return !!localStorage.getItem(LEGACY_SAMPLE_ARCHIVE);}catch(e){return false;}}
 function settingsPage(){return `<section class="settings-page"><div class="panel settings-hero"><div><h2>اطلاعات مالی من</h2><p class="muted">${cloud.user?`حساب: ${escapeHTML(cloud.user.email||'')} · ${cloudStatusText()}`:'حالت محلی؛ برای انتقال اطلاعات به دستگاه دیگر به حساب ابری وارد شو.'}</p></div><div class="settings-count">${fmt(data.length)} <small>تعهد ثبت‌شده</small></div></div>
- <div class="settings-grid"><section class="panel settings-box cloud-card"><span class="settings-icon">${icon('user')}</span><h3>حساب کاربری و ابر</h3><p>${cloud.user?`ورود با ${escapeHTML(cloud.user.email||'')}. ${cloudStatusText()}`:'با حساب شخصی بین موبایل و کامپیوتر به اطلاعات یکسان دسترسی پیدا کن. برای فعال‌سازی، پروژه Supabase را پیکربندی کن.'}</p><button class="btn primary" data-action="account-open">${cloud.user?'مدیریت حساب و همگام‌سازی':'ورود یا ساخت حساب'}</button></section><section class="panel settings-box"><span class="settings-icon">${icon('download')}</span><h3>فایل پشتیبان</h3><p>تمام تعهدات، اقساط و تاریخچه پرداخت‌ها را در یک فایل JSON ذخیره کن.</p><button class="btn primary" data-action="export">${icon('download')} دریافت پشتیبان</button></section>
+ <div class="settings-grid"><section class="panel settings-box cloud-card"><span class="settings-icon">${icon('user-circle')}</span><h3>حساب کاربری و همگام‌سازی</h3><p>${cloud.user?`ورود با ${escapeHTML(cloud.user.email||'')}. ${cloudStatusText()}`:'با حساب شخصی بین موبایل و کامپیوتر به اطلاعات یکسان دسترسی پیدا کن. برای فعال‌سازی، پروژه Supabase را پیکربندی کن.'}</p><button class="btn primary" data-action="account-open">${cloud.user?'مدیریت حساب و همگام‌سازی':'ورود یا ساخت حساب'}</button></section><section class="panel settings-box"><span class="settings-icon">${icon('download')}</span><h3>فایل پشتیبان</h3><p>تمام تعهدات، اقساط و تاریخچه پرداخت‌ها را در یک فایل JSON ذخیره کن.</p><button class="btn primary" data-action="export">${icon('download')} دریافت پشتیبان</button></section>
  <section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی پشتیبان</h3><p>فایل پشتیبان قسط‌یار را وارد کن. قبل از جایگزینی اطلاعات، خلاصه فایل و تأیید نمایش داده می‌شود.</p><button class="btn" data-action="import-pick">${icon('refresh')} انتخاب فایل JSON</button><input type="file" id="backup-file" accept=".json,application/json" hidden /></section>
  <section class="panel settings-box"><span class="settings-icon">${icon('edit')}</span><h3>شروع با اطلاعات خودم</h3><p>اطلاعات فضای فعلی را پس از تأیید پاک کن. در حالت ابری، حذف پس از همگام‌سازی به حساب نیز منتقل می‌شود.</p><button class="btn danger" data-action="erase-all">${icon('close')} پاک‌کردن تعهدات این فضا</button></section>
  ${!cloud.user&&legacyArchiveExists()?`<section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی داده‌های نمونه قدیمی</h3><p>نسخه‌های قبلی به‌طور خودکار داده آزمایشی می‌ساختند. یک نسخه بایگانی از این داده‌ها برای اطمینان نگه داشته شده است.</p><button class="btn" data-action="restore-legacy-demo">بازگرداندن نسخه بایگانی</button></section>`:''}
