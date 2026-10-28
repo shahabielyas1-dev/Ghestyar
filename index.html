@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#f7f8fd" />
+<script>
+/* Set the theme before rendering to avoid a bright flash on dark devices. */
+(function(){
+  var preference = null;
+  try { preference = localStorage.getItem('ghestyar_theme_v1'); } catch(e) {}
+  var dark = preference === 'dark' || (preference !== 'light' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
+})();
+</script>
+<title>قسط‌یار ۳.۰ | حساب کاربری و همگام‌سازی ابری</title>
+<script src="./ghestyar-config.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+:root{--ink:#18323d;--muted:#78909b;--teal:#087f79;--teal2:#0fa99a;--deep:#103b46;--canvas:#f5f7fa;--white:#fff;--border:#e6edf0;--soft:#f1f6f6;--orange:#e79a4f;--rose:#dd655e;--green:#0d9978;--shadow:0 10px 30px rgba(38,66,76,.045);--radius:19px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font-family:Tahoma,'Segoe UI',Arial,sans-serif;font-size:14px;line-height:1.75;font-variant-numeric:tabular-nums}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}a{text-decoration:none;color:inherit}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #79cfc6;outline-offset:2px}input,select,textarea{color:var(--ink)}svg{width:21px;height:21px;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none;flex-shrink:0}.app{min-height:100vh;display:flex}.sidebar{width:258px;background:#fff;min-height:100vh;position:sticky;top:0;height:100vh;border-left:1px solid var(--border);padding:30px 18px 18px;display:flex;flex-direction:column;z-index:10}.brand{display:flex;align-items:center;gap:11px;padding:0 11px 31px}.brand-logo{display:grid;place-items:center;width:44px;height:44px;background:var(--deep);color:white;border-radius:14px;box-shadow:0 5px 13px rgba(17,83,86,.16)}.brand-logo svg{width:24px;height:24px}.brand h1{font-size:23px;font-weight:900;letter-spacing:-.7px;margin:0;line-height:1.3}.brand span{display:block;font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0}.nav-label{font-size:11px;color:#93a7ad;padding:0 15px;margin:10px 0 8px}.nav{display:flex;flex-direction:column;gap:5px}.nav button{border:0;background:transparent;padding:12px 14px;border-radius:12px;display:flex;align-items:center;gap:13px;width:100%;text-align:right;color:#677f88;font-size:13px;font-weight:700;transition:.15s}.nav button svg{width:20px;height:20px}.nav button:hover{background:#f5f8f8;color:var(--deep)}.nav button.active{background:#e8f7f4;color:var(--teal)}.nav button.active::before{content:'';height:20px;width:3px;background:var(--teal2);border-radius:3px;position:absolute;right:18px}.sidebar-bottom{margin-top:auto}.sidebar-box{background:#f0f8f6;border:1px solid #e1f0eb;border-radius:16px;padding:15px;margin-bottom:14px}.sidebar-box .tiny{font-size:11px;color:#668b86}.sidebar-box strong{font-size:13px;display:block;margin-top:6px}.sidebar-box button{margin-top:11px;width:100%;background:white;border:1px solid #cee4de;padding:8px 6px;border-radius:9px;color:var(--teal);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:7px}.sidebar-box button svg{width:15px;height:15px}.demo-note{color:#9aa9ae;font-size:10px;text-align:center}.main{width:calc(100% - 258px);max-width:1640px;margin:0 auto;padding:27px 37px 80px;min-width:0}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px;gap:20px}.page-kicker{font-size:12px;color:var(--muted);margin:0 0 3px}.page-title{font-size:25px;line-height:1.4;margin:0;font-weight:900;letter-spacing:-.7px}.toolbar{display:flex;gap:9px;align-items:center}.pill-btn,.icon-btn,.btn{border:1px solid var(--border);background:white;color:var(--ink);border-radius:11px;padding:10px 14px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:700;min-height:42px;transition:.15s}.icon-btn{padding:10px;position:relative}.icon-btn:hover,.pill-btn:hover{border-color:#bedad5;transform:translateY(-1px)}.btn svg,.pill-btn svg,.icon-btn svg{width:18px;height:18px}.btn.primary{color:#fff;border-color:var(--teal);background:var(--teal)}.btn.primary:hover{background:#096d68}.btn.subtle{background:#ecf8f5;border:1px solid #d6efea;color:var(--teal)}.btn.danger{color:var(--rose);border-color:#f3d9d7}.btn.full{width:100%}.avatar{border-radius:100%;background:#dcefe9;color:#1b776e;display:grid;place-items:center;width:39px;height:39px;font-weight:800}.desktop-only{display:block}.mobile-only{display:none}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:30px 0 16px}.section-heading h2{margin:0;font-size:16px;font-weight:900}.section-heading .caption{font-size:12px;color:var(--muted)}.link-btn{border:0;background:transparent;color:var(--teal);font-size:12px;font-weight:800;padding:6px;display:inline-flex;align-items:center;gap:3px}.link-btn svg{width:15px;height:15px}.hero{background:linear-gradient(112deg,#0d4851,#103a48 55%,#1c6871);border-radius:22px;color:white;min-height:207px;padding:30px 34px;position:relative;overflow:hidden;display:flex;align-items:stretch;justify-content:space-between;gap:16px;box-shadow:0 14px 30px #154c5520}.hero:before,.hero:after{content:'';position:absolute;border:1px solid #ffffff20;width:290px;height:290px;border-radius:50%;left:-70px;top:-170px}.hero:after{width:400px;height:400px;left:-80px;top:-222px;border-color:#ffffff11}.hero .left,.hero .right{position:relative;z-index:1}.hero-label{display:flex;gap:8px;align-items:center;color:#bce3dc;font-size:12px}.hero-label svg{width:18px;height:18px}.hero h2{font-size:34px;font-weight:900;line-height:1.35;margin:10px 0}.hero .unit{font-size:14px;color:#bfd8d8;font-weight:500}.hero-sub{font-size:11px;color:#bcd9d8}.hero .left{align-self:center;text-align:left;display:flex;flex-direction:column;align-items:flex-end;gap:10px}.hero .left .btn{background:#ffffffea;color:#14535a;border:none;font-size:12px}.hero .left .hint{color:#b9d9d6;font-size:11px;max-width:220px;text-align:left}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:17px}.stat{background:white;border:1px solid var(--border);border-radius:16px;padding:17px 19px;box-shadow:var(--shadow);min-width:0}.stat-head{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.stat-head .ic{width:33px;height:33px;display:grid;place-items:center;border-radius:10px;background:#e9f7f3;color:var(--teal)}.stat-head .ic.orange{background:#fff5ea;color:#d78a39}.stat-head .ic.rose{background:#fff0ee;color:var(--rose)}.stat-head svg{width:17px;height:17px}.stat-value{font-size:23px;font-weight:900;margin-top:11px;line-height:1.5;white-space:nowrap}.stat-value span{font-size:11px;font-weight:400;color:var(--muted)}.stat-note{font-size:11px;color:#91a3aa;margin-top:5px}.dash-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.8fr);gap:18px}.panel{background:#fff;border:1px solid var(--border);border-radius:18px;padding:19px;box-shadow:var(--shadow);min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}.panel-head h3{font-size:15px;margin:0;font-weight:900}.panel-head small{color:var(--muted)}.due-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #eff3f5}.due-row:last-child{border-bottom:0}.type-icon{width:42px;height:42px;display:grid;place-items:center;background:#eaf7f3;color:var(--teal);border-radius:12px;flex-shrink:0}.type-icon.purchase{background:#f1efff;color:#8874ca}.type-icon.other{background:#fff4e8;color:#cb9650}.due-info{flex:1;min-width:0}.due-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.due-meta{font-size:10px;color:var(--muted)}.due-amount{text-align:left;font-size:12px;font-weight:900;white-space:nowrap}.due-amount small{font-size:10px;color:var(--muted);display:block;font-weight:400}.tag{display:inline-flex;align-items:center;gap:5px;border-radius:100px;padding:3px 9px;font-size:10px;font-weight:700;white-space:nowrap}.tag.overdue{background:#fff0ef;color:#c65a53}.tag.soon{background:#fff7e8;color:#bf8534}.tag.paid{background:#e8f7ed;color:#27936d}.tag.open{background:#edf4f5;color:#607f89}.chart-box{display:flex;height:167px;align-items:end;justify-content:space-between;gap:10px;padding:18px 3px 0}.bar-group{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;flex:1;min-width:0}.bar-wrap{height:124px;width:100%;max-width:35px;display:flex;align-items:end;justify-content:center;background:#f5f8f8;border-radius:8px 8px 0 0;position:relative}.bar{width:100%;background:linear-gradient(0deg,#0b837a,#6bc6bb);border-radius:7px 7px 0 0;min-height:4px;transition:height .3s}.bar-group:first-child .bar{background:linear-gradient(0deg,#0e5860,#158f8c)}.bar-label{font-size:10px;color:var(--muted);white-space:nowrap}.mini-summary{margin-top:20px;background:#f2f8f7;border:1px solid #e1efeb;border-radius:12px;padding:10px 12px;color:#567978;font-size:11px}.ob-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.ob-card{background:white;border:1px solid var(--border);padding:20px;border-radius:18px;min-width:0;box-shadow:var(--shadow);transition:.15s;cursor:pointer}.ob-card:hover{transform:translateY(-3px);border-color:#b8d9d4;box-shadow:0 14px 26px #164d5110}.ob-top{display:flex;align-items:center;gap:11px}.ob-name{font-size:13px;font-weight:900;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.ob-party{font-size:11px;color:var(--muted)}.ob-stat{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:20px 0 10px}.ob-stat strong{font-size:18px}.ob-stat span{font-size:10px;color:var(--muted)}.progress{height:7px;background:#eaf0f1;overflow:hidden;border-radius:99px}.progress>div{background:#18a68e;height:100%;border-radius:99px}.ob-footer{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px;margin-top:12px}.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:17px}.filter{border:1px solid var(--border);background:white;border-radius:11px;padding:9px 14px;color:#71868d;font-size:12px;font-weight:700}.filter.active{background:#e8f7f3;border-color:#b9e6db;color:var(--teal)}.searchbox{display:flex;align-items:center;gap:8px;padding:0 11px;background:white;border:1px solid var(--border);border-radius:11px;min-width:180px;max-width:300px;margin-inline-start:auto}.searchbox svg{width:17px;color:#9aacb2}.searchbox input{border:0;outline:0;min-height:40px;min-width:0;width:100%;background:transparent;font-size:12px}.list-table{background:white;border:1px solid var(--border);border-radius:17px;overflow:auto}.table{width:100%;border-collapse:collapse;min-width:640px}.table th{text-align:right;font-size:11px;color:#8ea3a9;background:#fafcfc;font-weight:600;padding:15px}.table td{padding:14px 15px;border-top:1px solid #eff3f5;font-size:12px}.table tr:hover td{background:#fcfefd}.table .td-title{font-weight:800}.table .td-sub{font-size:10px;color:var(--muted)}.table .row-action{padding:6px 10px;border:1px solid #d6ece7;border-radius:8px;background:#f2fbf9;color:var(--teal);font-size:11px;font-weight:800}.empty{text-align:center;color:var(--muted);padding:44px 15px}.empty svg{width:34px;height:34px;opacity:.55}.empty strong{display:block;color:var(--ink);margin:9px 0}.wizard-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:18px;align-items:start}.wizard-steps{display:flex;align-items:center;gap:9px;margin:0 0 19px}.step-item{display:flex;gap:8px;align-items:center;flex:1;font-size:11px;color:#96a9ad;font-weight:800}.step-number{border:1px solid var(--border);width:27px;height:27px;display:grid;place-items:center;border-radius:50%;background:#fff}.step-item.done,.step-item.current{color:var(--teal)}.step-item.done .step-number,.step-item.current .step-number{background:var(--teal);color:#fff;border-color:var(--teal)}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full-width{grid-column:1/-1}.field label{font-weight:800;color:#4e6670;font-size:11px}.field input,.field select,.field textarea{background:#fff;width:100%;height:43px;border:1px solid #dfe8ec;border-radius:10px;padding:9px 12px;font-size:12px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:#66c3b6;box-shadow:0 0 0 3px #1ba69516}.field small{font-size:10px;color:var(--muted)}.input-addon{display:flex;align-items:center;position:relative}.input-addon span{position:absolute;left:12px;font-size:11px;color:#95a7ad}.input-addon input{padding-left:55px}.mode-choice{display:grid;grid-template-columns:1fr 1fr;gap:11px}.mode-card{border:1px solid #dfe8eb;background:#fff;border-radius:13px;padding:15px;text-align:right;display:flex;gap:9px;align-items:flex-start;color:#54717b}.mode-card.active{border-color:#35ab9f;background:#f1faf7;color:#127d74;box-shadow:inset 0 0 0 1px #a1dcd3}.mode-card strong{font-size:12px;display:block}.mode-card small{font-size:10px;line-height:1.7;display:block}.mode-card svg{width:20px;height:20px;margin-top:2px}.form-actions{display:flex;gap:10px;margin-top:23px;justify-content:space-between}.hint-card{background:#eff8f6;border:1px solid #d9eee8;border-radius:15px;padding:18px}.hint-card h3{font-size:13px;margin:0 0 15px}.hint-row{display:flex;justify-content:space-between;gap:9px;padding:11px 0;border-bottom:1px solid #daebe7;font-size:11px}.hint-row:last-child{border:none}.hint-row span{color:#668b88}.hint-row strong{font-size:12px}.warn{background:#fff8ec;border:1px solid #fae7c6;border-radius:12px;padding:11px 14px;font-size:11px;color:#9f793c;line-height:1.9}.good{background:#edfaf4;border:1px solid #c9ead8;border-radius:12px;padding:11px 14px;color:#238468;font-size:11px}.detail-banner{display:flex;align-items:center;justify-content:space-between;gap:13px;padding:23px;border:1px solid var(--border);border-radius:18px;background:white}.detail-title{display:flex;gap:14px;align-items:center}.detail-title .type-icon{width:55px;height:55px}.detail-title h2{font-size:18px;margin:0}.detail-title p{font-size:11px;color:var(--muted);margin:2px 0 0}.detail-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(250px,.75fr);gap:18px;margin-top:18px}.detail-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.detail-summary .metric{padding:14px;background:#f6f9fa;border-radius:11px}.metric label{font-size:11px;color:var(--muted);display:block}.metric strong{font-size:17px}.tabbar{display:flex;gap:8px;border-bottom:1px solid var(--border);margin-bottom:12px;overflow-x:auto}.tabbar button{border:0;border-bottom:3px solid transparent;background:transparent;padding:12px;font-size:12px;color:#80959c;font-weight:800;white-space:nowrap}.tabbar button.active{color:var(--teal);border-color:var(--teal)}.calendar-layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:18px}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:17px}.calendar-head strong{font-size:17px}.calendar-controls{display:flex;gap:6px}.calendar-controls button{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border);background:white;border-radius:9px}.weekgrid,.calgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.weekgrid{color:#849ba1;font-size:11px;text-align:center;margin-bottom:12px}.day{min-height:79px;background:#f9fbfc;border:1px solid #eef2f4;border-radius:10px;padding:7px;text-align:right;position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;color:#45616b}.day.blank{background:transparent;border-color:transparent;pointer-events:none}.day.today{border-color:#7ccbc0;background:#effaf7}.day.selected{outline:2px solid var(--teal);outline-offset:-2px;background:#e9f8f3}.day:hover{background:#eaf7f5}.day .number{font-size:12px;font-weight:800}.day .dots{display:flex;gap:3px;flex-wrap:wrap}.day .dot{width:6px;height:6px;background:#0aab8f;border-radius:100%}.day .dot.overdue{background:var(--rose)}.day .dot.paid{background:#b5cccd}.day .more{font-size:9px;color:var(--muted)}.month-nav{display:flex;gap:6px}.mini-key{display:flex;flex-wrap:wrap;gap:15px;color:var(--muted);font-size:10px;margin-top:13px}.mini-key span{display:flex;align-items:center;gap:5px}.modal-backdrop{position:fixed;inset:0;background:#12343e80;z-index:99;display:flex;align-items:center;justify-content:center;padding:20px}.modal{width:min(450px,100%);max-height:90vh;overflow:auto;background:white;border-radius:20px;padding:25px;box-shadow:0 30px 80px #092c3b40}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:19px}.modal-head h2{font-size:18px;margin:0}.modal .close-btn{border:0;background:#f1f5f6;border-radius:9px;width:34px;height:34px;display:grid;place-items:center}.modal-form{display:flex;flex-direction:column;gap:15px}.toast{position:fixed;left:25px;bottom:24px;background:#153f46;color:white;padding:12px 18px;border-radius:11px;box-shadow:0 8px 25px #163b442e;z-index:150;font-size:12px;max-width:calc(100vw - 40px);animation:slide .2s ease}.toast.error{background:#a73c42}@keyframes slide{from{transform:translateY(15px);opacity:0}to{transform:translateY(0);opacity:1}}.bottom-nav{display:none}.mobile-fab{display:none}.muted{color:var(--muted)}.small{font-size:11px}.figures{font-variant-numeric:tabular-nums}.mt-0{margin-top:0}.summary-line{display:flex;justify-content:space-between;gap:8px;margin:9px 0}.summary-line .small{color:var(--muted)}.row-inline{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.w-100{width:100%}.row-list{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #edf2f4}.row-list:last-child{border-bottom:0}.code-note{font-size:10px;color:#91a5aa}.soft-alert{background:#fff5ed;border:1px solid #fae6d9;border-radius:12px;padding:10px 14px;color:#ad704a;font-size:11px}.form-error{color:#c45050;font-size:11px;margin-top:7px}.backbutton{display:inline-flex;align-items:center;gap:4px;background:transparent;border:none;color:var(--teal);font-size:12px;font-weight:800;margin-bottom:10px;padding:0}.check-badge{border-radius:100%;width:52px;height:52px;display:grid;place-items:center;background:#e1f6ed;color:#14976e;margin:auto auto 12px}.check-badge svg{width:29px;height:29px}
+@media (max-width:1200px){.main{padding:24px 25px 80px}.ob-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dash-grid{grid-template-columns:1fr}.wizard-layout{grid-template-columns:minmax(0,1fr) 285px}.detail-grid{grid-template-columns:1fr}.calendar-layout{grid-template-columns:1fr 275px}}
+@media (max-width:900px){.sidebar{width:215px}.main{width:calc(100% - 215px)}.brand h1{font-size:19px}.wizard-layout,.calendar-layout{grid-template-columns:1fr}.stats{gap:9px}.stat{padding:12px}.stat-value{font-size:19px}}
+@media(max-width:720px){.app{display:block}.sidebar{display:none}.main{width:100%;padding:21px 15px 106px}.topbar{margin-bottom:21px}.page-title{font-size:21px}.topbar .toolbar .desktop-only{display:none}.mobile-only{display:block}.toolbar{gap:7px}.hero{padding:23px;min-height:175px}.hero h2{font-size:26px}.hero .left .hint{display:none}.hero .left .btn{font-size:10px;padding:9px}.stats{grid-template-columns:repeat(2,1fr);gap:9px}.stats .stat:last-child{grid-column:1/-1}.stat-value{font-size:20px}.ob-grid{grid-template-columns:1fr}.form-grid{gap:11px}.form-grid .field{grid-column:1/-1}.mode-choice{grid-template-columns:1fr}.bottom-nav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e2eded;padding:8px 5px calc(8px + env(safe-area-inset-bottom));z-index:40;box-shadow:0 -8px 25px #092c3b0a}.bottom-nav button{border:0;background:transparent;color:#92a4ab;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;min-height:45px}.bottom-nav button svg{width:21px;height:21px}.bottom-nav button.active{color:var(--teal)}.bottom-nav button.add-nav svg{width:30px;height:30px;background:var(--teal);color:#fff;border-radius:10px;padding:6px}.mobile-fab{display:none}.chart-box{height:156px}.bar-wrap{height:115px}.detail-banner{padding:16px;align-items:flex-start}.detail-banner .btn{font-size:10px;padding:9px;white-space:nowrap}.detail-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.metric strong{font-size:14px}.day{min-height:60px;padding:6px 4px}.weekgrid,.calgrid{gap:3px}.day .number{font-size:11px}.day .dot{width:5px;height:5px}.section-heading{margin-top:23px}.panel{padding:15px}.modal{padding:20px}.wizard-steps{gap:4px}.step-item{font-size:9px;gap:4px}.step-number{width:23px;height:23px}.hide-sm{display:none}}
+@media(max-width:390px){.hero{display:block}.hero .left{align-items:flex-start;margin-top:13px}.hero .left .btn{display:none}.hero h2{font-size:25px}.stat-value{font-size:18px}.toolbar .avatar{display:none}.due-amount{font-size:11px}}
+
+/* Ghestyar 2.0 · modern creative finance design system */
+:root{--ink:#24263d;--muted:#787b99;--teal:#6b54d6;--teal2:#7158e5;--deep:#342c78;--canvas:#f7f8fd;--white:#fff;--border:#e9e9f3;--soft:#f2efff;--orange:#cc8239;--rose:#d95764;--green:#218f78;--shadow:0 12px 32px rgba(52,40,103,.045);--radius:22px}
+body{font-family:'Noto Sans Arabic',Tahoma,'Segoe UI',Arial,sans-serif;font-size:13px;color:var(--ink);background:radial-gradient(ellipse at 10% -25%,#ece8ff 0,transparent 38%),var(--canvas);line-height:1.75}
+button,input,select,textarea{font-family:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,[role="button"]:focus-visible{outline:3px solid #9685fa;outline-offset:3px}
+button{touch-action:manipulation}
+.sidebar{background:#fff;box-shadow:8px 0 34px #493b8410;border-color:#edecf6;padding:29px 19px}
+.brand{padding:0 8px 40px}.brand-logo{background:linear-gradient(135deg,#7559ed,#aa8dff);box-shadow:0 9px 22px #6e53e844;border-radius:15px}
+.brand h1{color:#30245d;font-size:23px}.brand span{font-size:10px}.nav-label{color:#b3b1ca;letter-spacing:.2px}
+.nav button{border-radius:13px;color:#85859d;font-weight:700;font-size:12px;min-height:48px}.nav button:hover{background:#f7f4ff;color:#6351bc}.nav button.active{background:#f0edff;color:#654cc9}
+.nav button.active::before{background:#8069ec;height:18px;width:3px}
+.sidebar-box{background:#f6f5ff;border:1px solid #e9e5ff;color:#565082}.sidebar-box button{border-color:#e0d8fa;color:#6e57c9;background:#fff}.demo-note{color:#b0aec3}
+.main{padding:28px 38px 72px;max-width:1600px}.topbar{margin-bottom:28px}.page-kicker{color:#8c87a9;font-size:12px}.page-title{font-size:25px;letter-spacing:0;color:#25283d}.toolbar .pill-btn,.icon-btn{border-color:#ebeaf5;background:#fff;box-shadow:0 5px 15px #493b8410}.avatar{background:#ede8ff;color:#674cce}
+.btn,.pill-btn,.icon-btn{border-radius:13px;min-height:43px}.btn.primary{background:#7255df;border-color:#7255df;color:#fff;box-shadow:0 5px 11px #765de027}.btn.primary:hover{background:#6046cb}.btn.subtle{background:#f1eeff;border-color:#e8e3ff;color:#6246c7}
+.btn:hover:not(:disabled){transform:translateY(-1px)}.btn:active:not(:disabled){transform:translateY(0)}.link-btn{color:#6953ce}
+.section-heading h2{font-size:16px}.panel,.stat,.ob-card,.detail-banner{border-color:#eaeaf4;border-radius:22px;box-shadow:var(--shadow)}
+.type-icon{background:#f0edff;color:#735bd6}.type-icon.purchase{background:#e8f8f4;color:#1b9b81}.type-icon.other{background:#fff2e5;color:#c78b4f}
+.tag.overdue{background:#fff0f2;color:#c74763}.tag.soon{background:#fff2e2;color:#b4762f}.tag.open{background:#f0eef9;color:#746f9e}.tag.paid{background:#e5f8f2;color:#16856a}
+.progress{background:#eeedf7}.progress>div{background:linear-gradient(90deg,#ac90ff,#6d55de)}
+.ob-card:hover{border-color:#cfc7fc;box-shadow:0 16px 32px #5d4eb812}.filter.active{border-color:#765edd;color:#6753d1;background:#f1edff}
+.tabbar button.active{color:#7158d5;border-color:#7158d5}.day.today{background:#f2edff;border-color:#b7a7fa}.day.selected{background:#ebe4ff;outline-color:#8268e5}
+.modal-backdrop{background:#24204485}.modal{border-radius:25px;box-shadow:0 22px 78px #29204433}.toast{background:#403477}.mini-summary{background:#f4f1ff;border-color:#e9e2ff;color:#6d619b}.warn{background:#fff8ed}.soft-alert{background:#fff7f2}
+/* dashboard-specific bento */
+.dash-v2{display:flex;flex-direction:column;gap:20px}
+.dash-topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:0}
+.dash-topline .dash-eyebrow{font-size:11px;color:#8a86a2;font-weight:700;letter-spacing:.2px}
+.dash-topline .dash-date{font-size:11px;color:#8b88a6;background:white;border:1px solid #eceaf7;border-radius:100px;padding:7px 12px;white-space:nowrap}
+.dash-v2 .hero-bento{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(285px,.88fr);gap:17px}
+.month-card{position:relative;min-width:0;overflow:hidden;background:#fff;border:1px solid #ebe9f6;border-radius:26px;padding:28px 30px 24px;min-height:274px;box-shadow:0 12px 27px #38316e08}
+.month-card:after{content:'';position:absolute;left:-53px;top:-67px;width:218px;height:218px;border-radius:50%;background:radial-gradient(circle at 70% 70%,#f2edff,#f8f6ff 68%,transparent 69%);pointer-events:none}
+.month-card:before{content:'';position:absolute;left:90px;bottom:-95px;width:225px;height:225px;border:1px solid #eeecfc;border-radius:50%;pointer-events:none}
+.month-card>*{position:relative;z-index:1}.card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.eyebrow{color:#7b78a0;font-size:11px;font-weight:800;display:inline-flex;align-items:center;gap:8px}.eyebrow .small-circle{width:10px;height:10px;border-radius:50%;background:#7d61e8;box-shadow:0 0 0 5px #f0edff}
+.month-heading{font-size:14px;font-weight:800;color:#4c426d}.month-value{margin:24px 0 2px;line-height:1.45;font-size:38px;font-weight:900;letter-spacing:-1px;color:#292244;white-space:nowrap}.month-value small{font-size:13px;color:#817e9d;font-weight:600;letter-spacing:0}
+.month-subtitle{font-size:11px;color:#8c87a2;max-width:420px}.month-progress-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:26px;color:#746e95;font-size:11px}.month-progress-head strong{color:#6251b9}.month-track{height:10px;border-radius:100px;background:#eeeaff;margin-top:10px;overflow:hidden}.month-track>div{height:100%;background:linear-gradient(90deg,#aa8ef9,#7458df);border-radius:100px;transition:width .2s}
+.month-actions{display:flex;align-items:center;gap:10px;margin-top:16px}.month-actions button{font-size:11px;padding:8px 11px;min-height:38px}.month-actions .text-link{color:#6650bd;border:0;background:transparent;font-weight:800}
+.focus-card{position:relative;border-radius:26px;padding:26px 27px;overflow:hidden;min-height:274px;background:linear-gradient(125deg,#46378c 0%,#6e57d2 55%,#947af2 100%);color:white;box-shadow:0 19px 29px #5d4ca52b}
+.focus-card:before,.focus-card:after{content:'';position:absolute;width:215px;height:215px;border-radius:50%;left:-91px;top:-96px;border:1px solid #ffffff25}.focus-card:after{width:270px;height:270px;left:-126px;top:-131px}
+.focus-card .focus-label{color:#e6dfff;font-size:11px;font-weight:800;display:flex;align-items:center;gap:7px}.focus-card .focus-label svg{width:15px;height:15px}.focus-card .focus-content{position:relative;z-index:1}.focus-card h2{font-size:19px;line-height:1.6;margin:13px 0 6px;font-weight:900}.focus-card .focus-date{color:#e5e1ff;font-size:11px}.focus-card .focus-number{font-size:28px;line-height:1.4;font-weight:900;margin:16px 0 14px;white-space:nowrap}.focus-card .focus-number span{font-size:12px;font-weight:500;color:#e9e2ff}.focus-btns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.focus-btns .btn{border:0;min-height:42px;background:white;color:#51409a;font-weight:900;font-size:11px}.focus-btns .focus-ghost{background:#ffffff20;color:#fff;border:1px solid #ffffff33}.focus-card .tag.overdue{background:#ffe8ed;color:#bd3351}
+.metrics-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}.metric-bento{background:white;border:1px solid #ebeaf5;border-radius:22px;padding:19px 21px;min-width:0;box-shadow:var(--shadow)}.metric-bento .metric-title{display:flex;gap:9px;align-items:center;font-size:11px;color:#7e789b;font-weight:800}.metric-bento .metric-symbol{display:grid;place-items:center;border-radius:12px;height:34px;width:34px;background:#f0edff;color:#795fe1}.metric-bento .metric-symbol svg{height:17px;width:17px}.metric-bento .metric-number{font-size:21px;font-weight:900;color:#322c52;margin:11px 0 2px;white-space:nowrap}.metric-bento .metric-number small{font-size:11px;color:#86819c;font-weight:500}.metric-bento .metric-note{font-size:10px;color:#9b97af}.metric-bento.warn-metric{border-color:#fde5e5;background:#fffafb}.metric-bento.warn-metric .metric-symbol{color:#d65b69;background:#ffedf0}.metric-bento.warn-metric .metric-number{color:#bf4560}.metric-bento .metric-action{padding:0;border:0;color:#ad5369;background:none;font-size:10px;font-weight:800;margin-top:9px}
+.dash-v2 .split-content{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.85fr);gap:17px}.dash-panel{background:#fff;border:1px solid #ebeaf5;border-radius:23px;padding:23px 24px;box-shadow:var(--shadow);min-width:0}.dash-panel .panel-head{margin-bottom:17px}.dash-panel .panel-head h3{font-size:15px;color:#332d50}.dash-panel .panel-head small{color:#9995aa;font-size:10px}
+.dashboard-chips{display:flex;gap:7px;align-items:center;overflow-x:auto;padding-bottom:9px;scrollbar-width:thin}.dashboard-chips button{flex-shrink:0;background:#f6f5fc;border:1px solid #eeeaf9;border-radius:999px;padding:8px 13px;color:#7b759a;font-size:10px;font-weight:800;min-height:35px}.dashboard-chips button.active{color:#fff;background:#7358dc;border-color:#7358dc}
+.payment-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:13px;align-items:center;border-top:1px solid #f0eef7;padding:16px 0}.payment-row .payment-desc{display:flex;align-items:center;gap:11px;min-width:0}.payment-row .payment-desc .type-icon{width:40px;height:40px;border-radius:13px}.payment-row .payment-name{font-size:12px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.payment-row .payment-sub{font-size:10px;color:#8b87a2;display:flex;align-items:center;gap:7px;flex-wrap:wrap}.payment-row .payment-sub .tag{font-size:9px;padding:2px 7px}.payment-row .payment-price{text-align:left;font-weight:900;font-size:13px;white-space:nowrap}.payment-row .payment-price small{font-size:9px;display:block;color:#9793a7;font-weight:500}.payment-row .pay-cta{min-height:38px;background:#f0ecff;color:#644cca;border:1px solid #e7e0ff;border-radius:12px;white-space:nowrap;padding:8px 12px;font-weight:900;font-size:10px}.payment-row .pay-cta:hover{background:#dfd8fb}.payment-row .pay-cta svg{width:14px;height:14px;margin-left:4px;vertical-align:middle}
+.dash-v2 .empty-dash{display:flex;flex-direction:column;align-items:center;text-align:center;gap:9px;padding:35px 12px;color:#7e7b9a}.empty-dash svg{height:28px;width:28px;color:#7b66d9}.empty-dash strong{color:#353054}.empty-dash button{margin-top:6px}
+.visual-summary{display:grid;gap:14px}.mini-chart{display:flex;align-items:end;justify-content:space-between;gap:13px;height:190px;padding:12px 3px 0}.mini-chart .chart-col{height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;flex:1;gap:8px;min-width:0}.mini-chart .chart-rail{width:100%;max-width:38px;height:130px;border-radius:10px;background:#f4f2ff;display:flex;align-items:flex-end;overflow:hidden;position:relative}.mini-chart .chart-bar{width:100%;min-height:3px;background:linear-gradient(0deg,#7259d8,#ba9eff);border-radius:9px 9px 0 0;transition:height .2s}.mini-chart .chart-col:first-child .chart-bar{background:linear-gradient(0deg,#11a897,#6bdcc1)}.mini-chart .chart-label{font-size:10px;color:#8883a3;white-space:nowrap}.forecast-hint{margin-top:6px;border-radius:13px;padding:11px 13px;background:#f6f4ff;font-size:10px;color:#706a96;display:flex;gap:8px}.forecast-hint svg{width:17px;height:17px}
+.dash-bottom-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.dash-bottom-head h2{font-size:15px;color:#342e51;margin:0}.dash-small-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.dash-v2 .ob-card{border-radius:20px;padding:18px;box-shadow:none}
+.dash-footnote{display:flex;align-items:center;gap:7px;font-size:10px;color:#a39eb4;line-height:1.7}.dash-footnote svg{height:15px;width:15px}
+@media(max-width:1200px){.dash-v2 .hero-bento{grid-template-columns:1fr 1fr}.dash-v2 .split-content{grid-template-columns:1fr}.dash-v2 .dash-small-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.month-value{font-size:31px}}
+@media(max-width:1000px){.month-card,.focus-card{padding:22px}.month-value{font-size:28px}.metrics-row{gap:9px}.metric-bento{padding:13px}.metric-bento .metric-number{font-size:17px}}
+@media(max-width:720px){body{background:#f8f8fd}.main{padding:20px 16px 102px}.topbar{margin-bottom:20px}.page-title{font-size:20px}.page-kicker{font-size:10px}.dash-v2{gap:14px}.dash-topline{margin-bottom:0}.dash-topline .dash-date{font-size:10px;padding:5px 9px}.dash-v2 .hero-bento{grid-template-columns:1fr;gap:12px}.month-card{padding:22px 20px 20px;border-radius:23px;min-height:auto}.month-value{font-size:32px;margin:16px 0 1px}.month-progress-head{margin-top:19px}.month-actions{margin-top:14px}.focus-card{min-height:auto;padding:20px 21px;border-radius:23px}.focus-card h2{font-size:17px;margin:7px 0}.focus-card .focus-number{font-size:25px;margin:10px 0}.metrics-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.metrics-row .metric-bento:first-child{grid-column:1/-1}.metric-bento{padding:15px;border-radius:19px}.metric-bento .metric-number{font-size:19px}.metric-bento .metric-title{font-size:10px}.metric-bento .metric-note{font-size:9px}.dash-v2 .split-content{grid-template-columns:1fr;gap:12px}.dash-panel{padding:17px;border-radius:21px}.dash-panel .panel-head{margin-bottom:11px}.payment-row{grid-template-columns:minmax(0,1fr) auto;column-gap:7px;row-gap:10px;padding:14px 0}.payment-row .payment-name{font-size:11px}.payment-row .payment-desc .type-icon{width:37px;height:37px}.payment-row .payment-price{font-size:12px}.payment-row .pay-cta{grid-column:1/-1;justify-self:stretch;min-height:42px;font-size:11px}.dash-v2 .dash-small-grid{grid-template-columns:1fr}.dash-bottom-head h2{font-size:14px}.bottom-nav{grid-template-columns:repeat(4,1fr);border-top-color:#e8e5f5;background:#fff;padding:8px 7px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -9px 35px #4c3c9512}.bottom-nav button{color:#8b86a6;font-size:10px;min-height:51px}.bottom-nav button.active{color:#6d54d8}.bottom-nav button.add-nav svg{background:#765be2;border-radius:13px;width:37px;height:37px;padding:9px;box-shadow:0 5px 12px #765be034}.bottom-nav button:focus-visible{outline-offset:-2px}.hide-sm{display:none}
+}
+@media(max-width:390px){.month-value{font-size:27px}.month-card{padding:19px}.focus-card{padding:19px}.metric-bento .metric-number{font-size:17px}.payment-row .payment-desc{gap:6px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+.payment-row .payment-sub,.month-subtitle,.panel-head small,.dash-topline .dash-eyebrow,.metric-bento .metric-note,.mini-chart .chart-label{font-size:11px}
+@media(max-width:720px){.month-subtitle,.payment-row .payment-sub{font-size:11px}.metric-bento .metric-note{font-size:10px}}
+
+/* ==========================================
+  Ghestyar 2.1 | larger, bolder Persian type
+  No behavioral or content changes.
+========================================== */
+:root{--type-body:15px;--type-caption:12px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:'Vazirmatn','Noto Sans Arabic',Tahoma,Arial,sans-serif;font-size:var(--type-body);font-weight:600;line-height:1.88;letter-spacing:0}
+button,input,select,textarea{font-family:inherit;font-weight:600}
+/* Navigation and page hierarchy */
+.brand h1{font-size:25px;font-weight:900}
+.brand span,.nav-label,.sidebar-box .tiny,.demo-note{font-size:12px;font-weight:600}
+.nav button{font-size:14px;font-weight:800;min-height:50px}
+.sidebar-box strong{font-size:14px}
+.sidebar-box button{font-size:13px;font-weight:800;min-height:40px}
+.page-kicker{font-size:13px;font-weight:600}
+.page-title{font-size:28px;font-weight:900}
+.section-heading h2{font-size:19px}
+.section-heading .caption,.link-btn{font-size:13px;font-weight:700}
+.btn,.pill-btn,.icon-btn{font-size:14px;font-weight:800;min-height:46px}
+/* Main finance numbers and descriptive text */
+.hero-label,.hero-sub,.hero .left .hint{font-size:13px;font-weight:600}
+.hero h2{font-size:37px}
+.hero .unit{font-size:15px;font-weight:700}
+.hero .left .btn{font-size:14px}
+.stat-head,.stat-note{font-size:13px;font-weight:700}
+.stat-value{font-size:25px}
+.stat-value span{font-size:13px;font-weight:700}
+.panel-head h3{font-size:17px}
+.panel-head small,.due-meta{font-size:12px;font-weight:600}
+.due-name{font-size:14px;font-weight:800}
+.due-amount{font-size:15px}
+.due-amount small{font-size:12px;font-weight:600}
+.tag{font-size:12px;font-weight:800;line-height:1.5}
+.bar-label,.mini-summary,.ob-party,.ob-footer,.ob-stat span{font-size:12px;font-weight:600}
+.ob-name{font-size:15px;font-weight:900}
+.ob-stat strong{font-size:20px}
+.filter,.searchbox input{font-size:14px}
+.table th{font-size:13px;font-weight:800}
+.table td{font-size:14px}
+.table .td-sub{font-size:12px}
+.table .row-action{font-size:13px}
+/* Forms, installment detail, calendar and dialogs */
+.step-item{font-size:13px}
+.field label{font-size:14px;font-weight:800}
+.field input,.field select,.field textarea{font-size:15px;min-height:49px;height:auto;padding-block:11px;font-weight:600}
+.field small,.input-addon span{font-size:12px;font-weight:600}
+.mode-card strong{font-size:15px}
+.mode-card small{font-size:12px;font-weight:600}
+.hint-card h3{font-size:16px}
+.hint-row{font-size:13px}
+.hint-row strong{font-size:14px}
+.warn,.good{font-size:13px;font-weight:600}
+.detail-title h2,.modal-head h2{font-size:21px}
+.detail-title p,.metric label{font-size:13px;font-weight:600}
+.metric strong{font-size:20px}
+.tabbar button{font-size:14px}
+.calendar-head strong{font-size:19px}
+.weekgrid{font-size:13px;font-weight:700}
+.day .number{font-size:14px;font-weight:800}
+.day .more,.mini-key{font-size:12px}
+.toast{font-size:14px;font-weight:700}
+.small,.code-note,.soft-alert,.form-error{font-size:13px}
+.backbutton{font-size:14px}
+/* Dashboard 2.0 typography, with the same layout and colors */
+.dash-topline .dash-eyebrow,.dash-topline .dash-date,.eyebrow{font-size:13px;font-weight:800}
+.month-heading{font-size:17px}
+.month-value{font-size:40px}
+.month-value small{font-size:15px;font-weight:700}
+.month-subtitle,.month-progress-head{font-size:13px;font-weight:600}
+.month-progress-head strong{font-weight:900}
+.month-actions button{font-size:13px;font-weight:800;min-height:42px}
+.focus-card .focus-label{font-size:13px}
+.focus-card h2{font-size:22px}
+.focus-card .focus-date{font-size:13px;font-weight:700}
+.focus-card .focus-number{font-size:31px}
+.focus-card .focus-number span{font-size:14px;font-weight:700}
+.focus-btns .btn{font-size:13px;min-height:46px}
+.metric-bento .metric-title{font-size:13px}
+.metric-bento .metric-number{font-size:24px}
+.metric-bento .metric-number small{font-size:13px;font-weight:700}
+.metric-bento .metric-note,.metric-bento .metric-action{font-size:12px;font-weight:700}
+.dash-panel .panel-head h3,.dash-bottom-head h2{font-size:18px;font-weight:900}
+.dash-panel .panel-head small{font-size:12px;font-weight:600}
+.dashboard-chips button{font-size:13px;font-weight:800;min-height:40px}
+.payment-row .payment-name{font-size:15px;font-weight:900}
+.payment-row .payment-sub{font-size:12px;font-weight:600}
+.payment-row .payment-sub .tag{font-size:11px}
+.payment-row .payment-price{font-size:16px;font-weight:900}
+.payment-row .payment-price small{font-size:12px;font-weight:600}
+.payment-row .pay-cta{font-size:13px;font-weight:900;min-height:43px}
+.mini-chart .chart-label,.forecast-hint,.dash-footnote{font-size:12px;font-weight:600}
+/* Protect long numbers on compact devices without abbreviating them. */
+.month-card,.focus-card,.metric-bento,.payment-row,.payment-row .payment-desc{min-width:0}
+@media(max-width:1200px){
+  .month-value{font-size:35px}
+  .metric-bento .metric-number{font-size:22px}
+}
+@media(max-width:1000px){
+  .month-value{font-size:31px}
+  .metric-bento .metric-number{font-size:20px}
+}
+@media(max-width:720px){
+  body{font-size:15px}
+  .page-title{font-size:24px}
+  .page-kicker{font-size:12px}
+  .dash-topline .dash-date,.dash-topline .dash-eyebrow{font-size:12px}
+  .month-heading{font-size:16px}
+  .month-value{font-size:35px;letter-spacing:-.6px}
+  .month-value small{font-size:13px}
+  .month-subtitle,.month-progress-head{font-size:12px}
+  .month-actions button{font-size:12px}
+  .focus-card .focus-label,.focus-card .focus-date{font-size:12px}
+  .focus-card h2{font-size:20px}
+  .focus-card .focus-number{font-size:28px}
+  .focus-card .focus-number span{font-size:13px}
+  .focus-btns .btn{font-size:12px}
+  .metric-bento .metric-title{font-size:12px}
+  .metric-bento .metric-number{font-size:21px}
+  .metric-bento .metric-number small{font-size:12px}
+  .metric-bento .metric-note,.metric-bento .metric-action{font-size:11px}
+  .dash-panel .panel-head h3,.dash-bottom-head h2{font-size:17px}
+  .dash-panel .panel-head small{font-size:11px}
+  .payment-row .payment-name{font-size:14px}
+  .payment-row .payment-sub{font-size:12px}
+  .payment-row .payment-price{font-size:14px}
+  .payment-row .payment-price small{font-size:11px}
+  .payment-row .pay-cta{font-size:14px;min-height:47px}
+  .bottom-nav button{font-size:12px;font-weight:800;min-height:54px}
+  .step-item{font-size:11px}
+  .metric strong{font-size:17px}
+  .table th{font-size:12px}
+  .table td{font-size:13px}
+  .day .number{font-size:13px}
+  .month-card,.focus-card{overflow:hidden}
+}
+@media(max-width:390px){
+  .month-value{font-size:30px}
+  .focus-card .focus-number{font-size:25px}
+  .metric-bento .metric-number{font-size:19px}
+  .payment-row .payment-price{font-size:13px}
+  .month-card{padding-inline:18px}
+}
+
+/* Ghestyar 2.2 — screenshot-driven mobile UX repairs */
+.weekday-short{display:none}
+/* The lists use their own dense, mobile-friendly toolbar. */
+.obligations-page{min-width:0}
+.ob-list-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 17px}
+.ob-list-heading{min-width:0}
+.ob-list-heading h2{font-size:20px;line-height:1.5;font-weight:900;margin:0 0 3px}
+.ob-list-heading p{font-size:13px;font-weight:600;color:var(--muted);margin:0}
+.ob-add-button{flex-shrink:0;white-space:nowrap;padding:11px 16px;min-height:45px}
+.ob-list-tools{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.ob-list-tools .filters{display:flex;flex-wrap:nowrap;gap:7px;margin:0;min-width:0}
+.ob-list-tools .filter{min-width:0;white-space:nowrap;border-radius:12px;min-height:42px;padding:9px 13px}
+.ob-list-tools .searchbox{flex:0 1 320px;width:100%;max-width:none;min-width:165px;margin:0;min-height:46px;order:1;border-radius:13px}
+.ob-list-tools .searchbox:focus-within{border-color:#8e77f1;box-shadow:0 0 0 3px #745de41a}
+.ob-list-tools .searchbox input{font-size:14px;min-height:44px;outline:0}
+.ob-card{padding:18px;overflow:hidden}
+.ob-top{min-width:0;gap:10px}
+.ob-identity{flex:1;min-width:0}
+.ob-card .tag{flex-shrink:0}
+.ob-card .ob-name{font-size:16px;line-height:1.5}
+.ob-card .ob-party{font-size:12px;line-height:1.55;margin-top:2px}
+.ob-finance{margin:16px 0 13px}
+.ob-finance-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:700}
+.ob-amount{display:flex;align-items:baseline;gap:7px;min-width:0;margin-top:4px;flex-wrap:wrap}
+.ob-amount strong{font-size:clamp(19px,2.2vw,24px);line-height:1.6;font-weight:900;direction:ltr;unicode-bidi:isolate;white-space:nowrap;max-width:100%}
+.ob-amount span{font-size:12px;font-weight:700;color:var(--muted)}
+.ob-card .progress{height:7px}
+.ob-card .ob-footer{font-size:12px;font-weight:700;margin-top:12px;gap:8px;min-width:0}
+.ob-card .ob-footer span:first-child{min-width:0}
+/* Calendar: eliminate full day-name collision on narrow screens. */
+.weekgrid,.calgrid{width:100%;min-width:0;grid-template-columns:repeat(7,minmax(0,1fr))}
+.weekgrid>span{min-width:0;display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;font-weight:800}
+.day{min-width:0;touch-action:manipulation}
+.day:focus-visible{outline:3px solid #8d73e8;outline-offset:-2px}
+.calendar-head>div:first-child{min-width:0}
+.calendar-controls button{flex:0 0 auto}
+@media(max-width:900px){
+  .ob-list-tools{flex-wrap:wrap}
+  .ob-list-tools .searchbox{flex:1 1 100%;order:1}
+  .ob-list-tools .filters{width:100%;justify-content:flex-start;order:0}
+}
+@media(max-width:720px){
+  .main{padding-inline:15px;padding-bottom:calc(116px + env(safe-area-inset-bottom))}
+  .ob-list-header{gap:9px;margin-bottom:14px;align-items:center}
+  .ob-list-heading h2{display:none}
+  .ob-list-heading p{font-size:14px;font-weight:800;color:#69647f}
+  .ob-add-button{font-size:13px!important;min-height:43px;padding:9px 12px;border-radius:12px;gap:5px}
+  .ob-add-button svg{width:17px;height:17px}
+  .ob-list-tools{gap:10px;margin-bottom:14px}
+  .ob-list-tools .filters{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:100%}
+  .ob-list-tools .filter{padding:9px 3px;font-size:13px!important;min-height:43px;white-space:nowrap;line-height:1.4}
+  .ob-list-tools .searchbox{width:100%;max-width:none;flex-basis:100%;padding-inline:13px;min-height:47px}
+  .ob-list-tools .searchbox input{font-size:15px}
+  .ob-grid{gap:11px}
+  .ob-card{border-radius:20px;padding:16px}
+  .ob-card .type-icon{width:43px;height:43px}
+  .ob-card .ob-name{font-size:16px}
+  .ob-card .tag{font-size:11px}
+  .ob-finance{margin:13px 0 11px}
+  .ob-amount strong{font-size:clamp(20px,5.65vw,25px)}
+  .calendar-layout{gap:12px}
+  .calendar-layout>.panel:first-child{padding:15px 12px 17px;border-radius:22px}
+  .calendar-head{margin-bottom:16px;gap:7px}
+  .calendar-head strong{font-size:18px}
+  .calendar-head .small{font-size:12px}
+  .calendar-controls{gap:4px}
+  .calendar-controls button{width:35px;height:37px;border-radius:10px}
+  .calendar-controls [data-action="cal-today"]{width:auto;padding:0 8px;font-size:12px;font-weight:800}
+  .weekgrid,.calgrid{gap:4px}
+  .weekgrid{font-size:12px!important;line-height:1.35;margin-bottom:9px}
+  .weekday-full{display:none}
+  .weekday-short{display:inline}
+  .day{padding:6px 5px;min-height:clamp(46px,13vw,62px);border-radius:11px;align-items:flex-start}
+  .day .number{font-size:14px!important}
+  .day .dots{gap:2px}
+  .mini-key{margin-top:14px;gap:12px;font-size:12px}
+  .bottom-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom));max-width:100vw}
+  .bottom-nav button{min-width:0;touch-action:manipulation}
+  .toolbar .avatar{display:none}
+  /* Dashboard on phones: avoid repeating the entire obligations list. */
+  .dash-v2 .dash-bottom-head,.dash-v2 .dash-small-grid{display:none}
+  .dash-v2 .dash-footnote{margin-top:0}
+}
+@media(max-width:360px){
+  .ob-list-heading h2{font-size:17px}
+  .ob-add-button{padding:9px 10px}
+  .ob-list-tools .filter{font-size:12px!important}
+  .ob-amount strong{font-size:20px}
+  .calendar-layout>.panel:first-child{padding-inline:10px}
+  .calendar-head strong{font-size:16px}
+  .calendar-head .small{font-size:11px}
+  .calendar-controls button{width:31px;height:35px}
+  .calendar-controls [data-action="cal-today"]{padding-inline:6px}
+  .weekgrid,.calgrid{gap:3px}
+  .day{padding:5px 3px;min-height:45px}
+  .day .number{font-size:13px!important}
+}
+
+
+/* ============================================
+   Ghestyar 2.3 — comprehensive accessible dark theme
+   Existing layout, font sizes and business logic retained.
+   ============================================ */
+.theme-toggle{gap:7px;white-space:nowrap;min-width:46px}
+.theme-toggle svg{width:20px;height:20px}
+.theme-button-label{font-size:12px;font-weight:800}
+@media(max-width:720px){.theme-toggle{padding:10px;min-width:46px}.theme-button-label{display:none}}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ink:#f2f0fc;--muted:#b1aacd;
+  --teal:#b4a0ff;--teal2:#a996ff;--deep:#a996ff;
+  --canvas:#0f1220;--white:#191d2e;--border:#33374d;
+  --soft:#24223f;--orange:#ffbc79;--rose:#ff879c;--green:#65dac1;
+  --shadow:0 12px 35px rgba(0,0,0,.22);
+}
+html[data-theme="dark"],html[data-theme="dark"] body{background:#0f1220;color:var(--ink)}
+html[data-theme="dark"] body{background:radial-gradient(ellipse at 10% -15%,#282044 0,transparent 40%),#0f1220}
+html[data-theme="dark"] .sidebar{background:#151927;border-color:var(--border);box-shadow:8px 0 38px #02020a28}
+html[data-theme="dark"] .brand h1,html[data-theme="dark"] .page-title{color:#f6f3ff}
+html[data-theme="dark"] .brand span,html[data-theme="dark"] .page-kicker,html[data-theme="dark"] .nav-label{color:#aca5c8}
+html[data-theme="dark"] .nav button{color:#bcb6d5}
+html[data-theme="dark"] .nav button:hover{background:#2b2943;color:#e6dcff}
+html[data-theme="dark"] .nav button.active{background:#302951;color:#d4c5ff}
+html[data-theme="dark"] .sidebar-box{background:#222339;border-color:#39364f;color:#d4ccee}
+html[data-theme="dark"] .sidebar-box .tiny{color:#bdb3d4}
+html[data-theme="dark"] .sidebar-box button{background:#312c4d;border-color:#5b4c87;color:#ddd1ff}
+html[data-theme="dark"] .demo-note{color:#aca4c8}
+html[data-theme="dark"] .panel,html[data-theme="dark"] .stat,html[data-theme="dark"] .ob-card,html[data-theme="dark"] .detail-banner,
+html[data-theme="dark"] .month-card,html[data-theme="dark"] .dash-panel,html[data-theme="dark"] .metric-bento,
+html[data-theme="dark"] .modal,html[data-theme="dark"] .list-table{background:#1a1d30;border-color:#34364d;box-shadow:var(--shadow);color:var(--ink)}
+html[data-theme="dark"] .month-card:after{background:radial-gradient(circle at 70% 70%,#292443,#24203a 68%,transparent 69%)}
+html[data-theme="dark"] .month-card:before{border-color:#38304f}
+html[data-theme="dark"] .pill-btn,html[data-theme="dark"] .icon-btn,html[data-theme="dark"] .btn:not(.primary):not(.subtle):not(.danger){background:#24283c;border-color:#41435c;color:#f0ebff;box-shadow:none}
+html[data-theme="dark"] .pill-btn:hover,html[data-theme="dark"] .icon-btn:hover{background:#302c4c;border-color:#8871cb}
+html[data-theme="dark"] .btn.primary{background:#8067ea;border-color:#927af5;color:#fff;box-shadow:0 7px 20px #3b2c8738}
+html[data-theme="dark"] .btn.primary:hover{background:#9179fc}
+html[data-theme="dark"] .btn.subtle{background:#302747;border-color:#55477f;color:#d8cbff}
+html[data-theme="dark"] .btn.danger{background:#3b2635;border-color:#714156;color:#ffb7c4}
+html[data-theme="dark"] .avatar{background:#383055;color:#e4d9ff}
+html[data-theme="dark"] .section-heading h2,html[data-theme="dark"] .panel-head h3,html[data-theme="dark"] .dash-bottom-head h2{color:#f2edff}
+html[data-theme="dark"] .link-btn,html[data-theme="dark"] .backbutton{color:#c7b8ff}
+html[data-theme="dark"] .muted,html[data-theme="dark"] .small.muted,html[data-theme="dark"] .page-kicker{color:#b5afcb}
+html[data-theme="dark"] .type-icon{background:#342c54;color:#baa4ff}
+html[data-theme="dark"] .type-icon.purchase{background:#173c3e;color:#6ae0c1}
+html[data-theme="dark"] .type-icon.other{background:#413022;color:#f5bd82}
+html[data-theme="dark"] .tag.overdue{background:#482a3a;color:#ffb3c1}
+html[data-theme="dark"] .tag.soon{background:#483727;color:#ffd193}
+html[data-theme="dark"] .tag.paid{background:#1c433e;color:#81e4c4}
+html[data-theme="dark"] .tag.open{background:#302b49;color:#c9baf1}
+html[data-theme="dark"] .progress,html[data-theme="dark"] .month-track{background:#37334f}
+html[data-theme="dark"] .ob-card:hover{border-color:#7663b4;box-shadow:0 14px 30px #05051244}
+html[data-theme="dark"] .ob-party,html[data-theme="dark"] .ob-footer,html[data-theme="dark"] .ob-finance-meta,
+html[data-theme="dark"] .ob-amount span,html[data-theme="dark"] .ob-stat span{color:#b7afd0}
+html[data-theme="dark"] .ob-list-heading p{color:#bcb0dd}
+html[data-theme="dark"] .filter{background:#25283a;color:#c9c2e0;border-color:#42425d}
+html[data-theme="dark"] .filter.active{background:#352951;color:#e1d3ff;border-color:#937ae3}
+html[data-theme="dark"] .searchbox{background:#222638;border-color:#41415a}
+html[data-theme="dark"] .searchbox svg{color:#bcb5d4}
+html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{color:#f6f3ff}
+html[data-theme="dark"] input::placeholder,html[data-theme="dark"] textarea::placeholder{color:#a9a3be;opacity:1}
+html[data-theme="dark"] .field label,html[data-theme="dark"] .field small,html[data-theme="dark"] .input-addon span{color:#c5bedf}
+html[data-theme="dark"] .field input,html[data-theme="dark"] .field select,html[data-theme="dark"] .field textarea{background:#24273b;border-color:#45465e}
+html[data-theme="dark"] .field input:focus,html[data-theme="dark"] .field select:focus,html[data-theme="dark"] .field textarea:focus{border-color:#ad97ff;box-shadow:0 0 0 3px #a392ff2a}
+html[data-theme="dark"] .searchbox input{background:transparent}
+html[data-theme="dark"] .mode-card{background:#25283a;border-color:#44435e;color:#c8c2e3}
+html[data-theme="dark"] .mode-card.active{background:#352d52;border-color:#927bdf;color:#e2d8ff;box-shadow:inset 0 0 0 1px #7057b5}
+html[data-theme="dark"] .step-number{background:#2c2c44;border-color:#514a70;color:#d7d1ec}
+html[data-theme="dark"] .step-item{color:#afa6c7}
+html[data-theme="dark"] .step-item.done,html[data-theme="dark"] .step-item.current{color:#cdbbff}
+html[data-theme="dark"] .step-item.done .step-number,html[data-theme="dark"] .step-item.current .step-number{background:#7962db;color:#fff;border-color:#806be6}
+html[data-theme="dark"] .hint-card,html[data-theme="dark"] .mini-summary{background:#282840;border-color:#42405a;color:#e5def8}
+html[data-theme="dark"] .hint-row{border-bottom-color:#403b55}
+html[data-theme="dark"] .hint-row span,html[data-theme="dark"] .summary-line .small{color:#c1b8d9}
+html[data-theme="dark"] .warn{background:#3d3025;border-color:#685037;color:#ffe0ad}
+html[data-theme="dark"] .good{background:#1a3c34;border-color:#355b4e;color:#a8f3cc}
+html[data-theme="dark"] .soft-alert{background:#3d2d2f;border-color:#68434c;color:#ffd0b6}
+html[data-theme="dark"] .form-error{color:#ff98a8}
+html[data-theme="dark"] .check-badge{background:#1c423b;color:#83f0bf}
+html[data-theme="dark"] .detail-title h2,html[data-theme="dark"] .detail-title p{color:var(--ink)}
+html[data-theme="dark"] .detail-summary .metric{background:#25283d}
+html[data-theme="dark"] .tabbar button{color:#beb7d7}
+html[data-theme="dark"] .tabbar button.active{color:#c3b2ff;border-color:#9c83f7}
+html[data-theme="dark"] .row-list{border-bottom-color:#393c51}
+html[data-theme="dark"] .table th{background:#272a3f;color:#d7d0e8}
+html[data-theme="dark"] .table td{border-top-color:#393b51;color:#ede8ff}
+html[data-theme="dark"] .table tr:hover td{background:#26273c}
+html[data-theme="dark"] .table .row-action,html[data-theme="dark"] .row-action{background:#342d51;border-color:#5c4b8c;color:#d5c6ff}
+html[data-theme="dark"] .empty strong{color:#f1eaff}
+html[data-theme="dark"] .calendar-controls button{background:#292b41;border-color:#48465e;color:#f0eaff}
+html[data-theme="dark"] .weekgrid{color:#b5bed1}
+html[data-theme="dark"] .day{background:#25283a;border-color:#393d50;color:#e9e8f8}
+html[data-theme="dark"] .day.blank{background:transparent;border-color:transparent}
+html[data-theme="dark"] .day:hover{background:#342e53}
+html[data-theme="dark"] .day.today{background:#352f51;border-color:#7765b7}
+html[data-theme="dark"] .day.selected{background:#453565;outline-color:#b6a0ff}
+html[data-theme="dark"] .day .dot{background:#5fd8b9}
+html[data-theme="dark"] .day .dot.overdue{background:#ff879c}
+html[data-theme="dark"] .day .more,html[data-theme="dark"] .mini-key{color:#b8b5cf}
+html[data-theme="dark"] .modal-backdrop{background:#03030ab8}
+html[data-theme="dark"] .modal .close-btn{background:#2b2e43;color:#ede6ff}
+html[data-theme="dark"] .toast{background:#463773;color:#fff}
+html[data-theme="dark"] .toast.error{background:#963e53}
+/* dashboard: headings, charts and state indicators */
+html[data-theme="dark"] .dash-topline .dash-eyebrow,html[data-theme="dark"] .eyebrow{color:#beb5d5}
+html[data-theme="dark"] .dash-topline .dash-date{background:#22263b;border-color:#403d56;color:#cbc3e1}
+html[data-theme="dark"] .month-heading{color:#c9bded}
+html[data-theme="dark"] .month-value{color:#f4edff}
+html[data-theme="dark"] .month-value small,html[data-theme="dark"] .month-subtitle{color:#bfb7d7}
+html[data-theme="dark"] .month-progress-head{color:#c5bddb}
+html[data-theme="dark"] .month-progress-head strong{color:#d2c4ff}
+html[data-theme="dark"] .month-actions .text-link{color:#d4c5ff}
+html[data-theme="dark"] .eyebrow .small-circle{background:#baa4ff;box-shadow:0 0 0 5px #3c3256}
+html[data-theme="dark"] .focus-card{background:linear-gradient(125deg,#42347b 0%,#5943a7 55%,#765bcc 100%);box-shadow:0 20px 32px #08051166}
+html[data-theme="dark"] .focus-card .focus-btns .btn{background:#f1edff;color:#392a7b}
+html[data-theme="dark"] .focus-card .focus-btns .focus-ghost{background:#ffffff1b;color:white;border-color:#ffffff5e}
+html[data-theme="dark"] .metric-bento .metric-title,html[data-theme="dark"] .metric-bento .metric-note,
+html[data-theme="dark"] .metric-bento .metric-number small{color:#c0b9d9}
+html[data-theme="dark"] .metric-bento .metric-number{color:#f4edff}
+html[data-theme="dark"] .metric-bento .metric-symbol{background:#312a4a;color:#c4b0ff}
+html[data-theme="dark"] .metric-bento.warn-metric{background:#2b2234;border-color:#5e394e}
+html[data-theme="dark"] .metric-bento.warn-metric .metric-number{color:#ffb1c1}
+html[data-theme="dark"] .metric-bento.warn-metric .metric-symbol{background:#45283b;color:#ff9cb1}
+html[data-theme="dark"] .metric-bento .metric-action{color:#ffadc0}
+html[data-theme="dark"] .dash-panel .panel-head h3{color:#f5edff}
+html[data-theme="dark"] .dash-panel .panel-head small{color:#bcb4ce}
+html[data-theme="dark"] .dashboard-chips button{background:#282a40;border-color:#41405b;color:#ccc4e3}
+html[data-theme="dark"] .dashboard-chips button.active{background:#765bd5;border-color:#9580ed;color:#fff}
+html[data-theme="dark"] .payment-row{border-top-color:#38364e}
+html[data-theme="dark"] .payment-row .payment-sub{color:#c2b9d8}
+html[data-theme="dark"] .payment-row .payment-price small{color:#c3bad5}
+html[data-theme="dark"] .payment-row .pay-cta{background:#332b51;border-color:#5e4b91;color:#e0d1ff}
+html[data-theme="dark"] .payment-row .pay-cta:hover{background:#41336a}
+html[data-theme="dark"] .dash-v2 .empty-dash{color:#b8b3d2}
+html[data-theme="dark"] .empty-dash strong{color:#f0eaff}
+html[data-theme="dark"] .mini-chart .chart-rail,html[data-theme="dark"] .bar-wrap{background:#302c4a}
+html[data-theme="dark"] .mini-chart .chart-label,html[data-theme="dark"] .bar-label{color:#bcb4d6}
+html[data-theme="dark"] .forecast-hint{background:#2c2944;color:#ccc4e8}
+html[data-theme="dark"] .dash-footnote{color:#b7aecb}
+html[data-theme="dark"] .due-row{border-bottom-color:#39394d}
+html[data-theme="dark"] .due-meta,html[data-theme="dark"] .due-amount small{color:#b8b3d1}
+html[data-theme="dark"] .bottom-nav{background:#191b2b;border-top-color:#36334e;box-shadow:0 -9px 35px #05051166}
+html[data-theme="dark"] .bottom-nav button{color:#aaa4c6}
+html[data-theme="dark"] .bottom-nav button.active{color:#c3b2ff}
+html[data-theme="dark"] .bottom-nav button.add-nav svg{background:#795de5;color:#fff}
+@media(max-width:720px){html[data-theme="dark"] body{background:#0f1220}}
+
+/* Distinct main and secondary actions against the dark gradient. */
+html[data-theme="dark"] .focus-card .focus-btns .btn:not(.focus-ghost){background:#f3efff;color:#3b2a79;border-color:#f3efff;box-shadow:0 3px 12px #20183c25}
+html[data-theme="dark"] .focus-card .focus-btns .focus-ghost{background:#ffffff24;color:#fff;border-color:#ffffff63;box-shadow:none}
+
+/* Functional phase 2.4 — settings, edit actions, reversal history */
+.changes-heading{margin:18px 0 8px;font-size:15px;font-weight:900}
+.change-entry{border-top:1px solid var(--border);padding:10px 0;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:13px}
+.change-entry span{font-size:12px;color:var(--muted)}
+.reverse-note{font-size:11px;color:var(--rose);padding-top:5px}
+
+.detail-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.installment-actions{display:flex;gap:7px;align-items:center;justify-content:flex-start}
+.edit-inline{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:5px 9px}
+.edit-inline svg{width:16px;height:16px}
+.reversed-row{opacity:.65}
+.reversed-row td:nth-child(3){text-decoration:line-through}
+.settings-page{max-width:1150px;margin:0 auto}
+.settings-hero{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px}
+.settings-hero h2{font-size:22px;margin:0 0 5px;font-weight:900}
+.settings-hero p{margin:0;font-size:13px}
+.settings-count{background:#f0ebff;border-radius:16px;padding:12px 16px;color:#6548b8;font-weight:900;font-size:24px;text-align:center;white-space:nowrap}
+.settings-count small{display:block;font-size:11px;color:#786a9b}
+.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.settings-box{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:235px}
+.settings-box h3{margin:0;font-size:18px;font-weight:900}
+.settings-box p{margin:0;color:var(--muted);font-size:13px;line-height:1.95;flex:1}
+.settings-box .btn{margin-top:8px}
+.settings-icon{display:grid;place-items:center;border-radius:14px;width:46px;height:46px;background:#f0ebff;color:#7254c9}
+.settings-icon svg{width:23px;height:23px}
+.settings-box .good{font-size:12px}
+html[data-theme="dark"] .settings-count,html[data-theme="dark"] .settings-icon{background:#35294f;color:#e4d7ff}
+html[data-theme="dark"] .settings-count small{color:#beb3d5}
+html[data-theme="dark"] .edit-inline{background:#322b4f;color:#ded1ff;border-color:#5d4e81}
+html[data-theme="dark"] .settings-box .good{background:#262e37;color:#c8e6e3}
+@media(max-width:760px){.settings-grid{grid-template-columns:1fr}.settings-hero{align-items:flex-start}.detail-actions{width:100%;justify-content:flex-start}.detail-actions .btn{font-size:12px}.settings-hero h2{font-size:19px}.settings-box{min-height:0;padding:20px}.settings-box p{flex:initial}.settings-count{font-size:20px}}
+@media(max-width:370px){.detail-actions .btn{flex:1}.settings-hero{flex-wrap:wrap}.installment-actions .row-action{padding:7px}}
+
+
+/* Comfortable mobile installment details without horizontal table scrolling */
+.mobile-detail-cards{display:none}
+@media(max-width:720px){
+ .detail-banner{display:flex;flex-direction:column;align-items:stretch;gap:15px;padding:18px}
+ .detail-title{width:100%;min-width:0;display:flex;gap:12px;align-items:center}
+ .detail-title > div{min-width:0;flex:1}
+ .detail-title h2{font-size:19px;line-height:1.7;overflow-wrap:anywhere}
+ .detail-title p{font-size:12px;line-height:1.75;overflow-wrap:anywhere}
+ .detail-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;width:100%}
+ .detail-banner .detail-actions .btn{font-size:12px;font-weight:800;padding:10px 7px;white-space:normal;line-height:1.6;min-height:45px}
+ .detail-banner .detail-actions svg{width:16px;height:16px}
+ .tabbar{display:flex;overflow-x:auto;overflow-y:hidden;gap:5px;white-space:nowrap;scrollbar-width:none}
+ .tabbar::-webkit-scrollbar{display:none}
+ .tabbar button{white-space:nowrap;flex:0 0 auto;padding:10px 11px;font-size:13px}
+ .detail-schedule-table,.detail-payments-table{display:none}
+ .mobile-detail-cards{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:14px}
+ .mobile-inst-card{background:var(--canvas);border:1px solid var(--border);border-radius:16px;padding:15px;min-width:0}
+ .mobile-inst-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+ .mobile-inst-head strong{font-size:15px}
+ .mobile-inst-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:5px 0;font-size:13px}
+ .mobile-inst-row span{color:var(--muted)}
+ .mobile-inst-row strong{font-weight:800;min-width:0;text-align:left;overflow-wrap:anywhere}
+ .mobile-inst-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+ .mobile-inst-actions .btn{min-height:43px;font-size:12px;padding-inline:8px}
+ .mobile-inst-note{margin:8px 0 0;color:var(--muted);font-size:12px}
+ .mobile-reverse{margin-top:12px;min-height:40px}
+}
+html[data-theme="dark"] .mobile-inst-card{background:#24263a;border-color:#403b59}
+
+
+.schedule-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.schedule-filters button{padding:8px 13px;border:1px solid var(--border);border-radius:10px;background:var(--white);color:var(--muted);font-size:12px;font-weight:800;min-height:38px}
+.schedule-filters button.active{background:#eee9ff;border-color:#9c85ed;color:#6048bd}
+html[data-theme="dark"] .schedule-filters button{background:#28293b;border-color:#414058;color:#c6bed9}
+html[data-theme="dark"] .schedule-filters button.active{background:#443578;border-color:#7a63d8;color:#f3ecff}
+@media(max-width:390px){.schedule-filters{gap:5px}.schedule-filters button{padding:7px 9px;font-size:11px;flex:1}}
+
+
+/* Cloud account UI — v3, maintains the approved V2.4 light / dark tokens */
+.cloud-status{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:12px;background:var(--white);padding:8px 10px;font-weight:800;color:var(--muted);font-size:12px;max-width:180px;white-space:nowrap}
+.cloud-dot{height:8px;width:8px;border-radius:50%;background:#a6a3b4;flex:0 0 auto}
+.cloud-status.is-ready .cloud-dot{background:#20a889}.cloud-status.is-pending .cloud-dot{background:#e2a342}.cloud-status.is-conflict .cloud-dot,.cloud-status.is-error .cloud-dot{background:#e06067}
+.cloud-panel{display:grid;gap:15px}.cloud-panel .field label{display:block;margin-bottom:5px}.cloud-panel .field input{width:100%;min-height:46px}.cloud-panel .muted{font-size:13px;line-height:1.9}
+.cloud-banner{border:1px solid var(--border);border-radius:17px;padding:16px;background:var(--soft);color:var(--ink);font-size:13px;line-height:1.9}
+.cloud-banner strong{font-size:15px;display:block;margin-bottom:4px}.cloud-banner.is-warning{border-color:#deb676;background:rgba(231,177,89,.12)}
+.cloud-actions{display:flex;gap:10px;flex-wrap:wrap}.cloud-actions .btn{flex:1;min-width:120px}
+.cloud-email{overflow-wrap:anywhere;font-weight:900;font-size:14px}
+.account-modal{width:min(510px,100%)}.account-modal .modal-head{margin-bottom:12px}.account-modal h2{line-height:1.5}
+.cloud-card{min-height:230px}.cloud-card .cloud-email{margin:8px 0}.cloud-card .btn{margin-top:8px}
+html[data-theme="dark"] .cloud-status{background:#23253b;color:#d7d4ee;border-color:#49445d}
+html[data-theme="dark"] .cloud-banner{background:#2c2941;border-color:#4e4763;color:#eceafb}
+html[data-theme="dark"] .cloud-banner.is-warning{background:#413423;border-color:#70552e;color:#fff0cf}
+@media(max-width:720px){.cloud-status{max-width:115px;font-size:10px;padding:6px}.cloud-status .cloud-word{overflow:hidden;text-overflow:ellipsis}.account-modal{padding:20px}.cloud-actions .btn{min-width:110px}.toolbar{gap:5px}}
+@media(max-width:380px){.cloud-status{max-width:88px}.cloud-status .cloud-word{font-size:0}.cloud-status .cloud-word:after{content:'ابر';font-size:11px}}
+
+</style>
+</head>
+<body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="16" rx="3"/><path d="M2 9h20M17 16h.01M5 5V3h14"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 15h2M14 15h2"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 16l4-4 3 2 5-7"/></symbol>
+<symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 11h1M14 11h1M9 15h1M14 15h1"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 8h16l-1 13H5L4 8zM9 9V6a3 3 0 0 1 6 0v3"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+<symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3h14v18l-3-2-4 2-4-2-3 2V3zM9 8h6M9 12h6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3 8 8 10 5-2 8-5 8-10V6zM9 12l2 2 4-4"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5m-5 5 5-5 5 5"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M4 16l-1 5 5-1L20 8l-4-4z"/></symbol>
+<symbol id="i-credit" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7V3l-4 4 4 4V7a8 8 0 1 0 2 8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 15.9A8.8 8.8 0 0 1 8.1 3.8a9.1 9.1 0 1 0 12.1 12.1Z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+<symbol id="i-eyeoff" viewBox="0 0 24 24"><path d="M3 3 21 21M9.9 5.8A12.8 12.8 0 0 1 12 5.6c6.4 0 10 6.4 10 6.4a18 18 0 0 1-3.3 3.9M6.1 6.9C3.3 8.7 2 12 2 12s3.6 6.4 10 6.4a10 10 0 0 0 4.2-.9M10 10a2.8 2.8 0 0 0 4 4"/></symbol>
+</defs></svg>
+<div class="app" id="app"></div>
+<script>
+'use strict';
+const $=s=>document.querySelector(s);
+const icon=(name,cls='')=>`<svg class="${cls}" aria-hidden="true"><use href="#i-${name}"></use></svg>`;
+const fmt=n=>Number(Math.round(n||0)).toLocaleString('fa-IR');
+const fnum=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[+d]);
+const number=s=>Number(String(s??'').replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace(/[٬,،\s]/g,'').replace(/٫/g,'.'));
+const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const jfmt=new Intl.DateTimeFormat('en-US-u-ca-persian',{year:'numeric',month:'numeric',day:'numeric',timeZone:'UTC'});
+const jmonths=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const asISO=date=>date.toISOString().slice(0,10);
+const parseISO=iso=>new Date(iso+'T12:00:00.000Z');
+function jalali(date){const parts=jfmt.formatToParts(date instanceof Date?date:parseISO(date));const d={};for(const p of parts){if(p.type==='year')d.y=+p.value;if(p.type==='month')d.m=+p.value;if(p.type==='day')d.d=+p.value;}return d;}
+function jText(iso,full=false){if(!iso)return '—';const d=jalali(iso);return full?`${fnum(d.y)}/${fnum(String(d.m).padStart(2,'0'))}/${fnum(String(d.d).padStart(2,'0'))}`:`${fnum(d.d)} ${jmonths[d.m-1]}`;}
+const yCache=new Map();
+function yearIndex(y){if(yCache.has(y))return yCache.get(y);const map=new Map();let t=Date.UTC(y+621,0,1);const end=Date.UTC(y+622,5,30);for(;t<end;t+=86400000){const date=new Date(t);const j=jalali(date);if(j.y===y)map.set(`${j.m}/${j.d}`,date.toISOString().slice(0,10));}yCache.set(y,map);return map;}
+function jISO(y,m,d){return yearIndex(y).get(`${m}/${d}`)||null;}
+function jParse(value){const a=String(value||'').replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).split(/[\/\-.]/).map(Number);return a.length===3&&a.every(Number.isInteger)?jISO(a[0],a[1],a[2]):null;}
+function addJMonth(start,offset,day){const j=typeof start==='string'?jalali(start):start;const ind=j.y*12+j.m-1+offset;const y=Math.floor(ind/12),m=(ind%12+12)%12+1;for(let d=day||j.d;d>=1;d--){const iso=jISO(y,m,d);if(iso)return iso;}return null;}
+const _localNow=new Date();const todayISO=[_localNow.getFullYear(),String(_localNow.getMonth()+1).padStart(2,'0'),String(_localNow.getDate()).padStart(2,'0')].join('-');const todayJ=jalali(todayISO);
+const id=()=>((typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():'id'+Date.now()+Math.random().toString(16).slice(2));
+function makeInstallments(total,n,start,rate=0){const per=rate/1200;const raw=per>0?total*per/(1-Math.pow(1+per,-n)):total/n;let bal=total;const inst=[];for(let i=0;i<n;i++){const interest=Math.round(bal*per);const amount=i===n-1?bal+interest:Math.round(raw);bal=Math.max(0,bal-(amount-interest));inst.push({id:id(),number:i+1,amount,due:addJMonth(start,i)});}return inst;}
+function seeded(){const bStart=addJMonth(todayJ,-6,12), lStart=addJMonth(todayJ,-2,24), pStart=addJMonth(todayJ,-1,5);const bank={id:id(),title:'وام بانک ملت',type:'loan',party:'بانک ملت',mode:'manual',principal:180000000,rate:0,createdAt:todayISO,installments:makeInstallments(216000000,18,bStart),payments:[]};const laptop={id:id(),title:'خرید لپ‌تاپ',type:'purchase',party:'فروشگاه دیجیتال',mode:'manual',principal:36000000,rate:0,createdAt:todayISO,installments:makeInstallments(36000000,6,lStart),payments:[]};const personal={id:id(),title:'قرض شخصی',type:'other',party:'دوست',mode:'manual',principal:15000000,rate:0,createdAt:todayISO,installments:makeInstallments(15000000,5,pStart),payments:[]};for(let i=0;i<6;i++)bank.payments.push({id:id(),installmentId:bank.installments[i].id,amount:bank.installments[i].amount,date:bank.installments[i].due,note:'پرداخت نمونه'});for(let i=0;i<2;i++)laptop.payments.push({id:id(),installmentId:laptop.installments[i].id,amount:laptop.installments[i].amount,date:laptop.installments[i].due,note:'پرداخت نمونه'});personal.payments.push({id:id(),installmentId:personal.installments[0].id,amount:3000000,date:personal.installments[0].due,note:'پرداخت نمونه'});return [bank,laptop,personal];}
+const KEY='ghestyar_v1_demo';let data;let storageAvailable=true;let storageRecoveryNeeded=false;
+try{const raw=localStorage.getItem(KEY);if(raw){const parsed=JSON.parse(raw);data=validateBackup(parsed);}else data=seeded();}catch(e){data=[];storageAvailable=false;storageRecoveryNeeded=true;console.error('Stored data is inaccessible or invalid; preventing overwrite:',e.message);}
+function commit(next){
+ if(cloud.user){
+   if(!['ready','pending','error'].includes(cloud.phase)){toast('تا پایان بارگذاری یا حل تعارض، ثبت تغییرات ممکن نیست.','error');return false;}
+   try{const validated=validateBackup({version:1,obligations:next});
+     const record={baseRevision:cloud.revision,dirty:true,obligations:validated};
+     localStorage.setItem(cloudCacheKey(),JSON.stringify(record));data=validated;cloud.dirty=true;cloud.phase='pending';
+     queueMicrotask(()=>pushCloud());return true;
+   }catch(e){toast('ذخیره محلی پیش از ارسال ابری ناموفق بود: '+e.message,'error');return false;}
+ }
+ try{localStorage.setItem(KEY,JSON.stringify({version:1,obligations:next}));data=next;storageAvailable=true;return true;}
+ catch(e){storageAvailable=false;toast('ذخیره در این مرورگر ناموفق بود. فضای ذخیره را بررسی کن.','error');return false;}
+}
+function save(){return commit(data);}
+const state={page:'dashboard',dashFilter:'all',hideAmounts:false,filter:'all',query:'',selectedId:null,detailTab:'schedule',scheduleFilter:'open',edit:null,calendarMonth:{y:todayJ.y,m:todayJ.m},selectedDay:todayISO,payment:null,wizardStep:1,draft:null};
+function total(o){return o.installments.reduce((s,x)=>s+x.amount,0)}
+function paid(o,installmentId){return o.payments.filter(p=>p.installmentId===installmentId&&!p.reversedAt).reduce((s,x)=>s+x.amount,0)}
+function left(o,inst){return Math.max(0,inst.amount-paid(o,inst.id))}
+function outstanding(o){return o.installments.reduce((s,i)=>s+left(o,i),0)}
+function paidTotal(o){return total(o)-outstanding(o)}
+function status(o,i){const remain=left(o,i);return remain<=0?'paid':i.due<todayISO?'overdue':i.due===todayISO?'soon':remain<i.amount?'partial':'open'}
+function statusLabel(s){return {paid:'پرداخت‌شده',overdue:'عقب‌افتاده',soon:'سررسید امروز',partial:'پرداخت ناقص',open:'در انتظار'}[s]||s;}
+function closest(){return data.flatMap(o=>o.installments.filter(i=>left(o,i)>0).map(i=>({o,i,rem:left(o,i)}))).sort((a,b)=>a.i.due.localeCompare(b.i.due));}
+function obligationStatus(o){return outstanding(o)<=0?'paid':o.installments.some(i=>status(o,i)==='overdue')?'overdue':'open';}
+function nav(page){state.page=page;state.query='';state.filter='all';state.payment=null;state.edit=null;render();window.scrollTo({top:0,behavior:'instant'});}
+const types={loan:{label:'وام بانکی',icon:'building',class:''},purchase:{label:'خرید قسطی',icon:'bag',class:'purchase'},other:{label:'بدهی شخصی',icon:'user',class:'other'}};
+function typeicon(type){const x=types[type]||types.other;return `<span class="type-icon ${x.class}">${icon(x.icon)}</span>`;}
+function tag(s){const key=s==='partial'?'soon':s;return `<span class="tag ${key}">${statusLabel(s)}</span>`;}
+function themeButton(){const dark=document.documentElement.dataset.theme==='dark';const name=dark?'روشن':'تاریک';return `<button class="icon-btn theme-toggle" type="button" data-action="toggle-theme" aria-label="فعال کردن حالت ${name}" title="حالت ${name}" aria-pressed="${dark}">${icon(dark?'sun':'moon')}<span class="theme-button-label">${dark?'روشن':'شب'}</span></button>`;}
+function applyTheme(theme, persist=true){
+  const dark=theme==='dark';
+  document.documentElement.dataset.theme=dark?'dark':'light';
+  document.querySelector('meta[name="theme-color"]').setAttribute('content',dark?'#0f1220':'#f7f8fd');
+  if(persist){try{localStorage.setItem('ghestyar_theme_v1',dark?'dark':'light');}catch(e){}}
+  document.querySelectorAll('.theme-toggle').forEach(button=>{button.innerHTML=icon(dark?'sun':'moon')+`<span class="theme-button-label">${dark?'روشن':'شب'}</span>`;button.setAttribute('aria-label',`فعال کردن حالت ${dark?'روشن':'تاریک'}`);button.title=`حالت ${dark?'روشن':'تاریک'}`;button.setAttribute('aria-pressed',String(dark));});
+}
+if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',event=>{let stored=null;try{stored=localStorage.getItem('ghestyar_theme_v1');}catch(e){}if(stored!=='light'&&stored!=='dark')applyTheme(event.matches?'dark':'light',false);});}catch(e){}}
+function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}<button class="cloud-status is-${cloud.phase}" data-action="account-open" aria-label="وضعیت حساب کاربری و همگام‌سازی" title="حساب و همگام‌سازی"><span class="cloud-dot"></span><span class="cloud-word">${cloudStatusText()}</span></button><span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn" title="مشاهده اقساط معوق" data-action="overdue" aria-label="مشاهده اقساط عقب‌افتاده">${icon('bell')}</button><span class="avatar" aria-label="نسخه نمایشی">م</span></div></header>`;}
+const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['settings','shield','مدیریت داده']];
+function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · حساب و همگام‌سازی ۳.۰</div></div></aside>`;}
+function bottomNav(){return `<nav class="bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['add','plus','افزودن']].map(([k,ic,t])=>`<button data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
+function dashboard(){
+ const all=closest();const overdue=all.filter(x=>x.i.due<todayISO);
+ const thisMonthEntries=data.flatMap(o=>o.installments.filter(i=>{const j=jalali(i.due);return j.y===todayJ.y&&j.m===todayJ.m}).map(i=>({o,i,rem:left(o,i)})));
+ const monthSum=thisMonthEntries.reduce((s,x)=>s+x.i.amount,0);const monthLeft=thisMonthEntries.reduce((s,x)=>s+x.rem,0);const monthPaid=Math.max(0,monthSum-monthLeft);const progress=monthSum?Math.round(monthPaid/monthSum*100):100;
+ const remain=data.reduce((s,o)=>s+outstanding(o),0);const active=data.filter(o=>outstanding(o)>0).length;
+ const soon=all.find(x=>x.i.due>=todayISO);const focus=overdue[0]||soon;
+ const days7=new Date(todayISO+'T12:00:00');days7.setDate(days7.getDate()+7);const cutoff=[days7.getFullYear(),String(days7.getMonth()+1).padStart(2,'0'),String(days7.getDate()).padStart(2,'0')].join('-');
+ const filter=state.dashFilter||'all';let visible=all.filter(x=>filter==='all'||(filter==='month'&&jalali(x.i.due).y===todayJ.y&&jalali(x.i.due).m===todayJ.m)||(filter==='late'&&x.i.due<todayISO)||(filter==='week'&&x.i.due>=todayISO&&x.i.due<=cutoff)).slice(0,5);
+ const totals=Array.from({length:6},(_,idx)=>{const iso=addJMonth({...todayJ,d:1},idx,1),j=jalali(iso);return {name:jmonths[j.m-1],sum:all.filter(x=>{const d=jalali(x.i.due);return d.y===j.y&&d.m===j.m}).reduce((s,x)=>s+x.rem,0)}});const max=Math.max(1,...totals.map(x=>x.sum));
+ const amount=v=>state.hideAmounts?'••••••':fmt(v);
+ const statusText=overdue.length?'نیازمند پیگیری':'در مسیر پرداخت';
+ const firstDue=focus?`${jText(focus.i.due,true)} · قسط ${fnum(focus.i.number)}`:'هنوز قسط پرداخت‌نشده‌ای نیست';
+ return `<div class="dash-v2">
+ <div class="dash-topline"><span class="dash-eyebrow">داشبورد شخصی · همه چیز زیر کنترل تو</span><span class="dash-date">${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span></div>
+ ${!data.length?`<section class="dash-panel empty-dash">${icon('wallet')}<strong>اولین برنامه پرداختت رو بساز</strong><span>وام یا خرید قسطی رو ثبت کن تا سررسیدها اینجا نمایش داده بشن.</span><button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button></section>`:''}
+ <div class="hero-bento">
+  <section class="month-card" aria-labelledby="month-heading">
+   <div class="card-top"><span class="eyebrow"><span class="small-circle"></span> نمای این ماه</span><button class="icon-btn" data-action="toggle-amounts" aria-label="${state.hideAmounts?'نمایش':'پنهان کردن'} مبالغ داشبورد" title="${state.hideAmounts?'نمایش':'پنهان کردن'} مبالغ" style="min-height:35px;padding:7px">${icon(state.hideAmounts?'eye':'eyeoff')}</button></div>
+   <h2 id="month-heading" class="month-heading">باقی‌مانده اقساط ${jmonths[todayJ.m-1]}</h2>
+   <div class="month-value" dir="rtl">${amount(monthLeft)} <small>تومان</small></div>
+   <div class="month-subtitle">از ${fnum(thisMonthEntries.length)} قسط با سررسید همین ماه ${monthSum?'· مبلغ کل '+amount(monthSum)+' تومان':''}</div>
+   <div class="month-progress-head"><span>پیشرفت پرداخت اقساط سررسید این ماه</span><strong>${fnum(progress)}٪</strong></div>
+   <div class="month-track" role="progressbar" aria-label="درصد پرداخت اقساط ماه" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"><div style="width:${progress}%"></div></div>
+   <div class="month-actions"><button class="btn subtle" data-action="dash-filter-shortcut" data-filter="month">${icon('list')} اقساط همین ماه</button><button class="text-link" data-nav="calendar">تقویم ${icon('chevron-left')}</button></div>
+  </section>
+  <section class="focus-card" aria-labelledby="focus-heading"><div class="focus-content">
+   <div class="focus-label">${icon('clock')} ${overdue.length?'اولویت امروز · قسط معوق':'اقدام بعدی · نزدیک‌ترین سررسید'}</div>
+   ${focus?`<h2 id="focus-heading">${escapeHTML(focus.o.title)}</h2><div class="focus-date">${firstDue} ${status(focus.o,focus.i)==='overdue'?tag('overdue'):''}</div><div class="focus-number">${amount(focus.rem)} <span>تومان</span></div><div class="focus-btns"><button class="btn" data-action="pay" data-ob="${focus.o.id}" data-inst="${focus.i.id}">${icon('check')} ثبت پرداخت</button><button class="btn focus-ghost" data-action="view" data-ob="${focus.o.id}">مشاهده جزئیات</button></div>`:`<h2 id="focus-heading">فعلاً قسط بازی نداری 🎉</h2><p class="focus-date">همه اقساط ثبت‌شده پرداخت شده‌اند.</p><div class="focus-btns"><button class="btn" data-nav="add">${icon('plus')} افزودن تعهد جدید</button></div>`}
+  </div></section>
+ </div>
+ <div class="metrics-row">
+  <section class="metric-bento"><div class="metric-title"><span class="metric-symbol">${icon('wallet')}</span>مانده کل تعهدات</div><div class="metric-number">${amount(remain)} <small>تومان</small></div><div class="metric-note">مجموع مانده اقساط قراردادی · ${fnum(active)} تعهد فعال</div></section>
+  <section class="metric-bento ${overdue.length?'warn-metric':''}"><div class="metric-title"><span class="metric-symbol">${icon('bell')}</span>اقساط معوق</div><div class="metric-number">${fnum(overdue.length)} <small>قسط</small></div><div class="metric-note">${overdue.length?amount(overdue.reduce((s,x)=>s+x.rem,0))+' تومان مانده معوقه':'هیچ پرداخت عقب‌افتاده‌ای نداری'}</div>${overdue.length?'<button class="metric-action" data-action="dash-filter-shortcut" data-filter="late">پیگیری معوقه ←</button>':''}</section>
+  <section class="metric-bento"><div class="metric-title"><span class="metric-symbol">${icon('calendar')}</span>تعهدات فعال</div><div class="metric-number">${fnum(active)} <small>مورد</small></div><div class="metric-note">وام بانکی، خرید قسطی و بدهی شخصی</div></section>
+ </div>
+ <div class="split-content">
+  <section class="dash-panel" aria-labelledby="payments-heading"><div class="panel-head"><div><h3 id="payments-heading">پرداخت‌های پیش رو</h3><small>برای پرداخت، نیازی به باز کردن پرونده نیست</small></div><button class="link-btn" data-nav="calendar">تقویم ${icon('chevron-left')}</button></div>
+   <div class="dashboard-chips" aria-label="فیلتر پرداخت‌های داشبورد">${[['all','همه'],['month','این ماه'],['week','۷ روز آینده'],['late','معوقه']].map(([k,t])=>`<button class="${filter===k?'active':''}" data-action="dash-filter" data-filter="${k}" aria-pressed="${filter===k}">${t}</button>`).join('')}</div>
+   <div aria-live="polite">${visible.length?visible.map(({o,i,rem})=>`<div class="payment-row"><div class="payment-desc">${typeicon(o.type)}<div style="min-width:0"><div class="payment-name">${escapeHTML(o.title)} · قسط ${fnum(i.number)}</div><div class="payment-sub">${jText(i.due,true)} ${tag(status(o,i))}</div></div></div><div class="payment-price">${amount(rem)} <small>تومان</small></div><button class="pay-cta" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">${icon('check')} ثبت پرداخت</button></div>`).join(''):`<div class="empty-dash">${icon('check')}<strong>در این بازه پرداختی نداری</strong><span>بازه دیگری رو انتخاب کن یا از تقویم استفاده کن.</span></div>`}</div>
+   <div style="margin-top:13px"><button class="link-btn" data-nav="obligations">مشاهده تمام تعهدات ${icon('chevron-left')}</button></div>
+  </section>
+  <section class="dash-panel" aria-labelledby="forecast-heading"><div class="panel-head"><div><h3 id="forecast-heading">نگاهی به ماه‌های بعد</h3><small>مبالغ باقی‌مانده بر اساس سررسید</small></div>${icon('calendar')}</div>
+   <div class="mini-chart" role="img" aria-label="نمودار میله‌ای مانده اقساط در شش ماه آینده">${totals.map((x,i)=>`<div class="chart-col" title="${escapeHTML(x.name)}: ${amount(x.sum)} تومان"><div class="chart-rail"><div class="chart-bar" style="height:${Math.max(3,Math.round(x.sum/max*100))}%"></div></div><span class="chart-label">${x.name}</span></div>`).join('')}</div>
+   <div class="forecast-hint">${icon('info')} فقط اقساط پرداخت‌نشده با تاریخ سررسید در هر ماه شمرده شده‌اند؛ معوقه‌های ماه‌های قبل جداگانه نمایش داده می‌شوند.</div>
+  </section>
+ </div>
+ <div class="dash-bottom-head"><h2>پرونده‌های مالی من</h2><button class="link-btn" data-nav="obligations">همه تعهدات ${icon('chevron-left')}</button></div>
+ ${data.length?`<div class="dash-small-grid">${data.slice(0,3).map(obCard).join('')}</div>`:''}
+ <div class="dash-footnote">${icon('shield')} ${cloud.user?`اطلاعات مربوط به حساب شماست. وضعیت ذخیره: ${cloudStatusText()}. پیش از خروج از مرورگر منتظر تکمیل همگام‌سازی بمان.`:'حالت نمایشی و محلی فعال است؛ برای همگام‌سازی بین دستگاه‌ها حساب ابری را از بالای صفحه فعال کن.'}</div>
+ </div>`;}
+function obCard(o){const completion=total(o)?Math.min(100,Math.round(paidTotal(o)/total(o)*100)):100;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party">${escapeHTML(o.party||types[o.type].label)}</div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>مانده پرداختنی</span><span>${fnum(completion)}٪ پرداخت‌شده</span></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان</span></div></div><div class="progress" role="progressbar" aria-label="درصد بازپرداخت" aria-valuenow="${completion}" aria-valuemin="0" aria-valuemax="100"><div style="width:${completion}%"></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
+function obligations(){let list=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});return `<section class="obligations-page"><div class="ob-list-header"><div class="ob-list-heading"><h2>فهرست تعهدات</h2><p>${fmt(data.length)} تعهد ثبت‌شده</p></div><button class="btn primary ob-add-button" data-nav="add" aria-label="افزودن تعهد جدید">${icon('plus')} <span>تعهد جدید</span></button></div><div class="ob-list-tools"><div class="filters" role="group" aria-label="فیلتر وضعیت تعهدات">${[['all','همه'],['active','فعال'],['overdue','معوق'],['paid','تسویه']].map(([k,t])=>`<button type="button" class="filter ${state.filter===k?'active':''}" data-filter="${k}" aria-pressed="${state.filter===k}">${t}</button>`).join('')}</div><label class="searchbox">${icon('search')}<input id="ob-search" type="search" aria-label="جست‌وجوی تعهدات" placeholder="جست‌وجوی نام تعهد یا بانک" value="${escapeHTML(state.query)}"/></label></div>${list.length?`<div class="ob-grid">${list.map(obCard).join('')}</div>`:`<div class="panel empty">${icon('search')}<strong>تعهدی پیدا نشد</strong>عبارت جست‌وجو یا فیلتر را تغییر دهید.</div>`}</section>`;}
+function freshDraft(){return {type:'loan',title:'',party:'',mode:'manual',amount:'60000000',rate:'18',count:'12',first:jText(addJMonth(todayJ,1,5),true),rows:[]};}
+function prepareDraft(){if(!state.draft)state.draft=freshDraft();}
+function draftSchedule(){const d=state.draft;const amount=number(d.amount),n=number(d.count),rate=number(d.rate);if(!Number.isSafeInteger(amount)||amount<=0||amount>1e12||!Number.isInteger(n)||n<1||n>120||!Number.isFinite(rate)||rate<0||rate>100||!jParse(d.first))return null;return makeInstallments(amount,n,jParse(d.first),d.mode==='auto'?rate:0);}
+function draftValid(){const d=state.draft;return d.title.trim().length>=2&&d.title.length<100&&d.party.length<100&&!!draftSchedule();}
+function field(label,name,value,placeholder='',help='',extra=''){return `<div class="field ${extra}"><label for="d-${name}">${label}</label><input id="d-${name}" data-draft="${name}" value="${escapeHTML(value)}" placeholder="${escapeHTML(placeholder)}"/><small>${help}</small></div>`;}
+function wizard(){prepareDraft();const d=state.draft;const predicted=draftSchedule();const rows=d.rows.length?d.rows:predicted||[];const sum=rows.reduce((s,x)=>s+(+x.amount||0),0);let body='';if(state.wizardStep===1){body=`<div class="panel"><div class="panel-head"><h3>اطلاعات اولیه و شرایط اقساط</h3><small>مرحله ۱ از ۳</small></div><div class="form-grid"><div class="field full-width"><label>نوع تعهد</label><div class="mode-choice">${[['loan','وام بانکی','building'],['purchase','خرید قسطی','bag'],['other','سایر بدهی‌ها','user']].map(([k,t,ic])=>`<button class="mode-card ${d.type===k?'active':''}" data-draft-type="${k}">${icon(ic)}<strong>${t}</strong></button>`).join('')}</div></div>${field('عنوان تعهد *','title',d.title,'مثلاً وام بانک ملت','','full-width')}${field(d.type==='loan'?'نام بانک / مؤسسه':d.type==='purchase'?'فروشنده / فروشگاه':'نام طلبکار','party',d.party,'اختیاری')}${field('تاریخ اولین قسط (شمسی) *','first',d.first,'۱۴۰۵/۰۹/۰۵','فرمت: سال/ماه/روز')}<div class="field full-width"><label>روش تعریف اقساط</label><div class="mode-choice"><button class="mode-card ${d.mode==='manual'?'active':''}" data-draft-mode="manual">${icon('edit')}<span><strong>ثبت مبلغ مشخص</strong><small>تقسیم مبلغ بازپرداخت بین اقساط</small></span></button><button class="mode-card ${d.mode==='auto'?'active':''}" data-draft-mode="auto">${icon('chart')}<span><strong>محاسبه خودکار</strong><small>با نرخ ثابت و مانده کاهشی</small></span></button></div></div>${field(d.mode==='auto'?'اصل وام (تومان) *':'مجموع بازپرداخت (تومان) *','amount',d.amount,'مثلاً 60000000')}${field('تعداد اقساط *','count',d.count,'۱۲','بین ۱ تا ۱۲۰')}${d.mode==='auto'?field('نرخ سود اسمی سالانه (درصد)','rate',d.rate,'۱۸','فرض: نرخ ثابت و سود ماهانه'):''}</div><div class="form-actions"><button class="btn" data-nav="dashboard">انصراف</button><button class="btn primary" data-action="wizard-next" ${!draftValid()?'disabled':''}>ساخت جدول اقساط ${icon('chevron-left')}</button></div><div class="code-note" style="margin-top:12px">مبالغ به تومان و تاریخ‌ها به شمسی هستند. اطلاعات نمونه تا زمان تأیید ذخیره نمی‌شوند.</div></div>`;}
+else if(state.wizardStep===2){body=`<div class="panel"><div class="panel-head"><h3>جدول اقساط و ویرایش دستی</h3><small>${fmt(rows.length)} قسط</small></div><div class="warn">می‌تونی مبلغ و تاریخ هر ردیف را قبل از ثبت تغییر بدهی. مبلغ کل برنامه پس از ویرایش در خلاصه نمایش داده می‌شود.</div><div class="list-table" style="margin-top:14px"><table class="table" style="min-width:510px"><thead><tr><th>قسط</th><th>سررسید شمسی</th><th>مبلغ (تومان)</th></tr></thead><tbody>${rows.map((x,k)=>`<tr><td>${fnum(k+1)}</td><td><input class="field" style="height:36px;border:1px solid #dce7e9;border-radius:8px;padding:5px 9px;max-width:145px;width:100%" data-row="${k}" data-prop="due" value="${escapeHTML(jText(x.due,true))}" aria-label="سررسید قسط ${k+1}" /></td><td><input style="height:36px;border:1px solid #dce7e9;border-radius:8px;padding:5px 9px;width:100%;max-width:150px" data-row="${k}" data-prop="amount" value="${x.amount}" aria-label="مبلغ قسط ${k+1}" /></td></tr>`).join('')}</tbody></table></div><div class="form-actions"><button class="btn" data-action="wizard-prev">${icon('chevron-right')} بازگشت</button><button class="btn primary" data-action="wizard-next">بررسی نهایی ${icon('chevron-left')}</button></div></div>`;}
+else {body=`<div class="panel"><div class="check-badge">${icon('check')}</div><h3 style="text-align:center">بررسی نهایی تعهد</h3><p class="muted small" style="text-align:center">پس از تأیید، اطلاعات تعهد و اقساط ثبت می‌شوند؛ در حالت حساب ابری، ارسال آن‌ها نیز انجام می‌شود.</p><div class="summary-line"><span class="small">عنوان</span><strong>${escapeHTML(d.title)}</strong></div><div class="summary-line"><span class="small">نوع تعهد</span><strong>${types[d.type].label}</strong></div><div class="summary-line"><span class="small">تعداد اقساط</span><strong>${fmt(rows.length)}</strong></div><div class="summary-line"><span class="small">مجموع اقساط</span><strong>${fmt(sum)} تومان</strong></div><div class="summary-line"><span class="small">اولین سررسید</span><strong>${jText(rows[0]?.due,true)}</strong></div><div class="good">${icon('shield')} ${cloud.user?`ثبت ابتدا در نسخه بازیابی این دستگاه و سپس در ابر انجام می‌شود. وضعیت ارسال را در سربرگ بررسی کن.`:'در حالت محلی، این داده‌ها فقط در همین مرورگر ذخیره می‌شوند.'}</div><div class="form-actions"><button class="btn" data-action="wizard-prev">${icon('chevron-right')} ویرایش جدول</button><button class="btn primary" data-action="wizard-save">${icon('check')} ثبت تعهد</button></div></div>`;}
+return `<div class="wizard-steps">${['مشخصات','برنامه اقساط','ثبت نهایی'].map((x,i)=>`<div class="step-item ${state.wizardStep===i+1?'current':state.wizardStep>i+1?'done':''}"><span class="step-number">${state.wizardStep>i+1?icon('check'):fnum(i+1)}</span>${x}</div>`).join('')}</div><div class="wizard-layout"><div>${body}</div><aside><div class="hint-card"><h3>${icon('wallet')} خلاصه برنامه</h3><div class="hint-row"><span>نوع تعهد</span><strong>${types[d.type].label}</strong></div><div class="hint-row"><span>تعداد اقساط</span><strong>${predicted?fmt(number(d.count)):'—'}</strong></div><div class="hint-row"><span>قسط اول (تخمینی)</span><strong>${predicted?fmt(predicted[0].amount)+' تومان':'—'}</strong></div><div class="hint-row"><span>مجموع بازپرداخت</span><strong>${predicted?fmt(predicted.reduce((s,i)=>s+i.amount,0))+' تومان':'—'}</strong></div>${d.mode==='auto'&&predicted?`<div class="hint-row"><span>سود محاسبه‌شده</span><strong>${fmt(predicted.reduce((s,i)=>s+i.amount,0)-number(d.amount))} تومان</strong></div>`:''}</div><div class="soft-alert" style="margin-top:13px">محاسبه خودکار یک مدل عمومی اقساط مساوی است؛ برای ثبت قطعی، ارقام قرارداد بانک را کنترل کنید. کارمزد و جرایم در این مدل لحاظ نشده‌اند.</div></aside></div>`;}
+function detail(){const o=data.find(x=>x.id===state.selectedId)||data[0];if(!o)return `<div class="empty">تعهدی وجود ندارد. <button class="btn primary" data-nav="add">افزودن</button></div>`;state.selectedId=o.id;const t=total(o),pd=paidTotal(o),progress=t?Math.round(pd/t*100):100;const visibleInstallments=o.installments.filter(i=>state.scheduleFilter==='all'||(state.scheduleFilter==='paid'?left(o,i)===0:left(o,i)>0));return `<button class="backbutton" data-nav="obligations">${icon('chevron-right')} بازگشت به تعهدات</button><div class="detail-banner"><div class="detail-title">${typeicon(o.type)}<div><h2>${escapeHTML(o.title)}</h2><p>${types[o.type].label} · ${escapeHTML(o.party||'بدون نام')}</p></div></div><div class="detail-actions"><button class="btn" data-action="edit-ob" data-ob="${o.id}">${icon('edit')} ویرایش مشخصات</button><button class="btn primary" data-action="pay-first" data-ob="${o.id}" ${outstanding(o)===0?'disabled':''}>${icon('credit')} ثبت پرداخت</button></div></div><div class="detail-grid"><div class="panel"><div class="tabbar">${[['schedule','جدول اقساط'],['payments','تاریخچه پرداخت‌ها'],['contract','اطلاعات تعهد']].map(([k,t])=>`<button data-tab="${k}" class="${state.detailTab===k?'active':''}">${t}</button>`).join('')}</div>${state.detailTab==='schedule'?`<div class="schedule-filters" role="group" aria-label="فیلتر اقساط">${[['open','پرداخت‌نشده'],['all','همه'],['paid','تسویه‌شده']].map(([k,t])=>`<button type="button" class="${state.scheduleFilter===k?'active':''}" data-action="schedule-filter" data-filter="${k}" aria-pressed="${state.scheduleFilter===k}">${t}</button>`).join('')}</div>${!visibleInstallments.length?'<p class="muted small">قسطی با این وضعیت وجود ندارد.</p>':''}<div class="list-table detail-schedule-table"><table class="table" style="min-width:530px"><thead><tr><th>قسط</th><th>سررسید</th><th>مبلغ</th><th>مانده</th><th>وضعیت</th><th></th></tr></thead><tbody>${visibleInstallments.map(i=>`<tr><td>${fnum(i.number)}</td><td>${jText(i.due,true)}</td><td>${fmt(i.amount)}</td><td>${fmt(left(o,i))}</td><td>${tag(status(o,i))}</td><td><div class="installment-actions">${left(o,i)>0?`<button class="row-action" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">پرداخت</button>`:icon('check')}${left(o,i)>0?`<button class="row-action edit-inline" data-action="edit-inst" data-ob="${o.id}" data-inst="${i.id}" aria-label="اصلاح قسط ${fnum(i.number)}">${icon('edit')}</button>`:''}</div></td></tr>`).join('')}</tbody></table></div><div class="mobile-detail-cards">${visibleInstallments.map(i=>`<article class="mobile-inst-card"><div class="mobile-inst-head"><strong>قسط ${fnum(i.number)}</strong>${tag(status(o,i))}</div><div class="mobile-inst-row"><span>سررسید</span><strong>${jText(i.due,true)}</strong></div><div class="mobile-inst-row"><span>مبلغ قسط</span><strong>${fmt(i.amount)} تومان</strong></div><div class="mobile-inst-row"><span>مانده</span><strong>${fmt(left(o,i))} تومان</strong></div>${left(o,i)>0?`<div class="mobile-inst-actions"><button class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button><button class="btn" data-action="edit-inst" data-ob="${o.id}" data-inst="${i.id}">اصلاح قسط</button></div>`:''}</article>`).join('')}</div>`:state.detailTab==='payments'?`${o.payments.length?`<div class="list-table detail-payments-table"><table class="table" style="min-width:410px"><thead><tr><th>تاریخ</th><th>قسط</th><th>مبلغ</th><th>توضیح</th><th>اصلاح</th></tr></thead><tbody>${o.payments.slice().reverse().map(p=>`<tr class="${p.reversedAt?'reversed-row':''}"><td>${jText(p.date,true)}</td><td>${fnum(o.installments.find(x=>x.id===p.installmentId)?.number||0)}</td><td>${fmt(p.amount)}</td><td>${escapeHTML(p.note||'—')}${p.reversedAt?`<div class="reverse-note">علت ابطال: ${escapeHTML(p.reverseReason||'ذکر نشده')}</div>`:''}</td><td>${p.reversedAt?'<span class="tag">باطل‌شده</span>':`<button class="row-action edit-inline" data-action="reverse-payment" data-ob="${o.id}" data-payment="${p.id}" title="ابطال این ثبت">ابطال ثبت</button>`}</td></tr>`).join('')}</tbody></table></div><div class="mobile-detail-cards">${o.payments.slice().reverse().map(p=>`<article class="mobile-inst-card ${p.reversedAt?'reversed-row':''}"><div class="mobile-inst-head"><strong>پرداخت قسط ${fnum(o.installments.find(x=>x.id===p.installmentId)?.number||0)}</strong>${p.reversedAt?'<span class="tag">باطل‌شده</span>':tag('paid')}</div><div class="mobile-inst-row"><span>تاریخ پرداخت</span><strong>${jText(p.date,true)}</strong></div><div class="mobile-inst-row"><span>مبلغ</span><strong>${fmt(p.amount)} تومان</strong></div>${p.note?`<p class="mobile-inst-note">${escapeHTML(p.note)}</p>`:''}${p.reversedAt?`<p class="reverse-note">دلیل ابطال: ${escapeHTML(p.reverseReason||'ذکر نشده')}</p>`:`<button class="btn danger mobile-reverse" data-action="reverse-payment" data-ob="${o.id}" data-payment="${p.id}">ابطال ثبت پرداخت</button>`}</article>`).join('')}</div>`:`<div class="empty">هنوز پرداختی ثبت نشده.</div>`}`:`<div class="row-list"><span class="muted">نوع تعهد</span><strong>${types[o.type].label}</strong></div><div class="row-list"><span class="muted">بانک / طرف حساب</span><strong>${escapeHTML(o.party||'—')}</strong></div><div class="row-list"><span class="muted">روش ثبت</span><strong>${o.mode==='auto'?'محاسبه خودکار':'مبلغ مشخص'}</strong></div><div class="row-list"><span class="muted">اصل یا مبلغ مبنا</span><strong>${fmt(o.principal)} تومان</strong></div><div class="row-list"><span class="muted">تعداد اقساط</span><strong>${fmt(o.installments.length)}</strong></div><div class="row-list"><span class="muted">تاریخ ثبت</span><strong>${jText(o.createdAt,true)}</strong></div><h3 class="changes-heading">سوابق اصلاحات تعهد</h3>${o.changes?.length?o.changes.slice().reverse().map(c=>`<div class="change-entry"><strong>${escapeHTML(c.summary)}</strong><span>${jText(c.date,true)}</span></div>`).join(''):'<p class="muted small">هنوز اصلاحی در مشخصات یا جدول اقساط ثبت نشده است.</p>'}`}</div><aside class="panel"><div class="panel-head"><h3>خلاصه بازپرداخت</h3>${tag(obligationStatus(o))}</div><div class="detail-summary"><div class="metric"><label>کل اقساط</label><strong>${fmt(t)}</strong><div class="small muted">تومان</div></div><div class="metric"><label>مانده</label><strong>${fmt(outstanding(o))}</strong><div class="small muted">تومان</div></div><div class="metric"><label>پرداخت شده</label><strong>${fmt(pd)}</strong><div class="small muted">تومان</div></div><div class="metric"><label>تعداد پرداخت‌نشده</label><strong>${fmt(o.installments.filter(i=>left(o,i)>0).length)}</strong><div class="small muted">قسط</div></div></div><div style="display:flex;justify-content:space-between;margin:20px 0 7px"><span class="small muted">پیشرفت بازپرداخت</span><strong>${fnum(progress)}٪</strong></div><div class="progress"><div style="width:${progress}%"></div></div><div class="soft-alert" style="margin-top:18px">مانده این صفحه، جمع مبلغ پرداخت‌نشده اقساط است؛ لزوماً معادل مانده اصل وام بانکی نیست.</div></aside></div>`;}
+function calendar(){const {y,m}=state.calendarMonth;const start=jISO(y,m,1),last=[31,30,29].map(d=>jISO(y,m,d)).find(Boolean),monthLen=jalali(last).d,week=(parseISO(start).getUTCDay()+1)%7;const entries=closest();const monthEntries=entries.filter(x=>{const j=jalali(x.i.due);return j.y===y&&j.m===m});const selected=entries.filter(x=>x.i.due===state.selectedDay);return `<div class="calendar-layout"><div class="panel"><div class="calendar-head"><div><strong>${jmonths[m-1]} ${fnum(y)}</strong><div class="small muted">${fmt(monthEntries.length)} قسط پرداخت‌نشده در این ماه</div></div><div class="calendar-controls"><button data-action="cal-next" title="ماه بعد">${icon('chevron-left')}</button><button data-action="cal-today" title="ماه جاری">امروز</button><button data-action="cal-prev" title="ماه قبل">${icon('chevron-right')}</button></div></div><div class="weekgrid" aria-label="روزهای هفته">${[['شنبه','شن'],['یکشنبه','یک'],['دوشنبه','دو'],['سه‌شنبه','سه'],['چهارشنبه','چه'],['پنجشنبه','پن'],['جمعه','جم']].map(([full,short])=>`<span title="${full}" aria-label="${full}"><span class="weekday-full" aria-hidden="true">${full}</span><span class="weekday-short" aria-hidden="true">${short}</span></span>`).join('')}</div><div class="calgrid">${Array.from({length:week},()=>'<div class="day blank"></div>').join('')}${Array.from({length:monthLen},(_,k)=>{const date=jISO(y,m,k+1),inst=entries.filter(x=>x.i.due===date);return `<button class="day ${date===todayISO?'today':''} ${date===state.selectedDay?'selected':''}" data-action="cal-day" data-date="${date}" aria-pressed="${date===state.selectedDay}" aria-label="${fnum(k+1)} ${jmonths[m-1]} ${fnum(y)}، ${fmt(inst.length)} قسط پرداخت‌نشده"><span class="number">${fnum(k+1)}</span><span class="dots">${inst.slice(0,3).map(x=>`<span class="dot ${status(x.o,x.i)==='overdue'?'overdue':''}"></span>`).join('')}${inst.length>3?`<span class="more">+${fnum(inst.length-3)}</span>`:''}</span></button>`}).join('')}</div><div class="mini-key"><span><i class="dot" style="background:#0aab8f;width:7px;height:7px;border-radius:50%"></i> سررسید آینده</span><span><i class="dot" style="background:#dd655e;width:7px;height:7px;border-radius:50%"></i> معوق</span></div></div><aside class="panel"><div class="panel-head"><h3>اقساط روز انتخاب‌شده</h3></div><p class="small muted">${jText(state.selectedDay,true)}</p>${selected.length?selected.map(({o,i,rem})=>`<div class="due-row">${typeicon(o.type)}<div class="due-info"><div class="due-name">${escapeHTML(o.title)}</div><div class="due-meta">قسط ${fnum(i.number)} · ${tag(status(o,i))}</div><div class="small"><strong>${fmt(rem)}</strong> تومان</div></div><button class="row-action" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">پرداخت</button></div>`).join(''):`<div class="empty">${icon('calendar')}<strong>قسط پرداخت‌نشده‌ای نیست</strong><span>روز دیگری را انتخاب کن.</span></div>`}</aside></div>`;}
+function payModal(){const p=state.payment;if(!p)return '';const o=data.find(x=>x.id===p.ob),i=o?.installments.find(x=>x.id===p.inst);if(!o||!i)return '';return `<div class="modal-backdrop" data-action="close-modal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="pay-title"><div class="modal-head"><h2 id="pay-title">ثبت پرداخت قسط ${fnum(i.number)}</h2><button class="close-btn" data-action="close-modal" aria-label="بستن">${icon('close')}</button></div><div class="row-list"><span class="muted">تعهد</span><strong>${escapeHTML(o.title)}</strong></div><div class="row-list"><span class="muted">مانده قابل پرداخت</span><strong>${fmt(left(o,i))} تومان</strong></div><div class="modal-form" style="margin-top:16px"><div class="field"><label>مبلغ پرداختی (تومان) *</label><input id="pay-amount" value="${escapeHTML(p.amount)}" inputmode="numeric" /></div><div class="field"><label>تاریخ پرداخت (شمسی) *</label><input id="pay-date" value="${escapeHTML(p.date)}" /></div><div class="field"><label>توضیح یا شماره پیگیری</label><input id="pay-note" value="${escapeHTML(p.note)}" placeholder="اختیاری" /></div><div class="warn">پرداخت در سوابق می‌ماند و در صورت اشتباه می‌توانی آن را از تب «تاریخچه پرداخت‌ها» با دلیل ابطال کنی.</div><div class="row-inline"><button class="btn primary" data-action="pay-save">${icon('check')} ثبت پرداخت</button><button class="btn" data-action="close-modal">انصراف</button></div></div></section></div>`;}
+// Phase 2.4: validate imported local data before replacing anything.
+function validISO(s){if(typeof s!=='string'||!/^(19|20|21)\d{2}-\d{2}-\d{2}$/.test(s))return false;const d=new Date(s+'T12:00:00Z');return !Number.isNaN(d.getTime())&&d.toISOString().slice(0,10)===s;}
+function validateBackup(parsed){
+ if(!parsed||typeof parsed!=='object'||parsed.version!==1||!Array.isArray(parsed.obligations))throw Error('ساختار فایل پشتیبان شناخته نشد.');
+ if(parsed.obligations.length>1000)throw Error('تعداد تعهدات بیش از حد مجاز است.');
+ const validId=s=>typeof s==='string'&&/^[a-zA-Z0-9_-]{1,110}$/.test(s);
+ const safeAmount=x=>Number.isSafeInteger(x)&&x>0&&x<=1e12;
+ const ids=new Set();let totalRows=0;
+ const obligations=parsed.obligations.map(o=>{
+  if(!o||!validId(o.id)||ids.has(o.id)||!['loan','purchase','other'].includes(o.type)||typeof o.title!=='string'||!o.title.trim()||o.title.length>100||typeof o.party!=='string'||o.party.length>100||!['manual','auto'].includes(o.mode)||!safeAmount(o.principal)||typeof o.rate!=='number'||!Number.isFinite(o.rate)||o.rate<0||o.rate>100||!validISO(o.createdAt)||!Array.isArray(o.installments)||o.installments.length<1||o.installments.length>120||!Array.isArray(o.payments)||o.payments.length>2500)throw Error('اطلاعات یکی از تعهدات معتبر نیست.');
+  ids.add(o.id);totalRows+=o.installments.length;if(totalRows>10000)throw Error('تعداد اقساط بیش از حد مجاز است.');
+  const instIds=new Map();
+  const installments=o.installments.map((i,idx)=>{if(!i||!validId(i.id)||ids.has(i.id)||i.number!==idx+1||!safeAmount(i.amount)||!validISO(i.due))throw Error('شماره، مبلغ یا تاریخ یکی از اقساط نامعتبر است.');ids.add(i.id);instIds.set(i.id,i);return {id:i.id,number:i.number,amount:i.amount,due:i.due};});
+  const amounts=new Map();const payments=o.payments.map(p=>{if(!p||!validId(p.id)||ids.has(p.id)||!instIds.has(p.installmentId)||!safeAmount(p.amount)||!validISO(p.date)||typeof p.note!=='string'||p.note.length>250||(p.reversedAt!==undefined&&!validISO(p.reversedAt)))throw Error('یکی از تراکنش‌های فایل معتبر نیست.');ids.add(p.id);if(!p.reversedAt)amounts.set(p.installmentId,(amounts.get(p.installmentId)||0)+p.amount);return {id:p.id,installmentId:p.installmentId,amount:p.amount,date:p.date,note:p.note,...(p.reversedAt?{reversedAt:p.reversedAt,reverseReason:typeof p.reverseReason==='string'?p.reverseReason.slice(0,200):''}:{})};});
+  for(const i of installments)if((amounts.get(i.id)||0)>i.amount)throw Error('مجموع پرداخت‌ها از مبلغ یک قسط بیشتر است.');
+  let changes=[];if(o.changes!==undefined){if(!Array.isArray(o.changes)||o.changes.length>1000)throw Error('تعداد سوابق اصلاحات نامعتبر است.');changes=o.changes.map(c=>{if(!c||!validId(c.id)||!validISO(c.date)||typeof c.summary!=='string'||c.summary.length>200)throw Error('سوابق اصلاحات فایل نامعتبر هستند.');return {id:c.id,date:c.date,summary:c.summary,...(c.before&&typeof c.before==='object'?{before:c.before}:{}),...(c.after&&typeof c.after==='object'?{after:c.after}:{})};});}
+  return {id:o.id,type:o.type,title:o.title,party:o.party,mode:o.mode,principal:o.principal,rate:o.rate,createdAt:o.createdAt,installments,payments,changes};
+ });
+ return obligations;
+}
+
+/* Phase 3.0: account-aware snapshot synchronization, optimistic locking, safe opt-in migration. */
+const CLOUD_CONFIG=window.GHESTYAR_SUPABASE||{};
+const cloud={client:null,user:null,phase:'local',revision:0,dirty:false,writing:false,accountOpen:false,error:'',authMode:'login',activationId:null,recovery:false};
+function cloudCacheKey(){return 'ghestyar_cloud_cache_'+cloud.user.id;}
+function cloudStatusText(){return ({local:'فقط روی دستگاه',disabled:'نیاز به راه‌اندازی',loading:'در حال دریافت',choose:'انتخاب اطلاعات اولیه',ready:'همگام‌سازی‌شده',pending:'در انتظار ارسال',error:'خطای اتصال؛ قابل تکرار',conflict:'تعارض دو دستگاه'})[cloud.phase]||cloud.phase;}
+function cloudConfigReady(){return /^https:\/\/[\w-]+\.supabase\.co\/?$/.test(CLOUD_CONFIG.url||'')&&!String(CLOUD_CONFIG.url).includes('YOUR-')&&typeof CLOUD_CONFIG.publishableKey==='string'&&!CLOUD_CONFIG.publishableKey.includes('YOUR_')&&CLOUD_CONFIG.publishableKey.length>24;}
+function cloudSnapshot(){return {version:1,obligations:data};}
+function readCloudCache(){try{const raw=localStorage.getItem(cloudCacheKey());return raw?JSON.parse(raw):null;}catch(e){return null;}}
+function persistCloudCache(dirty=false){try{localStorage.setItem(cloudCacheKey(),JSON.stringify({baseRevision:cloud.revision,dirty,obligations:data}));return true;}catch(e){toast('ذخیره نسخه بازیابی این دستگاه ممکن نشد.','error');return false;}}
+function setCloudPhase(phase,msg=''){cloud.phase=phase;cloud.error=msg;render();}
+function localReload(){try{const raw=localStorage.getItem(KEY);data=raw?validateBackup(JSON.parse(raw)):seeded();}catch(e){data=[];storageRecoveryNeeded=true;}}
+async function cloudActivate(user){
+ if(!user?.id)return;
+ if(cloud.user?.id===user.id&&['loading','ready','pending','choose','conflict'].includes(cloud.phase))return;
+ cloud.user=user;cloud.revision=0;cloud.dirty=false;cloud.activationId=user.id;cloud.accountOpen=cloud.recovery;
+ setCloudPhase('loading');
+ try{
+  const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',user.id).maybeSingle();
+  if(error)throw error;if(cloud.user?.id!==user.id)return;
+  const saved=readCloudCache();
+  if(!row){cloud.revision=0;setCloudPhase('choose');cloud.accountOpen=true;render();return;}
+  if(!Number.isSafeInteger(row.revision)||row.revision<1)throw Error('شماره نسخه پرونده ابری معتبر نیست.');
+  const loaded=validateBackup(row.payload);cloud.revision=row.revision;
+  if(saved?.dirty){
+    try{const pending=validateBackup({version:1,obligations:saved.obligations});
+      data=pending;cloud.dirty=true;
+      if(saved.baseRevision===row.revision){cloud.phase='pending';render();queueMicrotask(pushCloud);return;}
+      cloud.phase='conflict';cloud.accountOpen=true;render();return;
+    }catch(e){cloud.phase='conflict';cloud.accountOpen=true;render();return;}
+  }
+  data=loaded;cloud.dirty=false;persistCloudCache(false);setCloudPhase('ready');
+ }catch(e){if(cloud.user?.id!==user.id)return;cloud.accountOpen=true;setCloudPhase('error','بارگذاری پرونده ابری ناموفق بود: '+e.message);}
+}
+async function pushCloud(){
+ if(!cloud.user||cloud.writing||!cloud.dirty||!['ready','pending','error'].includes(cloud.phase))return;
+ if(!cloud.client)return;
+ cloud.writing=true;cloud.phase='pending';render();
+ const snapshot=cloudSnapshot();const revision=cloud.revision;const uid=cloud.user.id;
+ try{
+  const {data:newRevision,error}=await cloud.client.rpc('save_ghestyar_wallet',{expected_revision:revision,incoming_payload:snapshot});
+  if(error)throw error;
+  if(cloud.user?.id!==uid)return;
+  if(!Number.isSafeInteger(Number(newRevision))||Number(newRevision)<=revision)throw Error('پاسخ سرور شماره نسخه معتبر ندارد.');
+  cloud.revision=Number(newRevision);
+  const changed=JSON.stringify(cloudSnapshot())!==JSON.stringify(snapshot);
+  cloud.dirty=changed;
+  persistCloudCache(changed);
+  cloud.phase=changed?'pending':'ready';render();
+ }catch(e){if(cloud.user?.id!==uid)return;
+  const conflict=/SYNC_CONFLICT|409|23505/.test((e.message||'')+' '+(e.code||''));
+  cloud.phase=conflict?'conflict':'error';cloud.error=conflict?'پرونده در دستگاه دیگری تغییر کرده است. داده‌های محلی حفظ شده‌اند؛ ابتدا پشتیبان بگیر.':e.message||'خطای اتصال';
+  if(conflict)cloud.accountOpen=true;
+  render();
+ }finally{cloud.writing=false;if(cloud.user?.id===uid&&cloud.dirty&&cloud.phase==='pending')queueMicrotask(pushCloud);}
+}
+async function cloudCheckUpdates(){
+ if(!cloud.user||cloud.dirty||cloud.writing||cloud.phase!=='ready')return;
+ try{const uid=cloud.user.id;const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',uid).maybeSingle();
+  if(error)throw error;if(!row||cloud.user?.id!==uid||cloud.dirty)return;
+  if(row.revision>cloud.revision){const next=validateBackup(row.payload);data=next;cloud.revision=row.revision;persistCloudCache(false);state.edit=null;state.payment=null;render();toast('آخرین تغییرات دستگاه دیگر دریافت شد.');}
+ }catch(e){console.warn('Cloud refresh skipped:',e.message);}
+}
+async function cloudChoose(importLocal){
+ if(!cloud.user||cloud.phase!=='choose')return;
+ let chosen=[];
+ if(importLocal){try{const raw=localStorage.getItem(KEY);if(!raw)throw Error('اطلاعات محلی پیدا نشد.');chosen=validateBackup(JSON.parse(raw));}catch(e){toast('انتقال اطلاعات محلی ممکن نشد: '+e.message,'error');return;}
+ if(!confirm(`انتقال ${chosen.length} تعهد محلی به حساب ابری انجام شود؟ اگر داده‌ها آزمایشی هستند، گزینه «شروع خالی» را انتخاب کن.`))return;}
+ data=chosen;cloud.dirty=true;cloud.accountOpen=false;persistCloudCache(true);cloud.phase='pending';render();pushCloud();
+}
+async function cloudReloadServer(){
+ if(!cloud.user||!['conflict','error'].includes(cloud.phase))return;
+ if(!confirm('تغییرات ارسال‌نشده این دستگاه با آخرین اطلاعات ابر جایگزین می‌شوند. ابتدا از داده‌های فعلی فایل پشتیبان گرفته‌ای؟'))return;
+ const uid=cloud.user.id;
+ try{const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',uid).maybeSingle();if(error)throw error;
+ if(!row)throw Error('پرونده ابری پیدا نشد.');const next=validateBackup(row.payload);
+ data=next;cloud.revision=row.revision;cloud.dirty=false;persistCloudCache(false);cloud.accountOpen=false;cloud.phase='ready';state.draft=null;state.edit=null;state.payment=null;render();toast('نسخه ابری دریافت شد.');
+ }catch(e){toast('بارگذاری ناموفق بود: '+e.message,'error');}
+}
+async function cloudAuthAction(action){
+ if(!cloud.client){toast('ابتدا تنظیمات Supabase را تکمیل کن.','error');return;}
+ if(action==='cloud-reset-request'){
+   const email=document.getElementById('cloud-email')?.value.trim();
+   if(!email||!/^\S+@\S+\.\S+$/.test(email)){toast('ایمیل معتبر وارد کن.','error');return;}
+   if(location.protocol!=='http:'&&location.protocol!=='https:'){toast('برای بازیابی رمز، وب‌اپ باید روی HTTPS یا localhost اجرا شود.','error');return;}
+   const {error}=await cloud.client.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+   if(error)toast('ارسال لینک بازیابی ناموفق بود: '+error.message,'error');
+   else toast('در صورت وجود حساب، ایمیل بازیابی ارسال می‌شود.');
+   return;
+ }
+ if(action==='cloud-reset-update'){
+   const password=document.getElementById('cloud-new-password')?.value;
+   if(!password||password.length<8){toast('رمز جدید حداقل ۸ نویسه باشد.','error');return;}
+   const {error}=await cloud.client.auth.updateUser({password});
+   if(error)toast('تغییر رمز ناموفق بود: '+error.message,'error');
+   else{cloud.recovery=false;cloud.accountOpen=false;render();toast('رمز جدید ثبت شد.');}
+   return;
+ }
+ if(action==='cloud-logout'){
+  if(cloud.dirty||cloud.writing||cloud.phase==='conflict'){toast('قبل از خروج، همگام‌سازی را کامل کن یا فایل پشتیبان بگیر و تعارض را حل کن.','error');return;}
+  const {error}=await cloud.client.auth.signOut();if(error)toast(error.message,'error');return;
+ }
+ const email=document.getElementById('cloud-email')?.value.trim(),password=document.getElementById('cloud-password')?.value;
+ if(!email||!/^\S+@\S+\.\S+$/.test(email)||!password||password.length<8){toast('ایمیل معتبر و رمز عبور حداقل ۸ نویسه وارد کن.','error');return;}
+ const btn=document.querySelector(`[data-action="${action}"]`);if(btn)btn.disabled=true;
+ try{let result;
+  if(action==='cloud-register'){
+   const opt=(location.protocol==='https:'||location.protocol==='http:')?{emailRedirectTo:location.origin+location.pathname}:{};
+   result=await cloud.client.auth.signUp({email,password,options:opt});
+   if(result.error)throw result.error;
+   if(result.data.session){toast('حساب ساخته شد. در حال بارگذاری اطلاعات...');await cloudActivate(result.data.user);}
+   else toast('اگر ثبت‌نام پذیرفته شده باشد، پیوند تأیید به ایمیلت ارسال شده است. پس از تأیید وارد شو.');
+  }else{
+   result=await cloud.client.auth.signInWithPassword({email,password});if(result.error)throw result.error;
+   toast('ورود با موفقیت انجام شد.');await cloudActivate(result.data.user);
+  }
+ }catch(e){toast('ورود یا ثبت‌نام ناموفق بود: '+e.message,'error');}finally{if(btn)btn.disabled=false;}
+}
+function accountModal(){
+ if(!cloud.accountOpen)return '';
+ let body='';
+ if(!cloud.client){body=`<div class="cloud-banner is-warning"><strong>اتصال ابری هنوز پیکربندی نشده</strong>برای فعال‌سازی، فایل <code>ghestyar-config.js</code> را با Project URL و کلید عمومی Supabase تکمیل کن و فایل <code>supabase-schema.sql</code> را در SQL Editor پروژه اجرا کن. فایل را از یک نشانی HTTPS یا localhost اجرا کن؛ از کلید مخفی یا service_role در مرورگر استفاده نکن.</div>`;}
+ else if(!cloud.user){body=`<div class="cloud-banner"><strong>ورود امن با ایمیل</strong>برای ساخت حساب، گزینه ثبت‌نام را انتخاب کن. اگر تأیید ایمیل فعال است، صندوق ورودی‌ات را بررسی کن.</div><div class="field"><label for="cloud-email">ایمیل</label><input id="cloud-email" type="email" autocomplete="email" dir="ltr" placeholder="you@example.com"></div><div class="field"><label for="cloud-password">رمز عبور (حداقل ۸ نویسه)</label><input id="cloud-password" type="password" autocomplete="current-password" dir="ltr" placeholder="••••••••"></div><div class="cloud-actions"><button class="btn primary" data-action="cloud-login">ورود</button><button class="btn" data-action="cloud-register">ساخت حساب</button></div><button class="btn" data-action="cloud-reset-request">رمز عبور را فراموش کرده‌ام</button>`;}
+ else if(cloud.recovery){body=`<div class="cloud-banner"><strong>بازیابی رمز عبور</strong>رمز عبور جدید را وارد کن و ذخیره کن.</div><div class="field"><label for="cloud-new-password">رمز جدید</label><input type="password" id="cloud-new-password" autocomplete="new-password" dir="ltr" minlength="8"></div><button class="btn primary" data-action="cloud-reset-update">ذخیره رمز جدید</button>`;}
+ else if(cloud.phase==='choose'){body=`<div class="cloud-banner"><strong>حساب ساخته شد؛ اطلاعات اولیه را انتخاب کن</strong>هیچ پرونده‌ای در ابر پیدا نشد. اطلاعات نمونه به‌صورت خودکار آپلود نمی‌شوند. می‌توانی از صفر شروع کنی یا داده‌های محلی همین مرورگر را آگاهانه منتقل کنی.</div><div class="cloud-actions"><button class="btn primary" data-action="cloud-start-empty">شروع با فضای خالی</button><button class="btn" data-action="cloud-import-local">انتقال داده‌های محلی</button></div>`;}
+ else {body=`<div class="cloud-banner ${['conflict','error'].includes(cloud.phase)?'is-warning':''}"><strong>${cloudStatusText()}</strong><span class="cloud-email" dir="ltr">${escapeHTML(cloud.user.email||'')}</span><p>${escapeHTML(cloud.error|| (cloud.phase==='ready'?'تغییرات حساب در این دستگاه و دستگاه‌های واردشده با همین حساب هماهنگ می‌شوند.':cloud.phase==='pending'?'تغییرات در صف ارسال هستند؛ تا تأیید سرور از بستن مرورگر خودداری کن.':'اگر داده‌های این دستگاه با سرور متفاوت شده‌اند، قبل از جایگزینی خروجی JSON بگیر.'))}</p></div><div class="cloud-actions"><button class="btn" data-action="export">دریافت پشتیبان</button>${cloud.phase==='conflict'?'<button class="btn primary" data-action="cloud-reload">دریافت نسخه سرور</button>':''}${cloud.phase==='error'||cloud.phase==='pending'?'<button class="btn primary" data-action="cloud-retry">تلاش مجدد</button>':''}${cloud.phase==='ready'?'<button class="btn" data-action="cloud-check">بررسی تغییرات</button>':''}<button class="btn danger" data-action="cloud-logout" ${cloud.dirty||cloud.writing?'disabled':''}>خروج از حساب</button></div>`;}
+ return `<div class="modal-backdrop" data-action="account-close"><section class="modal account-modal" role="dialog" aria-modal="true" aria-labelledby="account-title"><div class="modal-head"><h2 id="account-title">${icon('shield')} حساب کاربری و همگام‌سازی</h2><button class="close-btn" data-action="account-close" aria-label="بستن">${icon('close')}</button></div><div class="cloud-panel">${body}</div></section></div>`;
+}
+async function initCloud(){
+ if(!cloudConfigReady()){cloud.phase='disabled';render();return;}
+ if(!window.supabase?.createClient){cloud.phase='error';cloud.error='کتابخانه Supabase بارگذاری نشد؛ اتصال اینترنت را بررسی کن.';render();return;}
+ cloud.client=window.supabase.createClient(CLOUD_CONFIG.url,CLOUD_CONFIG.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true},db:{schema:'public'}});
+ cloud.client.auth.onAuthStateChange((event,session)=>{
+  if(event==='PASSWORD_RECOVERY'){cloud.recovery=true;cloud.accountOpen=true;render();}
+  if(event==='SIGNED_OUT'){
+   const previous=cloud.user?.id;cloud.user=null;cloud.revision=0;cloud.dirty=false;cloud.phase='local';cloud.accountOpen=false;cloud.error='';cloud.activationId=null;cloud.recovery=false;localReload();state.payment=null;state.edit=null;state.draft=null;render();
+   if(previous)toast('از حساب خارج شدی؛ اطلاعات محلی مستقل نمایش داده می‌شوند.');
+  }else if(event==='SIGNED_IN'&&session?.user){queueMicrotask(()=>cloudActivate(session.user));}
+ });
+ try{const {data:authData,error}=await cloud.client.auth.getUser();if(error&&error.status!==400)console.warn('Auth check:',error.message);if(authData?.user)await cloudActivate(authData.user);else{cloud.phase='local';render();}}
+ catch(e){cloud.phase='error';cloud.error=e.message;render();}
+}
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action;
+ if(action==='account-close'){if(el.classList.contains('modal-backdrop')&&e.target.closest('.modal'))return;cloud.accountOpen=false;render();}
+ else if(action==='account-open'){cloud.accountOpen=true;render();}
+ else if(['cloud-login','cloud-register','cloud-logout','cloud-reset-request','cloud-reset-update'].includes(action))cloudAuthAction(action);
+ else if(action==='cloud-start-empty'||action==='cloud-import-local')cloudChoose(action==='cloud-import-local');
+ else if(action==='cloud-retry'){if(cloud.dirty)pushCloud();else if(cloud.user)cloudActivate(cloud.user);}
+ else if(action==='cloud-reload')cloudReloadServer();
+ else if(action==='cloud-check')cloudCheckUpdates();
+});
+window.addEventListener('online',()=>{if(cloud.dirty)pushCloud();else cloudCheckUpdates();});
+window.addEventListener('focus',()=>{if(cloud.dirty)pushCloud();else cloudCheckUpdates();});
+setInterval(()=>{if(cloud.dirty&&cloud.phase==='error')pushCloud();else cloudCheckUpdates();},25000);
+window.addEventListener('DOMContentLoaded',initCloud);
+
+function settingsPage(){return `<section class="settings-page"><div class="panel settings-hero"><div><h2>اطلاعات مالی من</h2><p class="muted">${cloud.user?`حساب: ${escapeHTML(cloud.user.email||'')} · ${cloudStatusText()}`:'حالت محلی؛ برای انتقال اطلاعات به دستگاه دیگر به حساب ابری وارد شو.'}</p></div><div class="settings-count">${fmt(data.length)} <small>تعهد ثبت‌شده</small></div></div>
+ <div class="settings-grid"><section class="panel settings-box cloud-card"><span class="settings-icon">${icon('user')}</span><h3>حساب کاربری و ابر</h3><p>${cloud.user?`ورود با ${escapeHTML(cloud.user.email||'')}. ${cloudStatusText()}`:'با حساب شخصی بین موبایل و کامپیوتر به اطلاعات یکسان دسترسی پیدا کن. برای فعال‌سازی، پروژه Supabase را پیکربندی کن.'}</p><button class="btn primary" data-action="account-open">${cloud.user?'مدیریت حساب و همگام‌سازی':'ورود یا ساخت حساب'}</button></section><section class="panel settings-box"><span class="settings-icon">${icon('download')}</span><h3>فایل پشتیبان</h3><p>تمام تعهدات، اقساط و تاریخچه پرداخت‌ها را در یک فایل JSON ذخیره کن.</p><button class="btn primary" data-action="export">${icon('download')} دریافت پشتیبان</button></section>
+ <section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی پشتیبان</h3><p>فایل پشتیبان قسط‌یار را وارد کن. قبل از جایگزینی اطلاعات، خلاصه فایل و تأیید نمایش داده می‌شود.</p><button class="btn" data-action="import-pick">${icon('refresh')} انتخاب فایل JSON</button><input type="file" id="backup-file" accept=".json,application/json" hidden /></section>
+ <section class="panel settings-box"><span class="settings-icon">${icon('edit')}</span><h3>شروع با اطلاعات خودم</h3><p>اطلاعات فضای فعلی را پس از تأیید پاک کن. در حالت ابری، حذف پس از همگام‌سازی به حساب نیز منتقل می‌شود.</p><button class="btn danger" data-action="erase-all">${icon('close')} پاک‌کردن تعهدات این فضا</button></section>
+ <section class="panel settings-box"><span class="settings-icon">${icon('shield')}</span><h3>وضعیت نگهداری داده‌ها</h3><p>${cloud.user?'داده‌ها برای این حساب از سرور بارگیری می‌شوند؛ تغییرات ابتدا یک نسخه بازیابی در مرورگر می‌سازند و سپس با کنترل نسخه به ابر ارسال می‌شوند.':storageRecoveryNeeded?'اطلاعات قبلی قابل خواندن نیست؛ از حذف یا ثبت داده جدید خودداری کن.':'حالت محلی فعال است؛ اطلاعات بین دستگاه‌ها مشترک نیست.'}</p><div class="good">${cloud.user?`وضعیت: ${cloudStatusText()}`:'برای راه‌اندازی سرور، فایل SQL و راهنمای همراه بسته را اجرا کن.'}</div></section></div></section>`;}
+function editModal(){if(!state.edit)return '';const e=state.edit,o=data.find(x=>x.id===e.ob);if(!o)return '';let body='';if(e.kind==='ob'){body=`<div class="field"><label for="edit-title">عنوان تعهد</label><input id="edit-title" maxlength="100" value="${escapeHTML(o.title)}"/></div><div class="field"><label for="edit-party">نام بانک، فروشنده یا طرف حساب</label><input id="edit-party" maxlength="100" value="${escapeHTML(o.party)}"/></div><p class="muted small">مشخصات قابل تغییرند؛ اقساط و پرداخت‌ها حفظ می‌شوند.</p>`;}else{const i=o.installments.find(x=>x.id===e.inst);if(!i)return '';body=`<p class="muted">قسط ${fnum(i.number)} از ${escapeHTML(o.title)}</p><div class="field"><label for="edit-amount">مبلغ قسط (تومان)</label><input id="edit-amount" inputmode="numeric" value="${i.amount}"/></div><div class="field"><label for="edit-due">سررسید شمسی</label><input id="edit-due" value="${jText(i.due,true)}"/></div><p class="muted small">مبلغ جدید نباید از پرداخت‌های ثبت‌شده این قسط کمتر باشد. قسط کاملاً تسویه‌شده قابل ویرایش نیست.</p>`;}
+ return `<div class="modal-backdrop" data-action="close-edit"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-heading"><div class="modal-head"><h2 id="edit-heading">${e.kind==='ob'?'ویرایش مشخصات تعهد':'اصلاح قسط پرداخت‌نشده'}</h2><button class="close-btn" data-action="close-edit" aria-label="بستن">${icon('close')}</button></div><div class="modal-form">${body}<div class="row-inline"><button class="btn primary" data-action="edit-save">ذخیره تغییرات</button><button class="btn" data-action="close-edit">انصراف</button></div></div></section></div>`;}
+async function importBackup(file){if(!file)return;if(file.size>4*1024*1024){toast('حجم فایل بیشتر از ۴ مگابایت است.','error');return;}try{const content=await file.text();const loaded=validateBackup(JSON.parse(content));const count=loaded.reduce((sum,o)=>sum+o.installments.length,0);if(!window.confirm(`فایل بررسی شد: ${loaded.length} تعهد و ${count} قسط.\nاطلاعات فعلی (${data.length} تعهد) به‌طور کامل جایگزین می‌شوند.\nپیش از ادامه از داده‌های فعلی پشتیبان گرفته‌ای؟`))return;if(!commit(loaded))return;state.draft=null;state.payment=null;state.edit=null;nav('dashboard');toast('پشتیبان بازیابی شد.');}catch(e){toast('بازیابی انجام نشد: '+e.message,'error');}}
+function reversePayment(obId,paymentId){const o=data.find(x=>x.id===obId),p=o?.payments.find(x=>x.id===paymentId);if(!p||p.reversedAt)return;const reason=window.prompt('دلیل ابطال ثبت پرداخت را وارد کن (مثلاً مبلغ اشتباه):','ثبت اشتباه');if(reason===null)return;if(!reason.trim()||reason.length>200){toast('دلیل ابطال را وارد کن (حداکثر ۲۰۰ نویسه).','error');return;}if(!window.confirm(`پرداخت ${fmt(p.amount)} تومانی باطل شود؟\nسوابق حذف نمی‌شوند و مبلغ به مانده قسط برمی‌گردد.`))return;const next=data.map(x=>x.id===obId?{...x,payments:x.payments.map(y=>y.id===paymentId?{...y,reversedAt:todayISO,reverseReason:reason.trim()}:y)}:x);if(!commit(next))return;render();toast('پرداخت باطل شد؛ مانده قسط اصلاح شد.');}
+
+function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='settings')content=settingsPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${content}</main>`+bottomNav()+payModal()+editModal()+accountModal();document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',settings:'مدیریت داده‌ها'}[state.page]}`;}
+let toastTimer;function toast(msg,type=''){document.querySelector('.toast')?.remove();const x=document.createElement('div');x.className='toast '+type;x.setAttribute('role','status');x.textContent=msg;document.body.appendChild(x);clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.remove(),3900);}
+function paymentOpen(ob,inst){const o=data.find(x=>x.id===ob),i=o?.installments.find(x=>x.id===inst);if(!o||!i||left(o,i)<=0)return;state.payment={ob,inst,amount:String(left(o,i)),date:jText(todayISO,true),note:''};render();}
+function calendarShift(delta){const {y,m}=state.calendarMonth;const idx=y*12+m-1+delta;state.calendarMonth={y:Math.floor(idx/12),m:(idx%12+12)%12+1};const date=jISO(state.calendarMonth.y,state.calendarMonth.m,1);state.selectedDay=date||todayISO;render();}
+function wizardNext(){const d=state.draft;if(state.wizardStep===1){if(!draftValid()){toast('عنوان، مبلغ، تعداد اقساط و تاریخ شمسی را بررسی کن.','error');return;}d.rows=draftSchedule();state.wizardStep=2;render();return;}if(state.wizardStep===2){if(!d.rows.length||d.rows.some(x=>!Number.isSafeInteger(x.amount)||x.amount<=0||x.amount>1e12||!x.due)){toast('مبلغ یا تاریخ یکی از اقساط معتبر نیست.','error');return;}state.wizardStep=3;render();}}
+function wizardSave(){const d=state.draft;if(!d||state.wizardStep!==3||!draftValid()||!d.rows.length||d.rows.some(x=>!Number.isSafeInteger(x.amount)||x.amount<=0||!x.due)){toast('لطفاً جدول اقساط را بررسی کن.','error');return;}const ob={id:id(),type:d.type,title:d.title.trim(),party:d.party.trim(),mode:d.mode,principal:number(d.amount),rate:d.mode==='auto'?number(d.rate):0,createdAt:todayISO,installments:d.rows.map((x,k)=>({id:id(),number:k+1,due:x.due,amount:x.amount})),payments:[]};if(!commit([...data,ob]))return;state.selectedId=ob.id;state.detailTab='schedule';state.draft=null;state.wizardStep=1;nav('detail');toast('تعهد و جدول اقساط ثبت شد.');}
+function exportJSON(){const blob=new Blob([JSON.stringify({app:'ghestyar-demo',version:1,exportedAt:new Date().toISOString(),obligations:data},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ghestyar-backup-'+todayISO+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('فایل پشتیبان آماده شد.');}
+document.addEventListener('click',e=>{const n=e.target.closest('[data-nav]');if(n){if(n.dataset.nav==='detail'&&!state.selectedId)state.selectedId=data[0]?.id;if(n.dataset.nav==='add'&&!state.draft){state.draft=freshDraft();state.wizardStep=1;}nav(n.dataset.nav);return;}const filter=e.target.closest('[data-filter]:not([data-action])');if(filter){state.filter=filter.dataset.filter;render();return;}const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action;if(action==='close-modal' && el.classList.contains('modal-backdrop') && e.target.closest('.modal'))return;if(action==='view'){state.selectedId=el.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}
+else if(action==='pay')paymentOpen(el.dataset.ob,el.dataset.inst);
+else if(action==='pay-first'){const o=data.find(x=>x.id===el.dataset.ob),i=o?.installments.filter(x=>left(o,x)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];if(i)paymentOpen(o.id,i.id);}
+else if(action==='close-modal'){state.payment=null;render();}
+else if(action==='pay-save'){const o=data.find(x=>x.id===state.payment?.ob),i=o?.installments.find(x=>x.id===state.payment.inst);if(!o||!i)return;const amount=number($('#pay-amount').value);const iso=jParse($('#pay-date').value),note=$('#pay-note').value.trim().slice(0,250);if(!Number.isSafeInteger(amount)||amount<=0||amount>left(o,i)||!iso||iso>todayISO){toast('مبلغ باید مثبت و کمتر از مانده قسط و تاریخ پرداخت حداکثر امروز باشد.','error');return;}const next=data.map(x=>x.id===o.id?{...x,payments:[...x.payments,{id:id(),installmentId:i.id,amount,date:iso,note}]}:x);if(!commit(next))return;state.payment=null;render();toast('پرداخت ثبت شد و مانده‌ها به‌روز شدند.');}
+else if(action==='overdue'){state.page='obligations';state.filter='overdue';state.query='';render();}
+else if(action==='dash-filter'){state.dashFilter=el.dataset.filter;render();}
+else if(action==='dash-filter-shortcut'){state.dashFilter=el.dataset.filter;render();document.getElementById('payments-heading')?.scrollIntoView({behavior:'smooth',block:'start'});}
+else if(action==='toggle-amounts'){state.hideAmounts=!state.hideAmounts;render();}
+else if(action==='toggle-theme'){applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');}
+else if(action==='wizard-next')wizardNext();else if(action==='wizard-prev'){state.wizardStep=Math.max(1,state.wizardStep-1);render();}
+else if(action==='wizard-save')wizardSave();else if(action==='cal-prev')calendarShift(-1);else if(action==='cal-next')calendarShift(1);else if(action==='cal-today'){state.calendarMonth={y:todayJ.y,m:todayJ.m};state.selectedDay=todayISO;render();}else if(action==='cal-day'){state.selectedDay=el.dataset.date;render();}else if(action==='export')exportJSON();
+});
+document.addEventListener('click',e=>{
+ const btn=e.target.closest('[data-action]');if(!btn)return;const action=btn.dataset.action;
+ if(action==='schedule-filter'){state.scheduleFilter=btn.dataset.filter;render();return;}
+ if(action==='import-pick'){document.getElementById('backup-file')?.click();return;}
+ if(action==='erase-all'){if(!window.confirm('همه تعهدات و پرداخت‌های فضای فعلی (در حالت ابری، پس از همگام‌سازی روی حساب) پاک می‌شوند. قبل از ادامه پشتیبان گرفته‌ای؟'))return;if(!window.confirm('تأیید نهایی: اطلاعات مالی فعلی پاک شوند؟'))return;if(!commit([]))return;state.draft=null;nav('dashboard');toast('اطلاعات این مرورگر پاک شدند.');return;}
+ if(action==='reverse-payment'){reversePayment(btn.dataset.ob,btn.dataset.payment);return;}
+ if(action==='edit-ob'){state.edit={kind:'ob',ob:btn.dataset.ob};render();document.getElementById('edit-title')?.focus();return;}
+ if(action==='edit-inst'){state.edit={kind:'inst',ob:btn.dataset.ob,inst:btn.dataset.inst};render();document.getElementById('edit-amount')?.focus();return;}
+ if(action==='close-edit'){if(btn.classList.contains('modal-backdrop')&&e.target.closest('.modal'))return;state.edit=null;render();return;}
+ if(action==='edit-save'){
+  const edit=state.edit,o=data.find(x=>x.id===edit?.ob);if(!o)return;
+  let next;
+  if(edit.kind==='ob'){const title=$('#edit-title').value.trim(),party=$('#edit-party').value.trim();if(title.length<2||title.length>100||party.length>100){toast('عنوان باید بین ۲ تا ۱۰۰ نویسه باشد.','error');return;}next=data.map(x=>x.id===o.id?{...x,title,party,changes:[...(x.changes||[]),{id:id(),date:todayISO,summary:'ویرایش عنوان یا طرف حساب',before:{title:x.title,party:x.party},after:{title,party}}]}:x);}
+  else {const i=o.installments.find(x=>x.id===edit.inst),amount=number($('#edit-amount').value),due=jParse($('#edit-due').value);if(!i||left(o,i)<=0||!Number.isSafeInteger(amount)||amount<paid(o,i)||amount<1||amount>1e12||!due){toast('مبلغ یا تاریخ معتبر نیست یا مبلغ از پرداخت قبلی کمتر است.','error');return;}if(!window.confirm('مبلغ یا تاریخ سررسید قسط ویرایش شود؟ این تغییر بر گزارش‌های آینده تأثیر می‌گذارد.'))return;next=data.map(x=>x.id===o.id?{...x,installments:x.installments.map(y=>y.id===i.id?{...y,amount,due}:y),changes:[...(x.changes||[]),{id:id(),date:todayISO,summary:`اصلاح مبلغ یا سررسید قسط ${fnum(i.number)}`,before:{amount:i.amount,due:i.due},after:{amount,due}}]}:x);}
+  if(!commit(next))return;state.edit=null;render();toast('تغییرات با موفقیت ثبت شدند.');
+ }
+});
+document.addEventListener('change',e=>{if(e.target.id==='backup-file'){const file=e.target.files?.[0];e.target.value='';importBackup(file);}});
+
+document.addEventListener('click',e=>{const type=e.target.closest('[data-draft-type]');if(type){state.draft.type=type.dataset.draftType;state.draft.rows=[];render();}const mode=e.target.closest('[data-draft-mode]');if(mode){state.draft.mode=mode.dataset.draftMode;state.draft.rows=[];render();}const tab=e.target.closest('[data-tab]');if(tab){state.detailTab=tab.dataset.tab;render();}});
+document.addEventListener('change',e=>{if(e.target.dataset.draft){state.draft[e.target.dataset.draft]=e.target.value;state.draft.rows=[];render();}if(e.target.dataset.row!==undefined){const idx=+e.target.dataset.row,prop=e.target.dataset.prop;if(prop==='amount'){const value=number(e.target.value);state.draft.rows[idx].amount=value;}else if(prop==='due'){state.draft.rows[idx].due=jParse(e.target.value);}if(state.draft.rows[idx].due===null)toast('تاریخ شمسی این ردیف معتبر نیست.','error');}});
+document.addEventListener('input',e=>{if(e.target.id==='ob-search'){const pos=e.target.selectionStart;state.query=e.target.value;const holder=$('.ob-grid')||$('.empty');const matches=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});if(holder)holder.outerHTML=matches.length?`<div class="ob-grid">${matches.map(obCard).join('')}</div>`:`<div class="panel empty">نتیجه‌ای پیدا نشد.</div>`;}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(state.payment||state.edit)){state.payment=null;state.edit=null;render();}if(e.key==='Enter'&&e.target.matches('[data-action="view"]')){state.selectedId=e.target.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}});
+if(!storageRecoveryNeeded)save();render();if(storageRecoveryNeeded)toast('فایل اطلاعات قبلی قابل خواندن نیست؛ برای جلوگیری از حذف، بازنویسی نشده است. ابتدا از داده مرورگر نسخه پشتیبان تهیه کن.','error');
+</script>
+</body>
+</html>
