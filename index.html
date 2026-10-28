@@ -14,7 +14,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
 })();
 </script>
-<title>قسط‌یار ۳.۰ | حساب کاربری و همگام‌سازی ابری</title>
+<title>قسط‌یار ۳.۲ | شروع با اطلاعات خالی</title>
 <script src="./ghestyar-config.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -568,6 +568,86 @@ html[data-theme="dark"] .cloud-banner.is-warning{background:#413423;border-color
 @media(max-width:720px){.cloud-status{max-width:115px;font-size:10px;padding:6px}.cloud-status .cloud-word{overflow:hidden;text-overflow:ellipsis}.account-modal{padding:20px}.cloud-actions .btn{min-width:110px}.toolbar{gap:5px}}
 @media(max-width:380px){.cloud-status{max-width:88px}.cloud-status .cloud-word{font-size:0}.cloud-status .cloud-word:after{content:'ابر';font-size:11px}}
 
+
+/* v3.1 — focused mobile usability repairs; cloud/finance logic unchanged */
+html,body{max-width:100%}
+.app,.main,.wizard-layout,.wizard-layout>*,.wizard-schedule-panel{min-width:0;max-width:100%}
+.wizard-mobile-rows{display:none}
+.wizard-schedule-table .wizard-row-input{display:block;box-sizing:border-box;width:100%;max-width:170px;min-width:0;height:42px;padding:7px 10px;border-radius:10px;border:1px solid var(--border);background:var(--white);color:var(--ink);text-align:center;font-size:14px;font-weight:750}
+.wizard-schedule-table th,.wizard-schedule-table td{text-align:center}
+html[data-theme="dark"] .wizard-row-input{background:#292b3f;color:#f7f4ff;border-color:#65627d;color-scheme:dark}
+@media(max-width:720px){
+  .main{min-width:0;padding-inline:14px;padding-top:14px;padding-bottom:calc(105px + env(safe-area-inset-bottom))}
+  .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:0 0 16px}
+  .topbar>div:first-child{grid-column:1;grid-row:1;min-width:0}
+  .page-kicker{font-size:11px;line-height:1.5;margin:0 0 1px;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .page-title{font-size:23px;line-height:1.5;margin:0;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+  .toolbar{grid-column:2;grid-row:1;display:flex;gap:5px;min-width:0;align-items:center}
+  .toolbar>.icon-btn,.toolbar>.theme-toggle,.toolbar>.cloud-status{width:38px;height:38px;min-width:38px;min-height:38px;max-width:38px;flex:0 0 38px;padding:7px;display:flex;align-items:center;justify-content:center;border-radius:12px}
+  .toolbar>.icon-btn[data-action="overdue"]{display:none}
+  .toolbar .icon-btn svg,.toolbar .theme-toggle svg{width:19px;height:19px}
+  .toolbar .cloud-word{display:none!important}
+  .toolbar .cloud-status::after{content:'ابر';font-size:11px;font-weight:800;color:var(--muted)}
+  .toolbar .cloud-status{gap:3px;flex-direction:column;padding:3px}
+  .toolbar .cloud-dot{width:7px;height:7px}
+  .dash-topline{display:none}
+  .detail-banner{padding:16px;gap:12px;margin-top:10px;border-radius:19px}
+  .detail-title h2{font-size:19px;line-height:1.4;margin:0 0 3px}
+  .detail-title p{font-size:12px;line-height:1.5;margin:0}
+  .detail-actions{gap:8px}
+  .detail-banner .detail-actions .btn{min-height:43px;line-height:1.4;padding:8px 6px;gap:5px}
+  .backbutton{margin-bottom:4px}
+  .wizard-layout{grid-template-columns:minmax(0,1fr)!important;gap:0}
+  .wizard-layout>aside{display:none}
+  .wizard-layout>.panel,.wizard-layout>div,.wizard-layout>div>.panel{min-width:0;max-width:100%}
+  .wizard-schedule-panel{padding:14px!important;border-radius:18px}
+  .wizard-schedule-panel .panel-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}
+  .wizard-schedule-panel .panel-head h3{font-size:17px;line-height:1.45;min-width:0}
+  .wizard-notice{font-size:12px;line-height:1.9;padding:10px 12px;overflow-wrap:break-word}
+  .wizard-schedule-table{display:none!important}
+  .wizard-mobile-rows{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:12px;width:100%}
+  .wizard-mobile-row{min-width:0;max-width:100%;background:var(--canvas);border:1px solid var(--border);border-radius:15px;padding:12px;overflow:hidden}
+  .wizard-mobile-row-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+  .wizard-mobile-row-head strong{font-size:15px;font-weight:900}
+  .wizard-mobile-row-head span{font-size:11px;color:var(--muted)}
+  .wizard-mobile-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;min-width:0}
+  .wizard-mobile-fields label{display:block;min-width:0;font-size:12px;font-weight:800;color:var(--muted)}
+  .wizard-mobile-fields label span{display:block;margin-bottom:5px;white-space:nowrap;font-size:11px}
+  .wizard-mobile-fields .wizard-row-input{box-sizing:border-box;display:block;width:100%;min-width:0;max-width:100%;height:42px;padding:8px 5px;border:1px solid #c7c6d8;background:var(--white);border-radius:10px;color:var(--ink);font:700 13px Vazirmatn,Tahoma,sans-serif;text-align:center;direction:ltr}
+  .wizard-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:8px;margin-top:16px}
+  .wizard-actions .btn{min-width:0;max-width:100%;min-height:46px;padding:8px;font-size:13px;white-space:normal;line-height:1.4}
+  .wizard-steps{width:100%;min-width:0;gap:4px;justify-content:space-between}
+  .wizard-steps .step-item{min-width:0;font-size:11px;gap:4px;white-space:normal}
+  .wizard-steps .step-number{flex:0 0 auto}
+}
+@media(max-width:365px){
+ .main{padding-inline:11px}
+ .toolbar{gap:3px}
+ .toolbar>.icon-btn,.toolbar>.theme-toggle,.toolbar>.cloud-status{width:35px;height:35px;min-height:35px;min-width:35px;max-width:35px;flex-basis:35px}
+ .page-title{font-size:21px}
+ .wizard-mobile-fields{gap:6px}
+ .wizard-mobile-row{padding:10px}
+ .wizard-mobile-fields .wizard-row-input{font-size:12px;padding:7px 3px}
+ .wizard-mobile-fields label span{font-size:10px}
+}
+html[data-theme="dark"] .wizard-mobile-row{background:#24263a;border-color:#403b59}
+html[data-theme="dark"] .wizard-mobile-fields .wizard-row-input{background:#303146;border-color:#6b6687;color:#f9f6ff}
+html[data-theme="dark"] .toolbar .cloud-status::after{color:#d4cce5}
+
+
+/* 3.2 — welcoming true empty state on all devices and themes */
+.welcome-empty{max-width:720px;margin:clamp(12px,4vh,42px) auto;text-align:center;padding:clamp(25px,5vw,52px);display:flex;flex-direction:column;align-items:center;gap:15px;border-radius:26px}
+.welcome-empty-icon{width:72px;height:72px;border-radius:23px;display:grid;place-items:center;background:#ede7ff;color:#7457de}
+.welcome-empty-icon svg{width:35px;height:35px}
+.welcome-empty h2{margin:2px 0 0;font-size:clamp(23px,3vw,30px);font-weight:900;line-height:1.5}
+.welcome-empty p{margin:0;color:var(--muted);font-size:15px;line-height:2;max-width:500px}
+.welcome-empty-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:7px 0}
+.welcome-empty-actions .btn{min-height:50px;font-size:14px}
+.welcome-empty-note{display:flex;align-items:flex-start;gap:8px;max-width:520px;font-size:12px;line-height:1.9;color:var(--muted);text-align:right;margin-top:8px}
+.welcome-empty-note svg{width:17px;height:17px;margin-top:4px}
+html[data-theme="dark"] .welcome-empty-icon{background:#332c53;color:#b9a3ff}
+@media(max-width:520px){.welcome-empty{margin:10px 0;padding:30px 16px}.welcome-empty-actions{width:100%;flex-direction:column}.welcome-empty-actions .btn{width:100%}}
+
 </style>
 </head>
 <body>
@@ -625,9 +705,49 @@ function addJMonth(start,offset,day){const j=typeof start==='string'?jalali(star
 const _localNow=new Date();const todayISO=[_localNow.getFullYear(),String(_localNow.getMonth()+1).padStart(2,'0'),String(_localNow.getDate()).padStart(2,'0')].join('-');const todayJ=jalali(todayISO);
 const id=()=>((typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():'id'+Date.now()+Math.random().toString(16).slice(2));
 function makeInstallments(total,n,start,rate=0){const per=rate/1200;const raw=per>0?total*per/(1-Math.pow(1+per,-n)):total/n;let bal=total;const inst=[];for(let i=0;i<n;i++){const interest=Math.round(bal*per);const amount=i===n-1?bal+interest:Math.round(raw);bal=Math.max(0,bal-(amount-interest));inst.push({id:id(),number:i+1,amount,due:addJMonth(start,i)});}return inst;}
-function seeded(){const bStart=addJMonth(todayJ,-6,12), lStart=addJMonth(todayJ,-2,24), pStart=addJMonth(todayJ,-1,5);const bank={id:id(),title:'وام بانک ملت',type:'loan',party:'بانک ملت',mode:'manual',principal:180000000,rate:0,createdAt:todayISO,installments:makeInstallments(216000000,18,bStart),payments:[]};const laptop={id:id(),title:'خرید لپ‌تاپ',type:'purchase',party:'فروشگاه دیجیتال',mode:'manual',principal:36000000,rate:0,createdAt:todayISO,installments:makeInstallments(36000000,6,lStart),payments:[]};const personal={id:id(),title:'قرض شخصی',type:'other',party:'دوست',mode:'manual',principal:15000000,rate:0,createdAt:todayISO,installments:makeInstallments(15000000,5,pStart),payments:[]};for(let i=0;i<6;i++)bank.payments.push({id:id(),installmentId:bank.installments[i].id,amount:bank.installments[i].amount,date:bank.installments[i].due,note:'پرداخت نمونه'});for(let i=0;i<2;i++)laptop.payments.push({id:id(),installmentId:laptop.installments[i].id,amount:laptop.installments[i].amount,date:laptop.installments[i].due,note:'پرداخت نمونه'});personal.payments.push({id:id(),installmentId:personal.installments[0].id,amount:3000000,date:personal.installments[0].due,note:'پرداخت نمونه'});return [bank,laptop,personal];}
-const KEY='ghestyar_v1_demo';let data;let storageAvailable=true;let storageRecoveryNeeded=false;
-try{const raw=localStorage.getItem(KEY);if(raw){const parsed=JSON.parse(raw);data=validateBackup(parsed);}else data=seeded();}catch(e){data=[];storageAvailable=false;storageRecoveryNeeded=true;console.error('Stored data is inaccessible or invalid; preventing overwrite:',e.message);}
+// 3.2: real first-run empty state, with non-destructive legacy demo cleanup.
+const KEY='ghestyar_v1_demo';
+const LEGACY_SAMPLE_ARCHIVE='ghestyar_legacy_seeded_backup_v1';
+const LEGACY_RESTORE_KEEP='ghestyar_legacy_restore_requested_v1';
+let data=[];let storageAvailable=true;let storageRecoveryNeeded=false;
+function isExactLegacySampleOnly(items){
+ // Never remove custom or cloud data. Only the exact three auto-generated old demo files qualify.
+ if(!Array.isArray(items)||items.length!==3)return false;
+ const specs={
+  'وام بانک ملت':{type:'loan',party:'بانک ملت',principal:180000000,n:18,paid:6,total:216000000},
+  'خرید لپ‌تاپ':{type:'purchase',party:'فروشگاه دیجیتال',principal:36000000,n:6,paid:2,total:36000000},
+  'قرض شخصی':{type:'other',party:'دوست',principal:15000000,n:5,paid:1,total:15000000}
+ };
+ const titles=new Set();
+ return items.every(o=>{
+  const spec=specs[o.title];if(!spec||titles.has(o.title))return false;titles.add(o.title);
+  if(o.type!==spec.type||o.party!==spec.party||o.mode!=='manual'||o.principal!==spec.principal||o.rate!==0||o.installments.length!==spec.n||o.payments.length!==spec.paid||(o.changes||[]).length>0)return false;
+  if(o.installments.reduce((sum,i)=>sum+i.amount,0)!==spec.total)return false;
+  if(o.installments.some((i,k)=>i.number!==k+1))return false;
+  return o.payments.every((payment,k)=>payment.note==='پرداخت نمونه'&&!payment.reversedAt&&payment.installmentId===o.installments[k].id&&payment.date===o.installments[k].due&&payment.amount===(o.title==='قرض شخصی'?3000000:o.installments[k].amount));
+ });
+}
+function loadLocalData(){
+ try{
+  const raw=localStorage.getItem(KEY);
+  if(!raw){storageRecoveryNeeded=false;storageAvailable=true;return [];}
+  const entries=validateBackup(JSON.parse(raw));
+  if(isExactLegacySampleOnly(entries)&&localStorage.getItem(LEGACY_RESTORE_KEEP)!=='yes'){
+   // Archive first: never discard existing stored bytes without a recoverable copy.
+   if(!localStorage.getItem(LEGACY_SAMPLE_ARCHIVE))localStorage.setItem(LEGACY_SAMPLE_ARCHIVE,raw);
+   localStorage.removeItem(KEY);
+   storageRecoveryNeeded=false;storageAvailable=true;
+   return [];
+  }
+  storageRecoveryNeeded=false;storageAvailable=true;
+  return entries;
+ }catch(e){
+  storageAvailable=false;storageRecoveryNeeded=true;
+  console.error('Stored data is inaccessible or invalid; preventing overwrite:',e.message);
+  return [];
+ }
+}
+data=loadLocalData();
 function commit(next){
  if(cloud.user){
    if(!['ready','pending','error'].includes(cloud.phase)){toast('تا پایان بارگذاری یا حل تعارض، ثبت تغییرات ممکن نیست.','error');return false;}
@@ -664,14 +784,14 @@ function applyTheme(theme, persist=true){
   document.querySelectorAll('.theme-toggle').forEach(button=>{button.innerHTML=icon(dark?'sun':'moon')+`<span class="theme-button-label">${dark?'روشن':'شب'}</span>`;button.setAttribute('aria-label',`فعال کردن حالت ${dark?'روشن':'تاریک'}`);button.title=`حالت ${dark?'روشن':'تاریک'}`;button.setAttribute('aria-pressed',String(dark));});
 }
 if(window.matchMedia){try{window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',event=>{let stored=null;try{stored=localStorage.getItem('ghestyar_theme_v1');}catch(e){}if(stored!=='light'&&stored!=='dark')applyTheme(event.matches?'dark':'light',false);});}catch(e){}}
-function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}<button class="cloud-status is-${cloud.phase}" data-action="account-open" aria-label="وضعیت حساب کاربری و همگام‌سازی" title="حساب و همگام‌سازی"><span class="cloud-dot"></span><span class="cloud-word">${cloudStatusText()}</span></button><span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn" title="مشاهده اقساط معوق" data-action="overdue" aria-label="مشاهده اقساط عقب‌افتاده">${icon('bell')}</button><span class="avatar" aria-label="نسخه نمایشی">م</span></div></header>`;}
+function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}<button class="cloud-status is-${cloud.phase}" data-action="account-open" aria-label="وضعیت حساب کاربری و همگام‌سازی" title="حساب و همگام‌سازی"><span class="cloud-dot"></span><span class="cloud-word">${cloudStatusText()}</span></button><span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn" title="مشاهده اقساط معوق" data-action="overdue" aria-label="مشاهده اقساط عقب‌افتاده">${icon('bell')}</button></div></header>`;}
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['settings','shield','مدیریت داده']];
-function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · حساب و همگام‌سازی ۳.۰</div></div></aside>`;}
+function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۲</div></div></aside>`;}
 function bottomNav(){return `<nav class="bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['add','plus','افزودن']].map(([k,ic,t])=>`<button data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
  const all=closest();const overdue=all.filter(x=>x.i.due<todayISO);
  const thisMonthEntries=data.flatMap(o=>o.installments.filter(i=>{const j=jalali(i.due);return j.y===todayJ.y&&j.m===todayJ.m}).map(i=>({o,i,rem:left(o,i)})));
- const monthSum=thisMonthEntries.reduce((s,x)=>s+x.i.amount,0);const monthLeft=thisMonthEntries.reduce((s,x)=>s+x.rem,0);const monthPaid=Math.max(0,monthSum-monthLeft);const progress=monthSum?Math.round(monthPaid/monthSum*100):100;
+ const monthSum=thisMonthEntries.reduce((s,x)=>s+x.i.amount,0);const monthLeft=thisMonthEntries.reduce((s,x)=>s+x.rem,0);const monthPaid=Math.max(0,monthSum-monthLeft);const progress=monthSum?Math.round(monthPaid/monthSum*100):0;
  const remain=data.reduce((s,o)=>s+outstanding(o),0);const active=data.filter(o=>outstanding(o)>0).length;
  const soon=all.find(x=>x.i.due>=todayISO);const focus=overdue[0]||soon;
  const days7=new Date(todayISO+'T12:00:00');days7.setDate(days7.getDate()+7);const cutoff=[days7.getFullYear(),String(days7.getMonth()+1).padStart(2,'0'),String(days7.getDate()).padStart(2,'0')].join('-');
@@ -680,9 +800,15 @@ function dashboard(){
  const amount=v=>state.hideAmounts?'••••••':fmt(v);
  const statusText=overdue.length?'نیازمند پیگیری':'در مسیر پرداخت';
  const firstDue=focus?`${jText(focus.i.due,true)} · قسط ${fnum(focus.i.number)}`:'هنوز قسط پرداخت‌نشده‌ای نیست';
+ if(!data.length){return `<div class="dash-v2"><section class="dash-panel welcome-empty" role="status" aria-label="شروع کار با قسط‌یار">
+ <div class="welcome-empty-icon">${icon('wallet')}</div>
+ <h2>به قسط‌یار خوش اومدی!</h2>
+ <p>هنوز هیچ تعهد یا پرداختی ثبت نشده. از همین‌جا اولین وام یا خرید قسطی خودت رو اضافه کن.</p>
+ <div class="welcome-empty-actions"><button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>${!cloud.user?`<button class="btn" data-action="account-open">${icon('user')} ورود یا ساخت حساب</button>`:''}</div>
+ <div class="welcome-empty-note">${icon('shield')} ${cloud.user?'داده‌های این حساب هنوز خالی هستند.':'بدون ورود هم می‌تونی داده‌ها رو فقط در همین مرورگر ثبت کنی؛ همگام‌سازی به ورود نیاز داره.'}</div>
+ </section></div>`;}
  return `<div class="dash-v2">
- <div class="dash-topline"><span class="dash-eyebrow">داشبورد شخصی · همه چیز زیر کنترل تو</span><span class="dash-date">${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span></div>
- ${!data.length?`<section class="dash-panel empty-dash">${icon('wallet')}<strong>اولین برنامه پرداختت رو بساز</strong><span>وام یا خرید قسطی رو ثبت کن تا سررسیدها اینجا نمایش داده بشن.</span><button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button></section>`:''}
+ <div class="dash-topline"><span class="dash-eyebrow">خلاصه وضعیت پرداخت‌ها</span><span class="dash-date">${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span></div>
  <div class="hero-bento">
   <section class="month-card" aria-labelledby="month-heading">
    <div class="card-top"><span class="eyebrow"><span class="small-circle"></span> نمای این ماه</span><button class="icon-btn" data-action="toggle-amounts" aria-label="${state.hideAmounts?'نمایش':'پنهان کردن'} مبالغ داشبورد" title="${state.hideAmounts?'نمایش':'پنهان کردن'} مبالغ" style="min-height:35px;padding:7px">${icon(state.hideAmounts?'eye':'eyeoff')}</button></div>
@@ -716,17 +842,20 @@ function dashboard(){
  </div>
  <div class="dash-bottom-head"><h2>پرونده‌های مالی من</h2><button class="link-btn" data-nav="obligations">همه تعهدات ${icon('chevron-left')}</button></div>
  ${data.length?`<div class="dash-small-grid">${data.slice(0,3).map(obCard).join('')}</div>`:''}
- <div class="dash-footnote">${icon('shield')} ${cloud.user?`اطلاعات مربوط به حساب شماست. وضعیت ذخیره: ${cloudStatusText()}. پیش از خروج از مرورگر منتظر تکمیل همگام‌سازی بمان.`:'حالت نمایشی و محلی فعال است؛ برای همگام‌سازی بین دستگاه‌ها حساب ابری را از بالای صفحه فعال کن.'}</div>
+ <div class="dash-footnote">${icon('shield')} ${cloud.user?`اطلاعات مربوط به حساب شماست. وضعیت ذخیره: ${cloudStatusText()}. پیش از خروج از مرورگر منتظر تکمیل همگام‌سازی بمان.`:'حالت محلی فعال است؛ برای همگام‌سازی بین دستگاه‌ها وارد حساب شو.'}</div>
  </div>`;}
 function obCard(o){const completion=total(o)?Math.min(100,Math.round(paidTotal(o)/total(o)*100)):100;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party">${escapeHTML(o.party||types[o.type].label)}</div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>مانده پرداختنی</span><span>${fnum(completion)}٪ پرداخت‌شده</span></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان</span></div></div><div class="progress" role="progressbar" aria-label="درصد بازپرداخت" aria-valuenow="${completion}" aria-valuemin="0" aria-valuemax="100"><div style="width:${completion}%"></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
-function obligations(){let list=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});return `<section class="obligations-page"><div class="ob-list-header"><div class="ob-list-heading"><h2>فهرست تعهدات</h2><p>${fmt(data.length)} تعهد ثبت‌شده</p></div><button class="btn primary ob-add-button" data-nav="add" aria-label="افزودن تعهد جدید">${icon('plus')} <span>تعهد جدید</span></button></div><div class="ob-list-tools"><div class="filters" role="group" aria-label="فیلتر وضعیت تعهدات">${[['all','همه'],['active','فعال'],['overdue','معوق'],['paid','تسویه']].map(([k,t])=>`<button type="button" class="filter ${state.filter===k?'active':''}" data-filter="${k}" aria-pressed="${state.filter===k}">${t}</button>`).join('')}</div><label class="searchbox">${icon('search')}<input id="ob-search" type="search" aria-label="جست‌وجوی تعهدات" placeholder="جست‌وجوی نام تعهد یا بانک" value="${escapeHTML(state.query)}"/></label></div>${list.length?`<div class="ob-grid">${list.map(obCard).join('')}</div>`:`<div class="panel empty">${icon('search')}<strong>تعهدی پیدا نشد</strong>عبارت جست‌وجو یا فیلتر را تغییر دهید.</div>`}</section>`;}
-function freshDraft(){return {type:'loan',title:'',party:'',mode:'manual',amount:'60000000',rate:'18',count:'12',first:jText(addJMonth(todayJ,1,5),true),rows:[]};}
+function obligations(){let list=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});return `<section class="obligations-page"><div class="ob-list-header"><div class="ob-list-heading"><h2>فهرست تعهدات</h2><p>${fmt(data.length)} تعهد ثبت‌شده</p></div><button class="btn primary ob-add-button" data-nav="add" aria-label="افزودن تعهد جدید">${icon('plus')} <span>تعهد جدید</span></button></div><div class="ob-list-tools"><div class="filters" role="group" aria-label="فیلتر وضعیت تعهدات">${[['all','همه'],['active','فعال'],['overdue','معوق'],['paid','تسویه']].map(([k,t])=>`<button type="button" class="filter ${state.filter===k?'active':''}" data-filter="${k}" aria-pressed="${state.filter===k}">${t}</button>`).join('')}</div><label class="searchbox">${icon('search')}<input id="ob-search" type="search" aria-label="جست‌وجوی تعهدات" placeholder="جست‌وجوی نام تعهد یا بانک" value="${escapeHTML(state.query)}"/></label></div>${list.length?`<div class="ob-grid">${list.map(obCard).join('')}</div>`:`<div class="panel empty">${icon('wallet')}<strong>${data.length?'تعهدی پیدا نشد':'هنوز تعهدی ثبت نکردی'}</strong><p>${data.length?'عبارت جست‌وجو یا فیلتر رو تغییر بده.':'برای شروع، اولین وام یا خرید قسطی رو وارد کن.'}</p>${!data.length?`<button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>`:''}</div>`}</section>`;}
+function freshDraft(){return {type:'loan',title:'',party:'',mode:'manual',amount:'',rate:'0',count:'',first:jText(addJMonth(todayJ,1,5),true),rows:[]};}
 function prepareDraft(){if(!state.draft)state.draft=freshDraft();}
 function draftSchedule(){const d=state.draft;const amount=number(d.amount),n=number(d.count),rate=number(d.rate);if(!Number.isSafeInteger(amount)||amount<=0||amount>1e12||!Number.isInteger(n)||n<1||n>120||!Number.isFinite(rate)||rate<0||rate>100||!jParse(d.first))return null;return makeInstallments(amount,n,jParse(d.first),d.mode==='auto'?rate:0);}
 function draftValid(){const d=state.draft;return d.title.trim().length>=2&&d.title.length<100&&d.party.length<100&&!!draftSchedule();}
 function field(label,name,value,placeholder='',help='',extra=''){return `<div class="field ${extra}"><label for="d-${name}">${label}</label><input id="d-${name}" data-draft="${name}" value="${escapeHTML(value)}" placeholder="${escapeHTML(placeholder)}"/><small>${help}</small></div>`;}
 function wizard(){prepareDraft();const d=state.draft;const predicted=draftSchedule();const rows=d.rows.length?d.rows:predicted||[];const sum=rows.reduce((s,x)=>s+(+x.amount||0),0);let body='';if(state.wizardStep===1){body=`<div class="panel"><div class="panel-head"><h3>اطلاعات اولیه و شرایط اقساط</h3><small>مرحله ۱ از ۳</small></div><div class="form-grid"><div class="field full-width"><label>نوع تعهد</label><div class="mode-choice">${[['loan','وام بانکی','building'],['purchase','خرید قسطی','bag'],['other','سایر بدهی‌ها','user']].map(([k,t,ic])=>`<button class="mode-card ${d.type===k?'active':''}" data-draft-type="${k}">${icon(ic)}<strong>${t}</strong></button>`).join('')}</div></div>${field('عنوان تعهد *','title',d.title,'مثلاً وام بانک ملت','','full-width')}${field(d.type==='loan'?'نام بانک / مؤسسه':d.type==='purchase'?'فروشنده / فروشگاه':'نام طلبکار','party',d.party,'اختیاری')}${field('تاریخ اولین قسط (شمسی) *','first',d.first,'۱۴۰۵/۰۹/۰۵','فرمت: سال/ماه/روز')}<div class="field full-width"><label>روش تعریف اقساط</label><div class="mode-choice"><button class="mode-card ${d.mode==='manual'?'active':''}" data-draft-mode="manual">${icon('edit')}<span><strong>ثبت مبلغ مشخص</strong><small>تقسیم مبلغ بازپرداخت بین اقساط</small></span></button><button class="mode-card ${d.mode==='auto'?'active':''}" data-draft-mode="auto">${icon('chart')}<span><strong>محاسبه خودکار</strong><small>با نرخ ثابت و مانده کاهشی</small></span></button></div></div>${field(d.mode==='auto'?'اصل وام (تومان) *':'مجموع بازپرداخت (تومان) *','amount',d.amount,'مثلاً 60000000')}${field('تعداد اقساط *','count',d.count,'۱۲','بین ۱ تا ۱۲۰')}${d.mode==='auto'?field('نرخ سود اسمی سالانه (درصد)','rate',d.rate,'۱۸','فرض: نرخ ثابت و سود ماهانه'):''}</div><div class="form-actions"><button class="btn" data-nav="dashboard">انصراف</button><button class="btn primary" data-action="wizard-next" ${!draftValid()?'disabled':''}>ساخت جدول اقساط ${icon('chevron-left')}</button></div><div class="code-note" style="margin-top:12px">مبالغ به تومان و تاریخ‌ها به شمسی هستند. اطلاعات نمونه تا زمان تأیید ذخیره نمی‌شوند.</div></div>`;}
-else if(state.wizardStep===2){body=`<div class="panel"><div class="panel-head"><h3>جدول اقساط و ویرایش دستی</h3><small>${fmt(rows.length)} قسط</small></div><div class="warn">می‌تونی مبلغ و تاریخ هر ردیف را قبل از ثبت تغییر بدهی. مبلغ کل برنامه پس از ویرایش در خلاصه نمایش داده می‌شود.</div><div class="list-table" style="margin-top:14px"><table class="table" style="min-width:510px"><thead><tr><th>قسط</th><th>سررسید شمسی</th><th>مبلغ (تومان)</th></tr></thead><tbody>${rows.map((x,k)=>`<tr><td>${fnum(k+1)}</td><td><input class="field" style="height:36px;border:1px solid #dce7e9;border-radius:8px;padding:5px 9px;max-width:145px;width:100%" data-row="${k}" data-prop="due" value="${escapeHTML(jText(x.due,true))}" aria-label="سررسید قسط ${k+1}" /></td><td><input style="height:36px;border:1px solid #dce7e9;border-radius:8px;padding:5px 9px;width:100%;max-width:150px" data-row="${k}" data-prop="amount" value="${x.amount}" aria-label="مبلغ قسط ${k+1}" /></td></tr>`).join('')}</tbody></table></div><div class="form-actions"><button class="btn" data-action="wizard-prev">${icon('chevron-right')} بازگشت</button><button class="btn primary" data-action="wizard-next">بررسی نهایی ${icon('chevron-left')}</button></div></div>`;}
+else if(state.wizardStep===2){body=`<div class="panel wizard-schedule-panel"><div class="panel-head"><h3>تنظیم اقساط</h3><small>${fmt(rows.length)} قسط</small></div><div class="warn wizard-notice">در صورت نیاز، مبلغ و تاریخ هر قسط را ویرایش کن. جمع نهایی در مرحله بعد نمایش داده می‌شود.</div>
+<div class="list-table wizard-schedule-table" style="margin-top:14px"><table class="table" style="min-width:510px"><thead><tr><th>قسط</th><th>سررسید شمسی</th><th>مبلغ (تومان)</th></tr></thead><tbody>${rows.map((x,k)=>`<tr><td>${fnum(k+1)}</td><td><input class="wizard-row-input" data-row="${k}" data-prop="due" value="${escapeHTML(jText(x.due,true))}" aria-label="سررسید قسط ${k+1}" dir="ltr" /></td><td><input class="wizard-row-input" data-row="${k}" data-prop="amount" value="${x.amount}" inputmode="numeric" aria-label="مبلغ قسط ${k+1}" dir="ltr" /></td></tr>`).join('')}</tbody></table></div>
+<div class="wizard-mobile-rows" aria-label="ویرایش برنامه اقساط">${rows.map((x,k)=>`<article class="wizard-mobile-row"><div class="wizard-mobile-row-head"><strong>قسط ${fnum(k+1)}</strong><span>مبلغ و سررسید</span></div><div class="wizard-mobile-fields"><label><span>سررسید شمسی</span><input class="wizard-row-input" data-row="${k}" data-prop="due" value="${escapeHTML(jText(x.due,true))}" aria-label="سررسید قسط ${k+1}" dir="ltr" /></label><label><span>مبلغ (تومان)</span><input class="wizard-row-input" data-row="${k}" data-prop="amount" value="${x.amount}" inputmode="numeric" aria-label="مبلغ قسط ${k+1}" dir="ltr" /></label></div></article>`).join('')}</div>
+<div class="form-actions wizard-actions"><button class="btn" data-action="wizard-prev">${icon('chevron-right')} بازگشت</button><button class="btn primary" data-action="wizard-next">بررسی نهایی ${icon('chevron-left')}</button></div></div>`;}
 else {body=`<div class="panel"><div class="check-badge">${icon('check')}</div><h3 style="text-align:center">بررسی نهایی تعهد</h3><p class="muted small" style="text-align:center">پس از تأیید، اطلاعات تعهد و اقساط ثبت می‌شوند؛ در حالت حساب ابری، ارسال آن‌ها نیز انجام می‌شود.</p><div class="summary-line"><span class="small">عنوان</span><strong>${escapeHTML(d.title)}</strong></div><div class="summary-line"><span class="small">نوع تعهد</span><strong>${types[d.type].label}</strong></div><div class="summary-line"><span class="small">تعداد اقساط</span><strong>${fmt(rows.length)}</strong></div><div class="summary-line"><span class="small">مجموع اقساط</span><strong>${fmt(sum)} تومان</strong></div><div class="summary-line"><span class="small">اولین سررسید</span><strong>${jText(rows[0]?.due,true)}</strong></div><div class="good">${icon('shield')} ${cloud.user?`ثبت ابتدا در نسخه بازیابی این دستگاه و سپس در ابر انجام می‌شود. وضعیت ارسال را در سربرگ بررسی کن.`:'در حالت محلی، این داده‌ها فقط در همین مرورگر ذخیره می‌شوند.'}</div><div class="form-actions"><button class="btn" data-action="wizard-prev">${icon('chevron-right')} ویرایش جدول</button><button class="btn primary" data-action="wizard-save">${icon('check')} ثبت تعهد</button></div></div>`;}
 return `<div class="wizard-steps">${['مشخصات','برنامه اقساط','ثبت نهایی'].map((x,i)=>`<div class="step-item ${state.wizardStep===i+1?'current':state.wizardStep>i+1?'done':''}"><span class="step-number">${state.wizardStep>i+1?icon('check'):fnum(i+1)}</span>${x}</div>`).join('')}</div><div class="wizard-layout"><div>${body}</div><aside><div class="hint-card"><h3>${icon('wallet')} خلاصه برنامه</h3><div class="hint-row"><span>نوع تعهد</span><strong>${types[d.type].label}</strong></div><div class="hint-row"><span>تعداد اقساط</span><strong>${predicted?fmt(number(d.count)):'—'}</strong></div><div class="hint-row"><span>قسط اول (تخمینی)</span><strong>${predicted?fmt(predicted[0].amount)+' تومان':'—'}</strong></div><div class="hint-row"><span>مجموع بازپرداخت</span><strong>${predicted?fmt(predicted.reduce((s,i)=>s+i.amount,0))+' تومان':'—'}</strong></div>${d.mode==='auto'&&predicted?`<div class="hint-row"><span>سود محاسبه‌شده</span><strong>${fmt(predicted.reduce((s,i)=>s+i.amount,0)-number(d.amount))} تومان</strong></div>`:''}</div><div class="soft-alert" style="margin-top:13px">محاسبه خودکار یک مدل عمومی اقساط مساوی است؛ برای ثبت قطعی، ارقام قرارداد بانک را کنترل کنید. کارمزد و جرایم در این مدل لحاظ نشده‌اند.</div></aside></div>`;}
 function detail(){const o=data.find(x=>x.id===state.selectedId)||data[0];if(!o)return `<div class="empty">تعهدی وجود ندارد. <button class="btn primary" data-nav="add">افزودن</button></div>`;state.selectedId=o.id;const t=total(o),pd=paidTotal(o),progress=t?Math.round(pd/t*100):100;const visibleInstallments=o.installments.filter(i=>state.scheduleFilter==='all'||(state.scheduleFilter==='paid'?left(o,i)===0:left(o,i)>0));return `<button class="backbutton" data-nav="obligations">${icon('chevron-right')} بازگشت به تعهدات</button><div class="detail-banner"><div class="detail-title">${typeicon(o.type)}<div><h2>${escapeHTML(o.title)}</h2><p>${types[o.type].label} · ${escapeHTML(o.party||'بدون نام')}</p></div></div><div class="detail-actions"><button class="btn" data-action="edit-ob" data-ob="${o.id}">${icon('edit')} ویرایش مشخصات</button><button class="btn primary" data-action="pay-first" data-ob="${o.id}" ${outstanding(o)===0?'disabled':''}>${icon('credit')} ثبت پرداخت</button></div></div><div class="detail-grid"><div class="panel"><div class="tabbar">${[['schedule','جدول اقساط'],['payments','تاریخچه پرداخت‌ها'],['contract','اطلاعات تعهد']].map(([k,t])=>`<button data-tab="${k}" class="${state.detailTab===k?'active':''}">${t}</button>`).join('')}</div>${state.detailTab==='schedule'?`<div class="schedule-filters" role="group" aria-label="فیلتر اقساط">${[['open','پرداخت‌نشده'],['all','همه'],['paid','تسویه‌شده']].map(([k,t])=>`<button type="button" class="${state.scheduleFilter===k?'active':''}" data-action="schedule-filter" data-filter="${k}" aria-pressed="${state.scheduleFilter===k}">${t}</button>`).join('')}</div>${!visibleInstallments.length?'<p class="muted small">قسطی با این وضعیت وجود ندارد.</p>':''}<div class="list-table detail-schedule-table"><table class="table" style="min-width:530px"><thead><tr><th>قسط</th><th>سررسید</th><th>مبلغ</th><th>مانده</th><th>وضعیت</th><th></th></tr></thead><tbody>${visibleInstallments.map(i=>`<tr><td>${fnum(i.number)}</td><td>${jText(i.due,true)}</td><td>${fmt(i.amount)}</td><td>${fmt(left(o,i))}</td><td>${tag(status(o,i))}</td><td><div class="installment-actions">${left(o,i)>0?`<button class="row-action" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">پرداخت</button>`:icon('check')}${left(o,i)>0?`<button class="row-action edit-inline" data-action="edit-inst" data-ob="${o.id}" data-inst="${i.id}" aria-label="اصلاح قسط ${fnum(i.number)}">${icon('edit')}</button>`:''}</div></td></tr>`).join('')}</tbody></table></div><div class="mobile-detail-cards">${visibleInstallments.map(i=>`<article class="mobile-inst-card"><div class="mobile-inst-head"><strong>قسط ${fnum(i.number)}</strong>${tag(status(o,i))}</div><div class="mobile-inst-row"><span>سررسید</span><strong>${jText(i.due,true)}</strong></div><div class="mobile-inst-row"><span>مبلغ قسط</span><strong>${fmt(i.amount)} تومان</strong></div><div class="mobile-inst-row"><span>مانده</span><strong>${fmt(left(o,i))} تومان</strong></div>${left(o,i)>0?`<div class="mobile-inst-actions"><button class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button><button class="btn" data-action="edit-inst" data-ob="${o.id}" data-inst="${i.id}">اصلاح قسط</button></div>`:''}</article>`).join('')}</div>`:state.detailTab==='payments'?`${o.payments.length?`<div class="list-table detail-payments-table"><table class="table" style="min-width:410px"><thead><tr><th>تاریخ</th><th>قسط</th><th>مبلغ</th><th>توضیح</th><th>اصلاح</th></tr></thead><tbody>${o.payments.slice().reverse().map(p=>`<tr class="${p.reversedAt?'reversed-row':''}"><td>${jText(p.date,true)}</td><td>${fnum(o.installments.find(x=>x.id===p.installmentId)?.number||0)}</td><td>${fmt(p.amount)}</td><td>${escapeHTML(p.note||'—')}${p.reversedAt?`<div class="reverse-note">علت ابطال: ${escapeHTML(p.reverseReason||'ذکر نشده')}</div>`:''}</td><td>${p.reversedAt?'<span class="tag">باطل‌شده</span>':`<button class="row-action edit-inline" data-action="reverse-payment" data-ob="${o.id}" data-payment="${p.id}" title="ابطال این ثبت">ابطال ثبت</button>`}</td></tr>`).join('')}</tbody></table></div><div class="mobile-detail-cards">${o.payments.slice().reverse().map(p=>`<article class="mobile-inst-card ${p.reversedAt?'reversed-row':''}"><div class="mobile-inst-head"><strong>پرداخت قسط ${fnum(o.installments.find(x=>x.id===p.installmentId)?.number||0)}</strong>${p.reversedAt?'<span class="tag">باطل‌شده</span>':tag('paid')}</div><div class="mobile-inst-row"><span>تاریخ پرداخت</span><strong>${jText(p.date,true)}</strong></div><div class="mobile-inst-row"><span>مبلغ</span><strong>${fmt(p.amount)} تومان</strong></div>${p.note?`<p class="mobile-inst-note">${escapeHTML(p.note)}</p>`:''}${p.reversedAt?`<p class="reverse-note">دلیل ابطال: ${escapeHTML(p.reverseReason||'ذکر نشده')}</p>`:`<button class="btn danger mobile-reverse" data-action="reverse-payment" data-ob="${o.id}" data-payment="${p.id}">ابطال ثبت پرداخت</button>`}</article>`).join('')}</div>`:`<div class="empty">هنوز پرداختی ثبت نشده.</div>`}`:`<div class="row-list"><span class="muted">نوع تعهد</span><strong>${types[o.type].label}</strong></div><div class="row-list"><span class="muted">بانک / طرف حساب</span><strong>${escapeHTML(o.party||'—')}</strong></div><div class="row-list"><span class="muted">روش ثبت</span><strong>${o.mode==='auto'?'محاسبه خودکار':'مبلغ مشخص'}</strong></div><div class="row-list"><span class="muted">اصل یا مبلغ مبنا</span><strong>${fmt(o.principal)} تومان</strong></div><div class="row-list"><span class="muted">تعداد اقساط</span><strong>${fmt(o.installments.length)}</strong></div><div class="row-list"><span class="muted">تاریخ ثبت</span><strong>${jText(o.createdAt,true)}</strong></div><h3 class="changes-heading">سوابق اصلاحات تعهد</h3>${o.changes?.length?o.changes.slice().reverse().map(c=>`<div class="change-entry"><strong>${escapeHTML(c.summary)}</strong><span>${jText(c.date,true)}</span></div>`).join(''):'<p class="muted small">هنوز اصلاحی در مشخصات یا جدول اقساط ثبت نشده است.</p>'}`}</div><aside class="panel"><div class="panel-head"><h3>خلاصه بازپرداخت</h3>${tag(obligationStatus(o))}</div><div class="detail-summary"><div class="metric"><label>کل اقساط</label><strong>${fmt(t)}</strong><div class="small muted">تومان</div></div><div class="metric"><label>مانده</label><strong>${fmt(outstanding(o))}</strong><div class="small muted">تومان</div></div><div class="metric"><label>پرداخت شده</label><strong>${fmt(pd)}</strong><div class="small muted">تومان</div></div><div class="metric"><label>تعداد پرداخت‌نشده</label><strong>${fmt(o.installments.filter(i=>left(o,i)>0).length)}</strong><div class="small muted">قسط</div></div></div><div style="display:flex;justify-content:space-between;margin:20px 0 7px"><span class="small muted">پیشرفت بازپرداخت</span><strong>${fnum(progress)}٪</strong></div><div class="progress"><div style="width:${progress}%"></div></div><div class="soft-alert" style="margin-top:18px">مانده این صفحه، جمع مبلغ پرداخت‌نشده اقساط است؛ لزوماً معادل مانده اصل وام بانکی نیست.</div></aside></div>`;}
@@ -763,7 +892,7 @@ function cloudSnapshot(){return {version:1,obligations:data};}
 function readCloudCache(){try{const raw=localStorage.getItem(cloudCacheKey());return raw?JSON.parse(raw):null;}catch(e){return null;}}
 function persistCloudCache(dirty=false){try{localStorage.setItem(cloudCacheKey(),JSON.stringify({baseRevision:cloud.revision,dirty,obligations:data}));return true;}catch(e){toast('ذخیره نسخه بازیابی این دستگاه ممکن نشد.','error');return false;}}
 function setCloudPhase(phase,msg=''){cloud.phase=phase;cloud.error=msg;render();}
-function localReload(){try{const raw=localStorage.getItem(KEY);data=raw?validateBackup(JSON.parse(raw)):seeded();}catch(e){data=[];storageRecoveryNeeded=true;}}
+function localReload(){data=loadLocalData();}
 async function cloudActivate(user){
  if(!user?.id)return;
  if(cloud.user?.id===user.id&&['loading','ready','pending','choose','conflict'].includes(cloud.phase))return;
@@ -773,7 +902,20 @@ async function cloudActivate(user){
   const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',user.id).maybeSingle();
   if(error)throw error;if(cloud.user?.id!==user.id)return;
   const saved=readCloudCache();
-  if(!row){cloud.revision=0;setCloudPhase('choose');cloud.accountOpen=true;render();return;}
+  if(!row){
+   cloud.revision=0;
+   // Recover unsent first-write data if the first upload failed, rather than asking to start over.
+   if(saved?.dirty){
+    try{
+     const pending=validateBackup({version:1,obligations:saved.obligations});
+     data=pending;cloud.dirty=true;
+     if(saved.baseRevision===0){cloud.phase='pending';render();queueMicrotask(pushCloud);return;}
+     cloud.phase='conflict';cloud.accountOpen=true;render();return;
+    }catch(e){cloud.phase='conflict';cloud.accountOpen=true;render();return;}
+   }
+   // A new cloud account begins blank. Guest records remain separately in KEY for opt-in import.
+   data=[];setCloudPhase('choose');cloud.accountOpen=true;render();return;
+  }
   if(!Number.isSafeInteger(row.revision)||row.revision<1)throw Error('شماره نسخه پرونده ابری معتبر نیست.');
   const loaded=validateBackup(row.payload);cloud.revision=row.revision;
   if(saved?.dirty){
@@ -909,10 +1051,12 @@ window.addEventListener('focus',()=>{if(cloud.dirty)pushCloud();else cloudCheckU
 setInterval(()=>{if(cloud.dirty&&cloud.phase==='error')pushCloud();else cloudCheckUpdates();},25000);
 window.addEventListener('DOMContentLoaded',initCloud);
 
+function legacyArchiveExists(){try{return !!localStorage.getItem(LEGACY_SAMPLE_ARCHIVE);}catch(e){return false;}}
 function settingsPage(){return `<section class="settings-page"><div class="panel settings-hero"><div><h2>اطلاعات مالی من</h2><p class="muted">${cloud.user?`حساب: ${escapeHTML(cloud.user.email||'')} · ${cloudStatusText()}`:'حالت محلی؛ برای انتقال اطلاعات به دستگاه دیگر به حساب ابری وارد شو.'}</p></div><div class="settings-count">${fmt(data.length)} <small>تعهد ثبت‌شده</small></div></div>
  <div class="settings-grid"><section class="panel settings-box cloud-card"><span class="settings-icon">${icon('user')}</span><h3>حساب کاربری و ابر</h3><p>${cloud.user?`ورود با ${escapeHTML(cloud.user.email||'')}. ${cloudStatusText()}`:'با حساب شخصی بین موبایل و کامپیوتر به اطلاعات یکسان دسترسی پیدا کن. برای فعال‌سازی، پروژه Supabase را پیکربندی کن.'}</p><button class="btn primary" data-action="account-open">${cloud.user?'مدیریت حساب و همگام‌سازی':'ورود یا ساخت حساب'}</button></section><section class="panel settings-box"><span class="settings-icon">${icon('download')}</span><h3>فایل پشتیبان</h3><p>تمام تعهدات، اقساط و تاریخچه پرداخت‌ها را در یک فایل JSON ذخیره کن.</p><button class="btn primary" data-action="export">${icon('download')} دریافت پشتیبان</button></section>
  <section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی پشتیبان</h3><p>فایل پشتیبان قسط‌یار را وارد کن. قبل از جایگزینی اطلاعات، خلاصه فایل و تأیید نمایش داده می‌شود.</p><button class="btn" data-action="import-pick">${icon('refresh')} انتخاب فایل JSON</button><input type="file" id="backup-file" accept=".json,application/json" hidden /></section>
  <section class="panel settings-box"><span class="settings-icon">${icon('edit')}</span><h3>شروع با اطلاعات خودم</h3><p>اطلاعات فضای فعلی را پس از تأیید پاک کن. در حالت ابری، حذف پس از همگام‌سازی به حساب نیز منتقل می‌شود.</p><button class="btn danger" data-action="erase-all">${icon('close')} پاک‌کردن تعهدات این فضا</button></section>
+ ${!cloud.user&&legacyArchiveExists()?`<section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی داده‌های نمونه قدیمی</h3><p>نسخه‌های قبلی به‌طور خودکار داده آزمایشی می‌ساختند. یک نسخه بایگانی از این داده‌ها برای اطمینان نگه داشته شده است.</p><button class="btn" data-action="restore-legacy-demo">بازگرداندن نسخه بایگانی</button></section>`:''}
  <section class="panel settings-box"><span class="settings-icon">${icon('shield')}</span><h3>وضعیت نگهداری داده‌ها</h3><p>${cloud.user?'داده‌ها برای این حساب از سرور بارگیری می‌شوند؛ تغییرات ابتدا یک نسخه بازیابی در مرورگر می‌سازند و سپس با کنترل نسخه به ابر ارسال می‌شوند.':storageRecoveryNeeded?'اطلاعات قبلی قابل خواندن نیست؛ از حذف یا ثبت داده جدید خودداری کن.':'حالت محلی فعال است؛ اطلاعات بین دستگاه‌ها مشترک نیست.'}</p><div class="good">${cloud.user?`وضعیت: ${cloudStatusText()}`:'برای راه‌اندازی سرور، فایل SQL و راهنمای همراه بسته را اجرا کن.'}</div></section></div></section>`;}
 function editModal(){if(!state.edit)return '';const e=state.edit,o=data.find(x=>x.id===e.ob);if(!o)return '';let body='';if(e.kind==='ob'){body=`<div class="field"><label for="edit-title">عنوان تعهد</label><input id="edit-title" maxlength="100" value="${escapeHTML(o.title)}"/></div><div class="field"><label for="edit-party">نام بانک، فروشنده یا طرف حساب</label><input id="edit-party" maxlength="100" value="${escapeHTML(o.party)}"/></div><p class="muted small">مشخصات قابل تغییرند؛ اقساط و پرداخت‌ها حفظ می‌شوند.</p>`;}else{const i=o.installments.find(x=>x.id===e.inst);if(!i)return '';body=`<p class="muted">قسط ${fnum(i.number)} از ${escapeHTML(o.title)}</p><div class="field"><label for="edit-amount">مبلغ قسط (تومان)</label><input id="edit-amount" inputmode="numeric" value="${i.amount}"/></div><div class="field"><label for="edit-due">سررسید شمسی</label><input id="edit-due" value="${jText(i.due,true)}"/></div><p class="muted small">مبلغ جدید نباید از پرداخت‌های ثبت‌شده این قسط کمتر باشد. قسط کاملاً تسویه‌شده قابل ویرایش نیست.</p>`;}
  return `<div class="modal-backdrop" data-action="close-edit"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-heading"><div class="modal-head"><h2 id="edit-heading">${e.kind==='ob'?'ویرایش مشخصات تعهد':'اصلاح قسط پرداخت‌نشده'}</h2><button class="close-btn" data-action="close-edit" aria-label="بستن">${icon('close')}</button></div><div class="modal-form">${body}<div class="row-inline"><button class="btn primary" data-action="edit-save">ذخیره تغییرات</button><button class="btn" data-action="close-edit">انصراف</button></div></div></section></div>`;}
@@ -925,7 +1069,7 @@ function paymentOpen(ob,inst){const o=data.find(x=>x.id===ob),i=o?.installments.
 function calendarShift(delta){const {y,m}=state.calendarMonth;const idx=y*12+m-1+delta;state.calendarMonth={y:Math.floor(idx/12),m:(idx%12+12)%12+1};const date=jISO(state.calendarMonth.y,state.calendarMonth.m,1);state.selectedDay=date||todayISO;render();}
 function wizardNext(){const d=state.draft;if(state.wizardStep===1){if(!draftValid()){toast('عنوان، مبلغ، تعداد اقساط و تاریخ شمسی را بررسی کن.','error');return;}d.rows=draftSchedule();state.wizardStep=2;render();return;}if(state.wizardStep===2){if(!d.rows.length||d.rows.some(x=>!Number.isSafeInteger(x.amount)||x.amount<=0||x.amount>1e12||!x.due)){toast('مبلغ یا تاریخ یکی از اقساط معتبر نیست.','error');return;}state.wizardStep=3;render();}}
 function wizardSave(){const d=state.draft;if(!d||state.wizardStep!==3||!draftValid()||!d.rows.length||d.rows.some(x=>!Number.isSafeInteger(x.amount)||x.amount<=0||!x.due)){toast('لطفاً جدول اقساط را بررسی کن.','error');return;}const ob={id:id(),type:d.type,title:d.title.trim(),party:d.party.trim(),mode:d.mode,principal:number(d.amount),rate:d.mode==='auto'?number(d.rate):0,createdAt:todayISO,installments:d.rows.map((x,k)=>({id:id(),number:k+1,due:x.due,amount:x.amount})),payments:[]};if(!commit([...data,ob]))return;state.selectedId=ob.id;state.detailTab='schedule';state.draft=null;state.wizardStep=1;nav('detail');toast('تعهد و جدول اقساط ثبت شد.');}
-function exportJSON(){const blob=new Blob([JSON.stringify({app:'ghestyar-demo',version:1,exportedAt:new Date().toISOString(),obligations:data},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ghestyar-backup-'+todayISO+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('فایل پشتیبان آماده شد.');}
+function exportJSON(){const blob=new Blob([JSON.stringify({app:'ghestyar',version:1,exportedAt:new Date().toISOString(),obligations:data},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ghestyar-backup-'+todayISO+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('فایل پشتیبان آماده شد.');}
 document.addEventListener('click',e=>{const n=e.target.closest('[data-nav]');if(n){if(n.dataset.nav==='detail'&&!state.selectedId)state.selectedId=data[0]?.id;if(n.dataset.nav==='add'&&!state.draft){state.draft=freshDraft();state.wizardStep=1;}nav(n.dataset.nav);return;}const filter=e.target.closest('[data-filter]:not([data-action])');if(filter){state.filter=filter.dataset.filter;render();return;}const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action;if(action==='close-modal' && el.classList.contains('modal-backdrop') && e.target.closest('.modal'))return;if(action==='view'){state.selectedId=el.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}
 else if(action==='pay')paymentOpen(el.dataset.ob,el.dataset.inst);
 else if(action==='pay-first'){const o=data.find(x=>x.id===el.dataset.ob),i=o?.installments.filter(x=>left(o,x)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];if(i)paymentOpen(o.id,i.id);}
@@ -944,6 +1088,16 @@ document.addEventListener('click',e=>{
  if(action==='schedule-filter'){state.scheduleFilter=btn.dataset.filter;render();return;}
  if(action==='import-pick'){document.getElementById('backup-file')?.click();return;}
  if(action==='erase-all'){if(!window.confirm('همه تعهدات و پرداخت‌های فضای فعلی (در حالت ابری، پس از همگام‌سازی روی حساب) پاک می‌شوند. قبل از ادامه پشتیبان گرفته‌ای؟'))return;if(!window.confirm('تأیید نهایی: اطلاعات مالی فعلی پاک شوند؟'))return;if(!commit([]))return;state.draft=null;nav('dashboard');toast('اطلاعات این مرورگر پاک شدند.');return;}
+ if(action==='restore-legacy-demo'){
+  if(cloud.user){toast('بازیابی این نسخه بایگانی فقط در حالت محلی ممکن است.','error');return;}
+  try{const raw=localStorage.getItem(LEGACY_SAMPLE_ARCHIVE);if(!raw)throw Error('نسخه بایگانی موجود نیست.');
+   const backed=validateBackup(JSON.parse(raw));
+   if(!confirm(`این نسخه فقط شامل ${backed.length} پرونده آزمایشی قدیمی است. اطلاعات فعلی محلی جایگزین شوند؟`))return;
+   localStorage.setItem(LEGACY_RESTORE_KEEP,'yes');
+   if(!commit(backed))return;nav('dashboard');toast('داده‌های بایگانی‌شده بازیابی شدند.');
+  }catch(e){toast('بازیابی نسخه بایگانی ناموفق بود: '+e.message,'error');}
+  return;
+ }
  if(action==='reverse-payment'){reversePayment(btn.dataset.ob,btn.dataset.payment);return;}
  if(action==='edit-ob'){state.edit={kind:'ob',ob:btn.dataset.ob};render();document.getElementById('edit-title')?.focus();return;}
  if(action==='edit-inst'){state.edit={kind:'inst',ob:btn.dataset.ob,inst:btn.dataset.inst};render();document.getElementById('edit-amount')?.focus();return;}
@@ -962,7 +1116,7 @@ document.addEventListener('click',e=>{const type=e.target.closest('[data-draft-t
 document.addEventListener('change',e=>{if(e.target.dataset.draft){state.draft[e.target.dataset.draft]=e.target.value;state.draft.rows=[];render();}if(e.target.dataset.row!==undefined){const idx=+e.target.dataset.row,prop=e.target.dataset.prop;if(prop==='amount'){const value=number(e.target.value);state.draft.rows[idx].amount=value;}else if(prop==='due'){state.draft.rows[idx].due=jParse(e.target.value);}if(state.draft.rows[idx].due===null)toast('تاریخ شمسی این ردیف معتبر نیست.','error');}});
 document.addEventListener('input',e=>{if(e.target.id==='ob-search'){const pos=e.target.selectionStart;state.query=e.target.value;const holder=$('.ob-grid')||$('.empty');const matches=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});if(holder)holder.outerHTML=matches.length?`<div class="ob-grid">${matches.map(obCard).join('')}</div>`:`<div class="panel empty">نتیجه‌ای پیدا نشد.</div>`;}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(state.payment||state.edit)){state.payment=null;state.edit=null;render();}if(e.key==='Enter'&&e.target.matches('[data-action="view"]')){state.selectedId=e.target.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}});
-if(!storageRecoveryNeeded)save();render();if(storageRecoveryNeeded)toast('فایل اطلاعات قبلی قابل خواندن نیست؛ برای جلوگیری از حذف، بازنویسی نشده است. ابتدا از داده مرورگر نسخه پشتیبان تهیه کن.','error');
+render();if(storageRecoveryNeeded)toast('فایل اطلاعات قبلی قابل خواندن نیست؛ برای جلوگیری از حذف، بازنویسی نشده است. ابتدا از داده مرورگر نسخه پشتیبان تهیه کن.','error');
 </script>
 </body>
 </html>
