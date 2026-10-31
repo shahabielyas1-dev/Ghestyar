@@ -16,7 +16,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
 })();
 </script>
-<title>قسط‌یار ۳.۶ | اعلان پس‌زمینه</title>
+<title>قسط‌یار ۳.۶.۱ | رفع ابهام خطای Push</title>
 <script src="./ghestyar-config.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1027,11 +1027,32 @@ function pushStatusLabel(){
 }
 function b64ToBytes(value){const padded=value.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-value.length%4)%4);return Uint8Array.from(atob(padded),x=>x.charCodeAt(0));}
 function userTimeZone(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Tehran';}catch{return 'Asia/Tehran';}}
+/* Supabase Functions distinguishes network/CORS, gateway and function errors.
+ * Surface safe status details so a server setup problem is actionable on mobile.
+ * Never log authorization headers, session tokens or function secrets. */
+async function pushErrorMessage(error){
+ const status=Number(error?.context?.status)||0;
+ let code='';
+ try{
+  if(typeof error?.context?.clone==='function'){
+   const responseText=await error.context.clone().text();
+   const payload=JSON.parse(responseText);
+   if(typeof payload?.error==='string'&&/^[A-Z][A-Z0-9_]{2,60}$/.test(payload.error))code=payload.error;
+   else if(typeof payload?.code==='string'&&/^[A-Z][A-Z0-9_]{2,60}$/.test(payload.code))code=payload.code;
+  }
+ }catch(_e){}
+ if(!status)return 'اتصال به تابع Push برقرار نشد (خطای شبکه یا CORS). مسیر تابع و Invocations را در Supabase بررسی کن.';
+ if(status===404)return 'تابع ghestyar-push-subscribe پیدا نشد (HTTP 404). نام و وضعیت Deploy را بررسی کن.';
+ if(status===401||status===403)return `دسترسی به تابع Push رد شد (HTTP ${status}${code?' / '+code:''}). Verify JWT و ورود حساب را بررسی کن.`;
+ if(status===503)return `تابع Push پیکربندی نشده (HTTP 503${code?' / '+code:''}). Secrets و لاگ تابع را بررسی کن.`;
+ if(status>=500)return `تابع Push خطای سرور داد (HTTP ${status}${code?' / '+code:''}). بخش Logs تابع را بررسی کن.`;
+ return `درخواست تابع Push ناموفق بود (HTTP ${status}${code?' / '+code:''}). بخش Invocations را بررسی کن.`;
+}
 async function callPushBackend(body){
  if(!cloud.client||!cloud.user)throw Error('ابتدا وارد حساب شو.');
  const {data,error}=await cloud.client.functions.invoke('ghestyar-push-subscribe',{body});
- if(error)throw Error('تابع Push در Supabase پاسخ نداد. ابتدا بخش سرور نسخه ۳.۶ را فعال کن.');
- if(!data||data.error)throw Error(data?.error||'پاسخ نامعتبر از سرور Push');
+ if(error)throw Error(await pushErrorMessage(error));
+ if(!data||data.error)throw Error(typeof data?.error==='string' ? data.error : 'پاسخ نامعتبر از سرور Push');
  return data;
 }
 async function refreshBackgroundPushState(){
