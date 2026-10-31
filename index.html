@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#f7f8fd" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="apple-touch-icon" href="./icon-192.png" />
 <script>
 /* Set the theme before rendering to avoid a bright flash on dark devices. */
 (function(){
@@ -14,7 +16,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
 })();
 </script>
-<title>قسط‌یار ۳.۳ | حساب کاربری واضح</title>
+<title>قسط‌یار ۳.۶ | اعلان پس‌زمینه</title>
 <script src="./ghestyar-config.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -684,6 +686,154 @@ html[data-theme="dark"] .account-trigger .account-state-label{color:#c7bed8}
  .page-title{white-space:normal;overflow:visible;text-overflow:clip}
  .toolbar>.account-trigger{min-width:94px}
 }
+
+/* v3.4 — reports. All calculations are read-only and use the existing cloud-backed dataset. */
+.report-page{display:flex;flex-direction:column;gap:17px;min-width:0}
+.report-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--white);border:1px solid var(--border);border-radius:19px;padding:15px 17px}
+.report-toolbar-left,.report-toolbar-right{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.report-toolbar strong{font-size:16px;white-space:normal}
+.report-caption{font-size:12px;color:var(--muted)}
+.report-pills{display:flex;gap:5px;background:var(--canvas);padding:4px;border:1px solid var(--border);border-radius:12px;flex-wrap:wrap}
+.report-pills button{padding:8px 12px;border:0;background:transparent;color:var(--muted);border-radius:9px;font-size:13px;font-weight:800;min-height:39px}
+.report-pills button.active{background:#7960df;color:#fff;box-shadow:0 4px 10px #7663ba22}
+.report-month-nav{display:flex;align-items:center;gap:5px}
+.report-month-nav button{border:1px solid var(--border);border-radius:11px;background:var(--white);color:var(--ink);width:39px;height:39px;display:grid;place-items:center}
+.report-month-nav button:disabled{opacity:.3}
+.report-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.report-kpi{min-width:0;background:var(--white);border:1px solid var(--border);border-radius:18px;padding:17px}
+.report-kpi .label{font-size:12px;color:var(--muted);font-weight:700}
+.report-kpi .value{font-size:clamp(19px,2.1vw,26px);font-weight:900;overflow-wrap:anywhere;line-height:1.5;margin:8px 0 2px;font-variant-numeric:tabular-nums}
+.report-kpi .unit{color:var(--muted);font-size:12px}
+.report-kpi.important{background:#f1ecff;border-color:#e1d8ff}
+.report-kpi.important .value{color:#6249bd}
+.report-kpi.late .value{color:#bd5960}
+.report-columns{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(250px,1fr);gap:14px;align-items:start}
+.report-box{background:var(--white);border:1px solid var(--border);border-radius:19px;padding:19px;min-width:0}
+.report-box h2{margin:0;font-size:18px;font-weight:900}
+.report-box p{color:var(--muted);margin:5px 0 14px;font-size:12px;line-height:1.9}
+.report-legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.report-legend span{display:flex;align-items:center;gap:5px}
+.report-swatch{display:inline-block;width:11px;height:11px;border-radius:4px;background:#a18cf5}
+.report-swatch.actual{background:#35b9a0}
+.report-plot{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:8px;margin-top:14px;min-height:208px;align-items:end}
+.report-plot-group{display:flex;flex-direction:column;align-items:center;min-width:0;gap:8px}
+.report-bars{width:100%;max-width:74px;height:154px;display:flex;align-items:flex-end;justify-content:center;gap:4px;background:var(--canvas);border-radius:12px 12px 7px 7px;padding:5px}
+.report-bar{width:40%;border-radius:8px 8px 3px 3px;min-height:0;background:#a18cf5;transition:height .2s}
+.report-bar.actual{background:#35b9a0}
+.report-plot-label{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap}
+.report-breakdown{display:flex;flex-direction:column;gap:16px;margin-top:22px}
+.report-type-row{min-width:0}
+.report-type-top{display:flex;justify-content:space-between;align-items:center;gap:9px;font-size:13px;font-weight:700;margin-bottom:7px}
+.report-type-top strong{font-size:14px;overflow-wrap:anywhere}
+.report-type-track{height:10px;background:var(--canvas);border-radius:40px;overflow:hidden}
+.report-type-fill{height:100%;border-radius:40px;background:#8167df}
+.report-type-fill.purchase{background:#35b9a0}
+.report-type-fill.other{background:#f2b467}
+.report-table-wrap{overflow-x:auto;max-width:100%;border-radius:14px;border:1px solid var(--border)}
+.report-table{width:100%;border-collapse:collapse;font-size:13px;text-align:right}
+.report-table th,.report-table td{padding:13px 12px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.report-table th{background:var(--canvas);font-weight:800;color:var(--muted)}
+.report-table tr:last-child td{border-bottom:0}
+.report-table td strong{font-weight:900}
+.report-table .current{background:#8b73ec12}
+.report-key{font-size:12px;color:var(--muted);line-height:1.95;padding:12px 15px;border:1px solid var(--border);border-radius:14px;background:var(--white)}
+
+.report-mobile-months{display:none}
+.report-month-card{border:1px solid var(--border);background:var(--canvas);border-radius:14px;padding:13px;min-width:0}
+.report-month-card h3{font-size:15px;font-weight:900;margin:0 0 10px}
+.report-month-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.report-month-meta>div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.report-month-meta span{color:var(--muted);font-size:11px}
+.report-month-meta strong{font-size:14px;overflow-wrap:anywhere}
+.report-payments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.report-payment{padding:12px 14px;border:1px solid var(--border);background:var(--canvas);border-radius:13px;min-width:0}
+.report-payment h3{font-size:14px;line-height:1.6;overflow-wrap:anywhere;margin:0 0 7px}
+.report-payment div{display:flex;align-items:center;justify-content:space-between;gap:7px;font-size:12px;color:var(--muted)}
+.report-payment strong{font-weight:900;color:var(--ink)}
+.report-empty{padding:26px 15px;text-align:center;color:var(--muted)}
+.report-quick-link{display:flex;align-items:center;gap:8px;width:100%;justify-content:center;background:var(--white);border:1px solid var(--border);color:var(--ink);padding:12px;border-radius:12px;font-size:14px;font-weight:800;min-height:45px;margin-top:13px}
+html[data-theme="dark"] .report-kpi.important{background:#2f274d;border-color:#5f4a91}
+html[data-theme="dark"] .report-kpi.important .value{color:#d6c7ff}
+html[data-theme="dark"] .report-kpi.late .value{color:#ffb3bd}
+html[data-theme="dark"] .report-pills button.active{background:#795fde;color:#fff}
+html[data-theme="dark"] .report-bar{background:#997cee}
+html[data-theme="dark"] .report-bar.actual{background:#36b69e}
+html[data-theme="dark"] .report-table .current{background:#59478529}
+@media(max-width:1100px){.report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.report-columns{grid-template-columns:1fr}}
+@media(max-width:720px){.report-toolbar{padding:12px}.report-toolbar-left,.report-toolbar-right{width:100%;justify-content:space-between}.report-toolbar-left .report-pills{flex:1;justify-content:space-around}.report-toolbar-left .report-pills button{flex:1;padding:8px 6px}.report-kpis{gap:9px}.report-kpi{padding:13px}.report-kpi .value{font-size:clamp(17px,5vw,22px)}.report-box{padding:14px}.report-box h2{font-size:16px}.report-plot{gap:4px}.report-bars{gap:3px;padding:3px;height:133px}.report-plot-label{font-size:10px}.report-payment h3{font-size:13px}.report-payments{grid-template-columns:1fr}.report-table{font-size:12px}.report-table th,.report-table td{padding:10px}}
+@media(max-width:720px){
+ .report-toolbar-left{flex-direction:column;align-items:stretch}
+ .report-toolbar-left .report-pills{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
+ .report-toolbar-left .report-pills button{font-size:11px;line-height:1.5;padding:6px 3px;min-width:0;min-height:43px;white-space:normal}
+ .report-table-wrap{display:none}
+ .report-mobile-months{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+}
+@media(max-width:420px){.report-mobile-months{grid-template-columns:1fr}}
+@media(max-width:370px){.report-toolbar-left{display:block}.report-toolbar-left .report-pills{margin-top:9px}.report-kpi .value{font-size:17px}.report-kpi .label{font-size:11px}.report-plot-label{font-size:9px}}
+
+/* v3.5: accessible reminder center, own responsive layout, no mandatory push permission */
+.reminder-panel{background:var(--white);border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+.reminder-page{display:grid;gap:16px;max-width:1050px;margin:0 auto 40px}
+.reminder-hero{background:linear-gradient(115deg,#4b3991,#7558d8);color:#fff;padding:22px;border-radius:22px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.reminder-hero h2{font-size:clamp(20px,3vw,29px);line-height:1.5;margin:0 0 8px;font-weight:900}
+.reminder-hero p{font-size:13px;line-height:1.9;margin:0;opacity:.9}
+.reminder-count{background:#ffffff22;border:1px solid #ffffff38;border-radius:16px;padding:12px 20px;text-align:center;flex-shrink:0}
+.reminder-count strong{display:block;font-size:32px;line-height:1.3}
+.reminder-count span{font-size:12px}
+.reminder-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.reminder-tabs button{border:1px solid var(--border);border-radius:12px;padding:9px 15px;background:var(--soft);color:var(--ink);font-weight:800;min-height:44px}
+.reminder-tabs button.active{background:#7257d7;border-color:#7257d7;color:white}
+.reminder-section{display:grid;gap:10px}
+.reminder-item{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--soft);border:1px solid var(--border);border-radius:15px;padding:15px}
+.reminder-main{min-width:0;flex:1}
+.reminder-main strong{display:block;font-size:15px;overflow-wrap:anywhere}
+.reminder-meta{font-size:12px;color:var(--muted);margin:3px 0 0}
+.reminder-level{font-size:12px;display:inline-block;font-weight:800;color:var(--teal);margin-bottom:3px}
+.reminder-level.overdue{color:var(--rose)}
+.reminder-amount{font-size:16px;font-weight:900;white-space:nowrap}
+.reminder-amount small{font-size:11px;font-weight:600;color:var(--muted)}
+.reminder-actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.reminder-actions .btn{white-space:nowrap;min-height:40px;padding:8px 12px}
+.reminder-empty{display:flex;flex-direction:column;gap:8px;align-items:center;padding:35px 10px;text-align:center;color:var(--muted)}
+.reminder-empty svg{width:38px;height:38px;color:var(--green)}
+.reminder-empty strong{font-size:17px;color:var(--ink)}
+.reminder-settings{display:grid;gap:14px}
+.reminder-setting-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.reminder-setting-row label{font-size:14px;font-weight:800;color:var(--ink)}
+.reminder-setting-row p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.reminder-setting-row select{background:var(--white);color:var(--ink);border:1px solid var(--border);padding:10px 12px;border-radius:11px;min-width:135px;min-height:44px}
+.reminder-toggle{position:relative;display:inline-flex;align-items:center;gap:8px;cursor:pointer;min-height:44px;flex-shrink:0}
+.reminder-toggle input{width:22px;height:22px;accent-color:#7759df;cursor:pointer}
+.reminder-note{background:var(--soft);border:1px solid var(--border);border-radius:12px;padding:11px 14px;font-size:12px;line-height:1.95;color:var(--muted)}
+.reminder-info{font-size:12px;color:var(--muted);margin:0}
+.reminder-alert-line{padding:14px 16px;border:1px solid #baa5f441;background:var(--soft);border-radius:15px;margin:18px 0 6px;display:flex;justify-content:space-between;align-items:center;gap:9px}
+.reminder-alert-line strong{font-size:13px;font-weight:850}
+.reminder-alert-line .btn{font-size:12px;white-space:nowrap;min-height:40px}
+.alert-bell{position:relative}
+.alert-count{position:absolute;left:-5px;top:-7px;min-width:20px;height:20px;padding:0 3px;background:#ef667b;color:white;display:grid;place-items:center;font-size:10px;font-weight:900;border-radius:11px;border:2px solid var(--canvas);pointer-events:none}
+html[data-theme="dark"] .reminder-tabs button.active{background:#8268ee;border-color:#8268ee}
+html[data-theme="dark"] .reminder-hero{background:linear-gradient(120deg,#44317f,#6753ab)}
+@media(max-width:700px){
+ .reminder-panel{padding:15px;border-radius:18px}
+ .reminder-hero{padding:18px;align-items:flex-start}
+ .reminder-count{padding:10px 13px}
+ .reminder-count strong{font-size:26px}
+ .reminder-item{flex-direction:column;align-items:stretch;padding:13px}
+ .reminder-actions{justify-content:stretch;display:grid;grid-template-columns:1fr 1fr}
+ .reminder-actions .btn{width:100%;font-size:12px;min-width:0;padding:9px 5px}
+ .reminder-amount{margin-top:4px}
+ .reminder-setting-row{align-items:flex-start}
+ .reminder-alert-line{flex-direction:column;align-items:stretch}
+}
+@media(max-width:350px){.reminder-setting-row select{min-width:105px}.reminder-hero p{font-size:11px}.reminder-hero h2{font-size:19px}}
+
+
+/* Ghestyar 3.6 — background Push activation */
+.reminder-background-row{border:1px solid var(--border);border-radius:16px;padding:14px;margin:12px 0;background:var(--soft)}
+.reminder-background-row label{font-size:15px;font-weight:850}
+.reminder-background-row p{max-width:520px;overflow-wrap:anywhere}
+.reminder-background-row button{min-width:145px}
+@media(max-width:600px){.reminder-background-row{flex-direction:column;align-items:stretch;gap:11px}.reminder-background-row button{width:100%}}
 </style>
 </head>
 <body>
@@ -800,7 +950,7 @@ function commit(next){
  catch(e){storageAvailable=false;toast('ذخیره در این مرورگر ناموفق بود. فضای ذخیره را بررسی کن.','error');return false;}
 }
 function save(){return commit(data);}
-const state={page:'dashboard',dashFilter:'all',hideAmounts:false,filter:'all',query:'',selectedId:null,detailTab:'schedule',scheduleFilter:'open',edit:null,calendarMonth:{y:todayJ.y,m:todayJ.m},selectedDay:todayISO,payment:null,wizardStep:1,draft:null};
+const state={reminderFilter:'all',page:(location.hash==='#reminders'?'reminders':'dashboard'),reportType:'all',reportSpan:6,reportOffset:0,dashFilter:'all',hideAmounts:false,filter:'all',query:'',selectedId:null,detailTab:'schedule',scheduleFilter:'open',edit:null,calendarMonth:{y:todayJ.y,m:todayJ.m},selectedDay:todayISO,payment:null,wizardStep:1,draft:null};
 function total(o){return o.installments.reduce((s,x)=>s+x.amount,0)}
 function paid(o,installmentId){return o.payments.filter(p=>p.installmentId===installmentId&&!p.reversedAt).reduce((s,x)=>s+x.amount,0)}
 function left(o,inst){return Math.max(0,inst.amount-paid(o,inst.id))}
@@ -809,6 +959,175 @@ function paidTotal(o){return total(o)-outstanding(o)}
 function status(o,i){const remain=left(o,i);return remain<=0?'paid':i.due<todayISO?'overdue':i.due===todayISO?'soon':remain<i.amount?'partial':'open'}
 function statusLabel(s){return {paid:'پرداخت‌شده',overdue:'عقب‌افتاده',soon:'سررسید امروز',partial:'پرداخت ناقص',open:'در انتظار'}[s]||s;}
 function closest(){return data.flatMap(o=>o.installments.filter(i=>left(o,i)>0).map(i=>({o,i,rem:left(o,i)}))).sort((a,b)=>a.i.due.localeCompare(b.i.due));}
+
+/* v3.5 reminder engine: local-only preferences, financial records remain unchanged. */
+const REMINDER_STORAGE='ghestyar_reminder_prefs_v35';
+const REMINDER_DEFAULT={enabled:true,lead:3,overdue:true,system:false};
+function reminderScope(){return cloud.user?.id||'guest-local';}
+function reminderKey(suffix){return REMINDER_STORAGE+'_'+suffix+'_'+reminderScope();}
+function readReminder(key,fallback){try{const raw=localStorage.getItem(reminderKey(key));return raw===null?fallback:JSON.parse(raw);}catch(e){return fallback;}}
+function writeReminder(key,value){try{localStorage.setItem(reminderKey(key),JSON.stringify(value));return true;}catch(e){toast('ذخیره تنظیمات یادآوری در این دستگاه ممکن نشد.','error');return false;}}
+function reminderSettings(){const src=readReminder('settings',REMINDER_DEFAULT);return {
+ enabled:src.enabled!==false,
+ lead:[0,1,3,7].includes(src.lead)?src.lead:3,
+ overdue:src.overdue!==false,
+ system:src.system===true
+};}
+function todayLocalDate(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function daysUntil(due,now=todayLocalDate()){return Math.round((Date.parse(due+'T00:00:00Z')-Date.parse(now+'T00:00:00Z'))/86400000);}
+function reminderList(){
+ if(cloud.user && !['ready','pending','error'].includes(cloud.phase))return [];
+ const cfg=reminderSettings();if(!cfg.enabled)return [];
+ const snoozed=readReminder('snooze',{});const today=todayLocalDate();
+ const items=[];
+ for(const o of data)for(const i of o.installments){const remain=left(o,i);if(remain<=0)continue;
+  const days=daysUntil(i.due,today);
+  if(days<0&&!cfg.overdue)continue;
+  if(days>cfg.lead)continue;
+  if(snoozed[i.id]===today)continue;
+  items.push({o,i,remain,days});
+ }
+ return items.sort((a,b)=>a.i.due.localeCompare(b.i.due)||a.o.title.localeCompare(b.o.title));
+}
+function reminderMiniBanner(){const all=reminderList();if(!all.length)return '';const late=all.filter(x=>x.days<0).length;
+ return `<div class="reminder-alert-line"><strong>${icon('bell')} ${fnum(all.length)} قسط نیازمند پیگیری ${late?`· ${fnum(late)} معوق`:''}</strong><button class="btn subtle" data-nav="reminders">مشاهده یادآورها ${icon('chevron-left')}</button></div>`;
+}
+function reminderPage(){const cfg=reminderSettings(),all=reminderList(),late=all.filter(x=>x.days<0).length;
+ const filt=state.reminderFilter||'all';const rows=all.filter(x=>filt==='all'||(filt==='overdue'&&x.days<0)||(filt==='today'&&x.days===0)||(filt==='upcoming'&&x.days>0));
+ const hasSystem='Notification' in window&&'serviceWorker' in navigator&&window.isSecureContext;
+ const permission=typeof Notification==='undefined'?'unsupported':Notification.permission;
+ const desc=cfg.system&&permission==='granted'?'اعلان مرورگر فعال است؛ فقط وقتی سایت باز یا فعال باشد بررسی می‌شود.':permission==='denied'?'اعلان مرورگر مسدود است؛ برای تغییر آن به تنظیمات سایت در مرورگر برو.':'اعلان سیستم اختیاری است و به اجازه مرورگر نیاز دارد.';
+ return `<section class="reminder-page" aria-label="مرکز یادآوری اقساط">
+  <div class="reminder-hero"><div><h2>هیچ سررسیدی رو از قلم ننداز</h2><p>یادآوری‌ها از اقساط پرداخت‌نشده ساخته می‌شن و با ثبت پرداخت به‌روز می‌شن.</p></div><div class="reminder-count"><strong>${fnum(all.length)}</strong><span>مورد فعال</span></div></div>
+  <section class="reminder-panel" aria-labelledby="reminder-list-title"><div class="panel-head"><h3 id="reminder-list-title">سررسیدهای نیازمند پیگیری</h3><small>${late?`${fnum(late)} قسط معوق`:''}</small></div>
+   <div class="reminder-tabs" role="group" aria-label="فیلتر یادآورها">${[['all','همه'],['overdue','معوق'],['today','امروز'],['upcoming','نزدیک']].map(([v,label])=>`<button data-action="reminder-filter" data-value="${v}" class="${filt===v?'active':''}" aria-pressed="${filt===v}">${label}</button>`).join('')}</div>
+   <div class="reminder-section" aria-live="polite">${rows.length?rows.slice(0,40).map(({o,i,remain,days})=>`<article class="reminder-item"><div class="reminder-main"><span class="reminder-level ${days<0?'overdue':''}">${days<0?`${fnum(-days)} روز تأخیر`:days===0?'سررسید امروز':`${fnum(days)} روز تا سررسید`}</span><strong>${escapeHTML(o.title)} · قسط ${fnum(i.number)}</strong><div class="reminder-meta">${jText(i.due,true)} · مانده: <span class="reminder-amount">${fmt(remain)} <small>تومان</small></span></div></div><div class="reminder-actions"><button class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button><button class="btn" data-action="reminder-snooze" data-inst="${i.id}">فردا یادآوری کن</button></div></article>`).join(''):'<div class="reminder-empty">'+icon('check')+'<strong>یادآور فعالی در این بخش نداری</strong><span>اقساط تسویه‌شده به‌صورت خودکار از یادآورها حذف می‌شوند.</span></div>'}${rows.length>40?`<p class="reminder-info">۴۰ مورد اول نمایش داده شده است؛ برای موارد بیشتر به فهرست تعهدات مراجعه کن.</p>`:''}</div>
+  </section>
+  <section class="reminder-panel reminder-settings" aria-label="تنظیمات یادآوری"><div class="panel-head"><h3>تنظیمات یادآوری</h3></div>
+    <div class="reminder-setting-row"><div><label for="reminder-enabled">یادآورهای داخل برنامه</label><p>نمایش سررسیدها در داشبورد و زنگ هشدار</p></div><div class="reminder-toggle"><input id="reminder-enabled" type="checkbox" data-reminder-setting="enabled" ${cfg.enabled?'checked':''} aria-label="فعال بودن یادآوری"/></div></div>
+    <div class="reminder-setting-row"><div><label for="reminder-lead">چند روز قبل یادآوری کنم؟</label><p>برای هر قسط پرداخت‌نشده</p></div><select id="reminder-lead" data-reminder-setting="lead" ${!cfg.enabled?'disabled':''}>${[[0,'روز سررسید'],[1,'۱ روز قبل'],[3,'۳ روز قبل'],[7,'۷ روز قبل']].map(([v,label])=>`<option value="${v}" ${cfg.lead===v?'selected':''}>${label}</option>`).join('')}</select></div>
+    <div class="reminder-setting-row"><div><label for="reminder-overdue">نمایش اقساط معوق</label><p>تا زمان تسویه یا تعویق یک‌روزه</p></div><div class="reminder-toggle"><input id="reminder-overdue" type="checkbox" data-reminder-setting="overdue" ${cfg.overdue?'checked':''} ${!cfg.enabled?'disabled':''} aria-label="یادآوری اقساط معوق"/></div></div>
+    <div class="reminder-setting-row"><div><label>اعلان مرورگر</label><p>${desc}</p></div><button class="btn" data-action="reminder-permission" ${!hasSystem||!cfg.enabled||permission==='denied'||pushState.active?'disabled':''}>${cfg.system&&permission==='granted'?'غیرفعال‌کردن':'فعال‌کردن'}</button></div>
+    <div class="reminder-setting-row reminder-background-row"><div><label>اعلان حتی وقتی سایت بسته است</label><p>${pushStatusLabel()}</p></div><button class="btn ${pushState.active?'':'primary'}" data-action="push-toggle" ${!cfg.enabled||!pushSupported()||!cloud.user||!['ready','pending'].includes(cloud.phase)||pushState.loading?'disabled':''}>${pushState.loading?'در حال بررسی':pushState.active?'غیرفعال‌کردن Push':'فعال‌کردن Push'}</button></div>
+  <div class="reminder-note">یادآوری داخل برنامه در همین مرورگر کار می‌کند. ارسال در پس‌زمینه فقط بعد از راه‌اندازی تابع و زمان‌بند Supabase و فعال‌سازی Push در هر دستگاه انجام می‌شود. پیام سیستمی فقط تعداد اقساط را نشان می‌دهد؛ زمان تحویل به وضعیت شبکه، مرورگر و سیستم‌عامل وابسته است. تنظیمات Push در سرور با حساب کاربری مرتبط هستند.</div>
+  </section>
+ </section>`;
+}
+
+/* Ghestyar 3.6: optional account-bound, server-scheduled Web Push subscription. */
+const pushState={active:false,loaded:false,loading:false,err:''};
+function pushSupported(){return window.isSecureContext&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;}
+function pushStatusLabel(){
+ if(!cloud.user)return 'ابتدا با حساب خود وارد شو. اعلان پس‌زمینه فقط برای حساب ابری فعال می‌شود.';
+ if(!pushSupported())return 'مرورگر فعلی Push را پشتیبانی نمی‌کند. در iPhone ممکن است لازم باشد سایت را به Home Screen اضافه کنی.';
+ if(Notification.permission==='denied')return 'دسترسی اعلان در تنظیمات مرورگر بسته شده است.';
+ if(pushState.loading)return 'در حال بررسی اشتراک این دستگاه…';
+ if(pushState.active)return 'فعال روی همین دستگاه؛ خلاصه اقساط نزدیک حدود ساعت ۹ صبح به وقت دستگاه بررسی می‌شود.';
+ return pushState.err||'برای دریافت یادآوری در زمان بسته‌بودن سایت، این دستگاه را جداگانه فعال کن.';
+}
+function b64ToBytes(value){const padded=value.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-value.length%4)%4);return Uint8Array.from(atob(padded),x=>x.charCodeAt(0));}
+function userTimeZone(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||'Asia/Tehran';}catch{return 'Asia/Tehran';}}
+async function callPushBackend(body){
+ if(!cloud.client||!cloud.user)throw Error('ابتدا وارد حساب شو.');
+ const {data,error}=await cloud.client.functions.invoke('ghestyar-push-subscribe',{body});
+ if(error)throw Error('تابع Push در Supabase پاسخ نداد. ابتدا بخش سرور نسخه ۳.۶ را فعال کن.');
+ if(!data||data.error)throw Error(data?.error||'پاسخ نامعتبر از سرور Push');
+ return data;
+}
+async function refreshBackgroundPushState(){
+ if(pushState.loading||!cloud.user||!pushSupported())return;
+ pushState.loading=true;
+ try{
+  const sw=await registerReminderWorker(),sub=await sw?.pushManager?.getSubscription();
+  if(!sub){pushState.active=false;pushState.loaded=true;return;}
+  const response=await callPushBackend({action:'status',endpoint:sub.endpoint});
+  pushState.active=response.enabled===true;pushState.err='';pushState.loaded=true;
+ }catch(e){pushState.err=String(e.message||e);pushState.loaded=true;}
+ finally{pushState.loading=false;if(state.page==='reminders')render();}
+}
+async function enableBackgroundPush(){
+ if(!cloud.user||!['ready','pending'].includes(cloud.phase)){toast('ابتدا وارد حساب شو و همگام‌سازی را کامل کن.','error');return;}
+ if(!pushSupported()){toast('این مرورگر از Push در پس‌زمینه پشتیبانی نمی‌کند.','error');return;}
+ if(Notification.permission==='denied'){toast('اعلان‌ها در تنظیمات مرورگر مسدود هستند.','error');return;}
+ // The permission request is initiated directly by the user's click, before awaits.
+ let permission=Notification.permission;
+ if(permission!=='granted'){try{permission=await Notification.requestPermission();}catch{permission='denied';}}
+ if(permission!=='granted'){toast('اجازه ارسال اعلان داده نشد.','error');return;}
+ pushState.loading=true;render();
+ try{
+  const key=(await callPushBackend({action:'public-key'})).publicKey;
+  const sw=await registerReminderWorker();if(!sw?.pushManager)throw Error('PushManager در این مرورگر فعال نیست.');
+  let subscription=await sw.pushManager.getSubscription();
+  if(!subscription)subscription=await sw.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64ToBytes(key)});
+  const cfg=reminderSettings();
+  await callPushBackend({action:'subscribe',subscription:subscription.toJSON(),timezone:userTimeZone(),leadDays:cfg.lead,overdue:cfg.overdue});
+  pushState.active=true;pushState.loaded=true;pushState.err='';
+  // Do not display a second OS notification from the foreground-only reminder engine.
+  if(cfg.system)writeReminder('settings',{...cfg,system:false});
+  toast('اعلان پس‌زمینه برای این دستگاه ثبت شد.');
+ }catch(e){pushState.err=String(e.message||e);toast('فعال‌سازی Push ناموفق بود: '+pushState.err,'error');}
+ finally{pushState.loading=false;render();}
+}
+async function disableBackgroundPush(quiet=false){
+ if(!pushSupported()){pushState.active=false;return true;}
+ pushState.loading=true;if(!quiet)render();
+ let remoteOK=true;
+ try{
+  const sw=await registerReminderWorker(),sub=await sw?.pushManager?.getSubscription();
+  if(sub){
+    try{if(cloud.user)await callPushBackend({action:'unsubscribe',endpoint:sub.endpoint});}catch(e){remoteOK=false;console.warn('Push unregister:',e.message);}
+    await sub.unsubscribe();
+  }
+  pushState.active=false;pushState.loaded=true;pushState.err='';
+  if(!quiet)toast(remoteOK?'اعلان پس‌زمینه این دستگاه غیرفعال شد.':'اشتراک مرورگر لغو شد؛ حذف سرور را پس از اتصال بررسی کن.');
+ }catch(e){pushState.err=String(e.message||e);if(!quiet)toast(pushState.err,'error');remoteOK=false;}
+ finally{pushState.loading=false;if(!quiet)render();}
+ return remoteOK;
+}
+async function syncBackgroundPushPrefs(){
+ if(!pushState.active||!cloud.user)return;
+ const cfg=reminderSettings();
+ if(!cfg.enabled){await disableBackgroundPush();return;}
+ try{const sw=await registerReminderWorker(),sub=await sw?.pushManager?.getSubscription();
+  if(!sub)return;
+  await callPushBackend({action:'subscribe',subscription:sub.toJSON(),timezone:userTimeZone(),leadDays:cfg.lead,overdue:cfg.overdue});
+ }catch(e){toast('تنظیمات Push در سرور به‌روز نشد: '+(e.message||e),'error');}
+}
+async function syncPushSnooze(inst){
+ if(!pushState.active||!cloud.user)return;
+ try{await callPushBackend({action:'snooze',installmentId:inst,timezone:userTimeZone()});}
+ catch(e){toast('تعویق فقط در این مرورگر ثبت شد؛ Push سرور ممکن است همچنان ارسال شود.','error');}
+}
+let reminderWorker=null;
+function registerReminderWorker(){if(!('serviceWorker' in navigator)||!window.isSecureContext)return Promise.resolve(null);if(reminderWorker)return Promise.resolve(reminderWorker);
+ return navigator.serviceWorker.register('./reminder-sw.js',{scope:'./'}).then(r=>(reminderWorker=r)).catch(e=>(console.warn('Reminder service worker:',e),null));
+}
+async function requestReminderPermission(){if(pushState.active){toast('اعلان پس‌زمینه فعال است؛ برای جلوگیری از هشدار تکراری، اعلان حالت باز غیرفعال شده است.');return;}const config=reminderSettings();if(!config.enabled){toast('اول یادآورهای داخل برنامه را فعال کن.');return;}
+ if(config.system){writeReminder('settings',{...config,system:false});render();toast('اعلان مرورگر غیرفعال شد.');return;}
+ if(!('Notification' in window)||!window.isSecureContext){toast('مرورگر فعلی از اعلان پشتیبانی نمی‌کند.','error');return;}
+ if(Notification.permission==='denied'){toast('دسترسی اعلان از تنظیمات مرورگر مسدود شده است.','error');return;}
+ // Trigger permission only from the user's click (before awaiting any promises).
+ let permission=Notification.permission;
+ try{if(permission!=='granted')permission=await Notification.requestPermission();}catch(e){toast('دریافت اجازه اعلان ممکن نشد.','error');return;}
+ if(permission!=='granted'){toast('اجازه اعلان داده نشد؛ یادآورهای داخل برنامه فعال می‌مانند.');return;}
+ const sw=await registerReminderWorker();if(!sw){toast('فعال‌سازی اعلان برای این مرورگر ممکن نیست.','error');return;}
+ writeReminder('settings',{...config,system:true});render();toast('اعلان مرورگر فعال شد؛ فقط زمان بازبودن برنامه بررسی می‌شود.');
+ await maybeSystemReminder();
+}
+let reminderSending=false;
+async function maybeSystemReminder(){
+ if(reminderSending||pushState.active||document.visibilityState!=='visible')return;
+ if(cloud.user&&!['ready','pending'].includes(cloud.phase))return;
+ const cfg=reminderSettings();if(!cfg.enabled||!cfg.system||!window.isSecureContext||!('Notification' in window)||Notification.permission!=='granted')return;
+ const today=todayLocalDate();if(readReminder('last-system',null)===today)return;
+ const items=reminderList();if(!items.length)return;
+ reminderSending=true;
+ try{const sw=await registerReminderWorker();if(!sw)return;
+  const late=items.filter(x=>x.days<0).length;
+  await sw.showNotification('قسط‌یار | یادآوری سررسید',{body:`${fnum(items.length)} قسط نیازمند پیگیری${late?` · ${fnum(late)} معوق`:''}. برای جزئیات وارد قسط‌یار شو.`,tag:'ghestyar-due-'+reminderScope()+'-'+today,dir:'rtl',lang:'fa',data:{url:new URL('./#reminders',location.href).href}});
+  writeReminder('last-system',today);
+ }catch(e){console.warn('Notification not shown:',e);}finally{reminderSending=false;}
+}
 function obligationStatus(o){return outstanding(o)<=0?'paid':o.installments.some(i=>status(o,i)==='overdue')?'overdue':'open';}
 function nav(page){state.page=page;state.query='';state.filter='all';state.payment=null;state.edit=null;render();window.scrollTo({top:0,behavior:'instant'});}
 const types={loan:{label:'وام بانکی',icon:'building',class:''},purchase:{label:'خرید قسطی',icon:'bag',class:'purchase'},other:{label:'بدهی شخصی',icon:'user',class:'other'}};
@@ -834,9 +1153,9 @@ function accountAccessButton(){
  const detail=signedIn?`<span class="account-state-label">${cloud.phase==='ready'?'همگام':cloud.phase==='pending'?'در حال ارسال':cloud.phase==='conflict'?'تعارض':cloud.phase==='error'?'خطای اتصال':cloud.phase==='loading'?'در حال دریافت':'حساب فعال'}</span>`:'';
  return `<button class="account-trigger ${phaseClass} is-${cloud.phase}" type="button" data-action="account-open" aria-label="${help}" title="${help}">${icon(iconName)}<span class="account-trigger-text"><span class="account-main-label">${label}</span>${detail}</span>${signedIn?'<span class="cloud-dot" aria-hidden="true"></span>':''}</button>`;
 }
-function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}${accountAccessButton()}<span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn" title="مشاهده اقساط معوق" data-action="overdue" aria-label="مشاهده اقساط عقب‌افتاده">${icon('bell')}</button></div></header>`;}
-const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['settings','shield','مدیریت داده']];
-function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۳</div></div></aside>`;}
+function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],reminders:['پرداخت‌های نزدیک و سررسیدهای عقب‌افتاده','یادآوری اقساط'],reports:['تحلیل پرداخت‌های واقعی و اقساط آینده','گزارش‌های مالی'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}${accountAccessButton()}<span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn alert-bell" title="یادآوری اقساط" data-nav="reminders" aria-label="یادآوری اقساط، ${reminderList().length} مورد نیازمند پیگیری">${icon('bell')}${reminderList().length?`<span class="alert-count">${fnum(Math.min(99,reminderList().length))}</span>`:''}</button></div></header>`;}
+const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['reminders','bell','یادآورها'],['reports','chart','گزارش‌ها'],['settings','shield','مدیریت داده']];
+function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۵</div></div></aside>`;}
 function bottomNav(){return `<nav class="bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['add','plus','افزودن']].map(([k,ic,t])=>`<button data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
  const all=closest();const overdue=all.filter(x=>x.i.due<todayISO);
@@ -874,6 +1193,7 @@ function dashboard(){
    ${focus?`<h2 id="focus-heading">${escapeHTML(focus.o.title)}</h2><div class="focus-date">${firstDue} ${status(focus.o,focus.i)==='overdue'?tag('overdue'):''}</div><div class="focus-number">${amount(focus.rem)} <span>تومان</span></div><div class="focus-btns"><button class="btn" data-action="pay" data-ob="${focus.o.id}" data-inst="${focus.i.id}">${icon('check')} ثبت پرداخت</button><button class="btn focus-ghost" data-action="view" data-ob="${focus.o.id}">مشاهده جزئیات</button></div>`:`<h2 id="focus-heading">فعلاً قسط بازی نداری 🎉</h2><p class="focus-date">همه اقساط ثبت‌شده پرداخت شده‌اند.</p><div class="focus-btns"><button class="btn" data-nav="add">${icon('plus')} افزودن تعهد جدید</button></div>`}
   </div></section>
  </div>
+ ${reminderMiniBanner()}
  <div class="metrics-row">
   <section class="metric-bento"><div class="metric-title"><span class="metric-symbol">${icon('wallet')}</span>مانده کل تعهدات</div><div class="metric-number">${amount(remain)} <small>تومان</small></div><div class="metric-note">مجموع مانده اقساط قراردادی · ${fnum(active)} تعهد فعال</div></section>
   <section class="metric-bento ${overdue.length?'warn-metric':''}"><div class="metric-title"><span class="metric-symbol">${icon('bell')}</span>اقساط معوق</div><div class="metric-number">${fnum(overdue.length)} <small>قسط</small></div><div class="metric-note">${overdue.length?amount(overdue.reduce((s,x)=>s+x.rem,0))+' تومان مانده معوقه':'هیچ پرداخت عقب‌افتاده‌ای نداری'}</div>${overdue.length?'<button class="metric-action" data-action="dash-filter-shortcut" data-filter="late">پیگیری معوقه ←</button>':''}</section>
@@ -887,13 +1207,78 @@ function dashboard(){
   </section>
   <section class="dash-panel" aria-labelledby="forecast-heading"><div class="panel-head"><div><h3 id="forecast-heading">نگاهی به ماه‌های بعد</h3><small>مبالغ باقی‌مانده بر اساس سررسید</small></div>${icon('calendar')}</div>
    <div class="mini-chart" role="img" aria-label="نمودار میله‌ای مانده اقساط در شش ماه آینده">${totals.map((x,i)=>`<div class="chart-col" title="${escapeHTML(x.name)}: ${amount(x.sum)} تومان"><div class="chart-rail"><div class="chart-bar" style="height:${Math.max(3,Math.round(x.sum/max*100))}%"></div></div><span class="chart-label">${x.name}</span></div>`).join('')}</div>
-   <div class="forecast-hint">${icon('info')} فقط اقساط پرداخت‌نشده با تاریخ سررسید در هر ماه شمرده شده‌اند؛ معوقه‌های ماه‌های قبل جداگانه نمایش داده می‌شوند.</div>
+   <div class="forecast-hint">${icon('info')} فقط اقساط پرداخت‌نشده با تاریخ سررسید در هر ماه شمرده شده‌اند؛ معوقه‌های ماه‌های قبل جداگانه نمایش داده می‌شوند.</div><button class="report-quick-link" data-nav="reports">${icon('chart')} گزارش مالی کامل و فایل CSV</button>
   </section>
  </div>
  <div class="dash-bottom-head"><h2>پرونده‌های مالی من</h2><button class="link-btn" data-nav="obligations">همه تعهدات ${icon('chevron-left')}</button></div>
  ${data.length?`<div class="dash-small-grid">${data.slice(0,3).map(obCard).join('')}</div>`:''}
  <div class="dash-footnote">${icon('shield')} ${cloud.user?`اطلاعات مربوط به حساب شماست. وضعیت ذخیره: ${cloudStatusText()}. پیش از خروج از مرورگر منتظر تکمیل همگام‌سازی بمان.`:'حالت محلی فعال است؛ برای همگام‌سازی بین دستگاه‌ها وارد حساب شو.'}</div>
  </div>`;}
+
+/* v3.4 read-only report model: distinguish scheduled due dates from actual payment dates. */
+function reportMonthKey(iso){const j=jalali(iso);return j.y*12+j.m-1;}
+function reportCurrentKey(){return todayJ.y*12+todayJ.m-1;}
+function reportLabel(key){const y=Math.floor(key/12),m=(key%12+12)%12+1;return `${jmonths[m-1]} ${fnum(y)}`;}
+function reportShortLabel(key){return jmonths[(key%12+12)%12];}
+function reportData(){
+ const obligations=state.reportType==='all'?data:data.filter(o=>o.type===state.reportType);
+ const current=reportCurrentKey(),start=current+state.reportOffset;
+ const rows=Array.from({length:state.reportSpan},(_,i)=>({key:start+i,label:reportLabel(start+i),short:reportShortLabel(start+i),scheduled:0,received:0,remaining:0,count:0}));
+ const byKey=new Map(rows.map(r=>[r.key,r]));
+ let remainingTotal=0,overdue=0,overdueCount=0;
+ for(const o of obligations){
+  for(const inst of o.installments){
+   const rem=left(o,inst);remainingTotal+=rem;
+   if(rem>0&&inst.due<todayISO){overdue+=rem;overdueCount++;}
+   const r=byKey.get(reportMonthKey(inst.due));
+   if(r){r.scheduled+=inst.amount;r.remaining+=rem;r.count++;}
+  }
+  for(const p of o.payments){
+   if(p.reversedAt)continue;
+   const r=byKey.get(reportMonthKey(p.date));
+   if(r)r.received+=p.amount;
+  }
+ }
+ const paidThisMonth=obligations.reduce((sum,o)=>sum+o.payments.filter(p=>!p.reversedAt&&reportMonthKey(p.date)===current).reduce((v,p)=>v+p.amount,0),0);
+ const monthDue=obligations.reduce((sum,o)=>sum+o.installments.filter(i=>reportMonthKey(i.due)===current).reduce((v,i)=>v+left(o,i),0),0);
+ const byType=['loan','purchase','other'].map(type=>({type,label:types[type].label,total:obligations.filter(o=>o.type===type).reduce((sum,o)=>sum+outstanding(o),0)}));
+ const recent=obligations.flatMap(o=>o.payments.filter(p=>!p.reversedAt).map(p=>({o,p}))).sort((a,b)=>b.p.date.localeCompare(a.p.date)).slice(0,6);
+ return {rows,remainingTotal,overdue,overdueCount,paidThisMonth,monthDue,byType,recent,obligations};
+}
+function reports(){
+ const model=reportData(),rows=model.rows,max=Math.max(1,...rows.map(r=>Math.max(r.scheduled,r.received)));
+ const from=rows[0].label,to=rows[rows.length-1].label;
+ const typesList=[['all','همه'],['loan','وام'],['purchase','خرید قسطی'],['other','سایر']];
+ const typeLabel=typesList.find(x=>x[0]===state.reportType)?.[1]||'همه';
+ const sumFor=(prop)=>rows.reduce((sum,r)=>sum+r[prop],0);
+ const biggest=Math.max(1,...model.byType.map(x=>x.total));
+ return `<section class="report-page" aria-label="گزارش‌های مالی">
+ <div class="report-toolbar"><div class="report-toolbar-left"><strong>نمایش بر اساس نوع تعهد</strong><div class="report-pills" role="group" aria-label="دسته‌بندی تعهدات">${typesList.map(([v,label])=>`<button type="button" data-action="report-type" data-value="${v}" class="${state.reportType===v?'active':''}" aria-pressed="${state.reportType===v}">${label}</button>`).join('')}</div></div><div class="report-toolbar-right"><div class="report-pills" role="group" aria-label="طول بازه گزارش">${[6,12].map(v=>`<button type="button" data-action="report-span" data-value="${v}" class="${state.reportSpan===v?'active':''}" aria-pressed="${state.reportSpan===v}">${fnum(v)} ماه</button>`).join('')}</div><button class="btn" data-action="report-csv" ${data.length?'':'disabled'} title="دانلود گزارش ماهانه CSV">${icon('download')} CSV</button></div></div>
+ ${!data.length?`<div class="report-box report-empty">${icon('chart')}<h2>هنوز اطلاعاتی برای گزارش وجود ندارد</h2><p>بعد از ثبت اولین تعهد، نمودارها و جزئیات ماهانه اینجا نمایش داده می‌شوند.</p><button class="btn primary" data-nav="add">${icon('plus')} افزودن تعهد</button></div>`:`
+ <div class="report-kpis">
+ <div class="report-kpi important"><div class="label">مانده کل تعهدات</div><div class="value">${fmt(model.remainingTotal)}</div><div class="unit">تومان · ${typeLabel}</div></div>
+ <div class="report-kpi"><div class="label">پرداخت واقعی این ماه</div><div class="value">${fmt(model.paidThisMonth)}</div><div class="unit">تومان · براساس تاریخ پرداخت</div></div>
+ <div class="report-kpi"><div class="label">مانده اقساط این ماه</div><div class="value">${fmt(model.monthDue)}</div><div class="unit">تومان · سررسید همین ماه</div></div>
+ <div class="report-kpi late"><div class="label">مانده معوقه پیش از امروز</div><div class="value">${fmt(model.overdue)}</div><div class="unit">تومان · ${fmt(model.overdueCount)} قسط</div></div>
+ </div>
+ <div class="report-toolbar"><div><strong>بازه گزارش</strong><div class="report-caption">${from} تا ${to}</div></div><div class="report-month-nav"><button data-action="report-prev" ${state.reportOffset<=-36?'disabled':''} aria-label="شش ماه قبل" title="شش ماه قبل">${icon('chevron-right')}</button><button data-action="report-now" title="بازگشت به ماه جاری">امروز</button><button data-action="report-next" ${state.reportOffset>=36?'disabled':''} aria-label="شش ماه بعد" title="شش ماه بعد">${icon('chevron-left')}</button></div></div>
+ <div class="report-columns"><section class="report-box" aria-labelledby="report-chart-title"><h2 id="report-chart-title">سررسیدهای قراردادی و پرداخت‌های واقعی</h2><p>دو ستون هر ماه مستقل‌اند؛ پرداخت امروز ممکن است مربوط به قسط ماه دیگری باشد.</p><div class="report-legend"><span><i class="report-swatch"></i>مبلغ سررسید</span><span><i class="report-swatch actual"></i>پرداخت واقعی</span></div>
+ <div class="report-plot" style="--n:${rows.length}" role="img" aria-label="مقایسه مبلغ سررسید و پرداخت‌های واقعی در ${fnum(rows.length)} ماه">${rows.map(r=>`<div class="report-plot-group" title="${escapeHTML(r.label)}: سررسید ${fmt(r.scheduled)} و پرداخت واقعی ${fmt(r.received)} تومان"><div class="report-bars"><div class="report-bar" style="height:${r.scheduled?Math.max(2,Math.round(r.scheduled/max*100)):0}%"></div><div class="report-bar actual" style="height:${r.received?Math.max(2,Math.round(r.received/max*100)):0}%"></div></div><span class="report-plot-label">${r.short}</span></div>`).join('')}</div></section>
+ <section class="report-box"><h2>سهم انواع بدهی از مانده</h2><p>مانده اقساط قراردادی، نه لزوماً مانده اصل وام بانکی.</p><div class="report-breakdown">${model.byType.map(item=>`<div class="report-type-row"><div class="report-type-top"><span>${escapeHTML(item.label)}</span><strong>${fmt(item.total)} تومان</strong></div><div class="report-type-track"><div class="report-type-fill ${item.type}" style="width:${Math.round(item.total/biggest*100)}%"></div></div></div>`).join('')}</div></section></div>
+ <section class="report-box"><div class="panel-head"><h2>جزئیات ماهانه</h2><button class="btn" data-action="report-csv">${icon('download')} دریافت CSV</button></div><div class="report-table-wrap"><table class="report-table"><thead><tr><th scope="col">ماه شمسی</th><th scope="col">اقساط سررسید</th><th scope="col">مبلغ سررسید</th><th scope="col">پرداخت واقعی</th><th scope="col">مانده همان سررسیدها</th></tr></thead><tbody>${rows.map(r=>`<tr class="${r.key===reportCurrentKey()?'current':''}"><td><strong>${r.label}</strong></td><td>${fmt(r.count)}</td><td>${fmt(r.scheduled)}</td><td>${fmt(r.received)}</td><td>${fmt(r.remaining)}</td></tr>`).join('')}</tbody></table></div><div class="report-mobile-months">${rows.map(r=>`<article class="report-month-card"><h3>${r.label}</h3><div class="report-month-meta"><div><span>تعداد سررسید</span><strong>${fmt(r.count)} قسط</strong></div><div><span>مبلغ سررسید</span><strong>${fmt(r.scheduled)} تومان</strong></div><div><span>پرداخت واقعی در ماه</span><strong>${fmt(r.received)} تومان</strong></div><div><span>مانده سررسیدهای ماه</span><strong>${fmt(r.remaining)} تومان</strong></div></div></article>`).join('')}</div><p>جمع مبلغ سررسید این بازه: <strong>${fmt(sumFor('scheduled'))}</strong> تومان · مجموع پرداخت واقعی همین بازه: <strong>${fmt(sumFor('received'))}</strong> تومان.</p></section>
+ <section class="report-box"><h2>آخرین پرداخت‌های ثبت‌شده</h2><p>فقط پرداخت‌های معتبر؛ پرداخت‌های ابطال‌شده در محاسبات وارد نشده‌اند.</p>${model.recent.length?`<div class="report-payments">${model.recent.map(({o,p})=>`<article class="report-payment"><h3>${escapeHTML(o.title)}</h3><div><span>${jText(p.date,true)}</span><strong>${fmt(p.amount)} تومان</strong></div></article>`).join('')}</div>`:`<div class="report-empty">هنوز پرداختی ثبت نشده است.</div>`}</section>`}
+ <div class="report-key">${icon('info')} <strong>روش محاسبه:</strong> «مبلغ سررسید» مجموع مبالغ اقساط برنامه‌ریزی‌شده در هر ماه است؛ «پرداخت واقعی» براساس تاریخ ثبت‌شده پرداخت محاسبه می‌شود؛ «مانده همان سررسیدها» مبلغ پرداخت‌نشده اقساط متعلق به آن ماه است. این سه ستون قرار نیست با تفریق یکدیگر برابر شوند. معوقه‌های ماه‌های پیش جداگانه در کارت معوقه نمایش داده می‌شوند. هیچ مبلغی به‌عنوان سود وام یا مانده اصل بانک محاسبه مجدد نشده است.</div>
+ </section>`;
+}
+function reportExportCSV(){
+ if(!data.length)return;
+ const {rows}=reportData();
+ const fields=[['ماه شمسی','تعداد اقساط سررسید','مبلغ سررسید (تومان)','پرداخت واقعی (تومان)','مانده اقساط همان ماه (تومان)'],...rows.map(r=>[r.label,r.count,r.scheduled,r.received,r.remaining])];
+ const text=fields.map(row=>row.map(cell=>'"'+String(cell).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+ const blob=new Blob(['\ufeff',text],{type:'text/csv;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ghestyar-report-'+todayISO+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('فایل گزارش ماهانه آماده شد.');
+}
+
 function obCard(o){const completion=total(o)?Math.min(100,Math.round(paidTotal(o)/total(o)*100)):100;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party">${escapeHTML(o.party||types[o.type].label)}</div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>مانده پرداختنی</span><span>${fnum(completion)}٪ پرداخت‌شده</span></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان</span></div></div><div class="progress" role="progressbar" aria-label="درصد بازپرداخت" aria-valuenow="${completion}" aria-valuemin="0" aria-valuemax="100"><div style="width:${completion}%"></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
 function obligations(){let list=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});return `<section class="obligations-page"><div class="ob-list-header"><div class="ob-list-heading"><h2>فهرست تعهدات</h2><p>${fmt(data.length)} تعهد ثبت‌شده</p></div><button class="btn primary ob-add-button" data-nav="add" aria-label="افزودن تعهد جدید">${icon('plus')} <span>تعهد جدید</span></button></div><div class="ob-list-tools"><div class="filters" role="group" aria-label="فیلتر وضعیت تعهدات">${[['all','همه'],['active','فعال'],['overdue','معوق'],['paid','تسویه']].map(([k,t])=>`<button type="button" class="filter ${state.filter===k?'active':''}" data-filter="${k}" aria-pressed="${state.filter===k}">${t}</button>`).join('')}</div><label class="searchbox">${icon('search')}<input id="ob-search" type="search" aria-label="جست‌وجوی تعهدات" placeholder="جست‌وجوی نام تعهد یا بانک" value="${escapeHTML(state.query)}"/></label></div>${list.length?`<div class="ob-grid">${list.map(obCard).join('')}</div>`:`<div class="panel empty">${icon('wallet')}<strong>${data.length?'تعهدی پیدا نشد':'هنوز تعهدی ثبت نکردی'}</strong><p>${data.length?'عبارت جست‌وجو یا فیلتر رو تغییر بده.':'برای شروع، اولین وام یا خرید قسطی رو وارد کن.'}</p>${!data.length?`<button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>`:''}</div>`}</section>`;}
 function freshDraft(){return {type:'loan',title:'',party:'',mode:'manual',amount:'',rate:'0',count:'',first:jText(addJMonth(todayJ,1,5),true),rows:[]};}
@@ -976,6 +1361,7 @@ async function cloudActivate(user){
     }catch(e){cloud.phase='conflict';cloud.accountOpen=true;render();return;}
   }
   data=loaded;cloud.dirty=false;persistCloudCache(false);setCloudPhase('ready');
+  pushState.loaded=false;pushState.active=false;queueMicrotask(refreshBackgroundPushState);
  }catch(e){if(cloud.user?.id!==user.id)return;cloud.accountOpen=true;setCloudPhase('error','بارگذاری پرونده ابری ناموفق بود: '+e.message);}
 }
 async function pushCloud(){
@@ -1044,6 +1430,7 @@ async function cloudAuthAction(action){
  }
  if(action==='cloud-logout'){
   if(cloud.dirty||cloud.writing||cloud.phase==='conflict'){toast('قبل از خروج، همگام‌سازی را کامل کن یا فایل پشتیبان بگیر و تعارض را حل کن.','error');return;}
+  if(pushState.active)await disableBackgroundPush(true);
   const {error}=await cloud.client.auth.signOut();if(error)toast(error.message,'error');return;
  }
  const email=document.getElementById('cloud-email')?.value.trim(),password=document.getElementById('cloud-password')?.value;
@@ -1103,7 +1490,7 @@ window.addEventListener('DOMContentLoaded',initCloud);
 
 function legacyArchiveExists(){try{return !!localStorage.getItem(LEGACY_SAMPLE_ARCHIVE);}catch(e){return false;}}
 function settingsPage(){return `<section class="settings-page"><div class="panel settings-hero"><div><h2>اطلاعات مالی من</h2><p class="muted">${cloud.user?`حساب: ${escapeHTML(cloud.user.email||'')} · ${cloudStatusText()}`:'حالت محلی؛ برای انتقال اطلاعات به دستگاه دیگر به حساب ابری وارد شو.'}</p></div><div class="settings-count">${fmt(data.length)} <small>تعهد ثبت‌شده</small></div></div>
- <div class="settings-grid"><section class="panel settings-box cloud-card"><span class="settings-icon">${icon('user-circle')}</span><h3>حساب کاربری و همگام‌سازی</h3><p>${cloud.user?`ورود با ${escapeHTML(cloud.user.email||'')}. ${cloudStatusText()}`:'با حساب شخصی بین موبایل و کامپیوتر به اطلاعات یکسان دسترسی پیدا کن. برای فعال‌سازی، پروژه Supabase را پیکربندی کن.'}</p><button class="btn primary" data-action="account-open">${cloud.user?'مدیریت حساب و همگام‌سازی':'ورود یا ساخت حساب'}</button></section><section class="panel settings-box"><span class="settings-icon">${icon('download')}</span><h3>فایل پشتیبان</h3><p>تمام تعهدات، اقساط و تاریخچه پرداخت‌ها را در یک فایل JSON ذخیره کن.</p><button class="btn primary" data-action="export">${icon('download')} دریافت پشتیبان</button></section>
+ <div class="settings-grid"><section class="panel settings-box cloud-card"><span class="settings-icon">${icon('user-circle')}</span><h3>حساب کاربری و همگام‌سازی</h3><p>${cloud.user?`ورود با ${escapeHTML(cloud.user.email||'')}. ${cloudStatusText()}`:'با حساب شخصی بین موبایل و کامپیوتر به اطلاعات یکسان دسترسی پیدا کن. برای فعال‌سازی، پروژه Supabase را پیکربندی کن.'}</p><button class="btn primary" data-action="account-open">${cloud.user?'مدیریت حساب و همگام‌سازی':'ورود یا ساخت حساب'}</button></section><section class="panel settings-box"><span class="settings-icon">${icon('bell')}</span><h3>یادآوری سررسید</h3><p>زمان هشدار و اجازه اعلان سیستم را از صفحه یادآورها تنظیم کن.</p><button class="btn primary" data-nav="reminders">${icon('bell')} تنظیم یادآورها</button></section><section class="panel settings-box"><span class="settings-icon">${icon('download')}</span><h3>فایل پشتیبان</h3><p>تمام تعهدات، اقساط و تاریخچه پرداخت‌ها را در یک فایل JSON ذخیره کن.</p><button class="btn primary" data-action="export">${icon('download')} دریافت پشتیبان</button></section>
  <section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی پشتیبان</h3><p>فایل پشتیبان قسط‌یار را وارد کن. قبل از جایگزینی اطلاعات، خلاصه فایل و تأیید نمایش داده می‌شود.</p><button class="btn" data-action="import-pick">${icon('refresh')} انتخاب فایل JSON</button><input type="file" id="backup-file" accept=".json,application/json" hidden /></section>
  <section class="panel settings-box"><span class="settings-icon">${icon('edit')}</span><h3>شروع با اطلاعات خودم</h3><p>اطلاعات فضای فعلی را پس از تأیید پاک کن. در حالت ابری، حذف پس از همگام‌سازی به حساب نیز منتقل می‌شود.</p><button class="btn danger" data-action="erase-all">${icon('close')} پاک‌کردن تعهدات این فضا</button></section>
  ${!cloud.user&&legacyArchiveExists()?`<section class="panel settings-box"><span class="settings-icon">${icon('refresh')}</span><h3>بازیابی داده‌های نمونه قدیمی</h3><p>نسخه‌های قبلی به‌طور خودکار داده آزمایشی می‌ساختند. یک نسخه بایگانی از این داده‌ها برای اطمینان نگه داشته شده است.</p><button class="btn" data-action="restore-legacy-demo">بازگرداندن نسخه بایگانی</button></section>`:''}
@@ -1113,7 +1500,7 @@ function editModal(){if(!state.edit)return '';const e=state.edit,o=data.find(x=>
 async function importBackup(file){if(!file)return;if(file.size>4*1024*1024){toast('حجم فایل بیشتر از ۴ مگابایت است.','error');return;}try{const content=await file.text();const loaded=validateBackup(JSON.parse(content));const count=loaded.reduce((sum,o)=>sum+o.installments.length,0);if(!window.confirm(`فایل بررسی شد: ${loaded.length} تعهد و ${count} قسط.\nاطلاعات فعلی (${data.length} تعهد) به‌طور کامل جایگزین می‌شوند.\nپیش از ادامه از داده‌های فعلی پشتیبان گرفته‌ای؟`))return;if(!commit(loaded))return;state.draft=null;state.payment=null;state.edit=null;nav('dashboard');toast('پشتیبان بازیابی شد.');}catch(e){toast('بازیابی انجام نشد: '+e.message,'error');}}
 function reversePayment(obId,paymentId){const o=data.find(x=>x.id===obId),p=o?.payments.find(x=>x.id===paymentId);if(!p||p.reversedAt)return;const reason=window.prompt('دلیل ابطال ثبت پرداخت را وارد کن (مثلاً مبلغ اشتباه):','ثبت اشتباه');if(reason===null)return;if(!reason.trim()||reason.length>200){toast('دلیل ابطال را وارد کن (حداکثر ۲۰۰ نویسه).','error');return;}if(!window.confirm(`پرداخت ${fmt(p.amount)} تومانی باطل شود؟\nسوابق حذف نمی‌شوند و مبلغ به مانده قسط برمی‌گردد.`))return;const next=data.map(x=>x.id===obId?{...x,payments:x.payments.map(y=>y.id===paymentId?{...y,reversedAt:todayISO,reverseReason:reason.trim()}:y)}:x);if(!commit(next))return;render();toast('پرداخت باطل شد؛ مانده قسط اصلاح شد.');}
 
-function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='settings')content=settingsPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${content}</main>`+bottomNav()+payModal()+editModal()+accountModal();document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',settings:'مدیریت داده‌ها'}[state.page]}`;}
+function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='reminders')content=reminderPage();else if(state.page==='reports')content=reports();else if(state.page==='settings')content=settingsPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${content}</main>`+bottomNav()+payModal()+editModal()+accountModal();if(cloud.phase==='ready')queueMicrotask(maybeSystemReminder);document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',reminders:'یادآوری اقساط',reports:'گزارش‌های مالی',settings:'مدیریت داده‌ها'}[state.page]}`;}
 let toastTimer;function toast(msg,type=''){document.querySelector('.toast')?.remove();const x=document.createElement('div');x.className='toast '+type;x.setAttribute('role','status');x.textContent=msg;document.body.appendChild(x);clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.remove(),3900);}
 function paymentOpen(ob,inst){const o=data.find(x=>x.id===ob),i=o?.installments.find(x=>x.id===inst);if(!o||!i||left(o,i)<=0)return;state.payment={ob,inst,amount:String(left(o,i)),date:jText(todayISO,true),note:''};render();}
 function calendarShift(delta){const {y,m}=state.calendarMonth;const idx=y*12+m-1+delta;state.calendarMonth={y:Math.floor(idx/12),m:(idx%12+12)%12+1};const date=jISO(state.calendarMonth.y,state.calendarMonth.m,1);state.selectedDay=date||todayISO;render();}
@@ -1129,6 +1516,16 @@ else if(action==='overdue'){state.page='obligations';state.filter='overdue';stat
 else if(action==='dash-filter'){state.dashFilter=el.dataset.filter;render();}
 else if(action==='dash-filter-shortcut'){state.dashFilter=el.dataset.filter;render();document.getElementById('payments-heading')?.scrollIntoView({behavior:'smooth',block:'start'});}
 else if(action==='toggle-amounts'){state.hideAmounts=!state.hideAmounts;render();}
+else if(action==='reminder-filter'){state.reminderFilter=el.dataset.value;render();}
+else if(action==='reminder-snooze'){const old=readReminder('snooze',{});old[el.dataset.inst]=todayLocalDate();if(writeReminder('snooze',old)){render();toast('این قسط تا فردا از فهرست یادآورها پنهان شد.');syncPushSnooze(el.dataset.inst);}}
+else if(action==='reminder-permission'){requestReminderPermission();}
+else if(action==='push-toggle'){if(pushState.active)disableBackgroundPush();else enableBackgroundPush();}
+else if(action==='report-type'){state.reportType=el.dataset.value;render();}
+else if(action==='report-span'){state.reportSpan=Number(el.dataset.value)===12?12:6;render();}
+else if(action==='report-prev'){state.reportOffset=Math.max(-36,state.reportOffset-6);render();}
+else if(action==='report-next'){state.reportOffset=Math.min(36,state.reportOffset+6);render();}
+else if(action==='report-now'){state.reportOffset=0;render();}
+else if(action==='report-csv'){reportExportCSV();}
 else if(action==='toggle-theme'){applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');}
 else if(action==='wizard-next')wizardNext();else if(action==='wizard-prev'){state.wizardStep=Math.max(1,state.wizardStep-1);render();}
 else if(action==='wizard-save')wizardSave();else if(action==='cal-prev')calendarShift(-1);else if(action==='cal-next')calendarShift(1);else if(action==='cal-today'){state.calendarMonth={y:todayJ.y,m:todayJ.m};state.selectedDay=todayISO;render();}else if(action==='cal-day'){state.selectedDay=el.dataset.date;render();}else if(action==='export')exportJSON();
@@ -1164,8 +1561,14 @@ document.addEventListener('change',e=>{if(e.target.id==='backup-file'){const fil
 
 document.addEventListener('click',e=>{const type=e.target.closest('[data-draft-type]');if(type){state.draft.type=type.dataset.draftType;state.draft.rows=[];render();}const mode=e.target.closest('[data-draft-mode]');if(mode){state.draft.mode=mode.dataset.draftMode;state.draft.rows=[];render();}const tab=e.target.closest('[data-tab]');if(tab){state.detailTab=tab.dataset.tab;render();}});
 document.addEventListener('change',e=>{if(e.target.dataset.draft){state.draft[e.target.dataset.draft]=e.target.value;state.draft.rows=[];render();}if(e.target.dataset.row!==undefined){const idx=+e.target.dataset.row,prop=e.target.dataset.prop;if(prop==='amount'){const value=number(e.target.value);state.draft.rows[idx].amount=value;}else if(prop==='due'){state.draft.rows[idx].due=jParse(e.target.value);}if(state.draft.rows[idx].due===null)toast('تاریخ شمسی این ردیف معتبر نیست.','error');}});
+document.addEventListener('change',e=>{const setting=e.target.dataset.reminderSetting;if(!setting)return;const before=reminderSettings();const next={...before};if(setting==='lead')next.lead=[0,1,3,7].includes(Number(e.target.value))?Number(e.target.value):3;else next[setting]=Boolean(e.target.checked);if(!next.enabled)next.system=false;if(writeReminder('settings',next)){render();toast('تنظیمات یادآوری ذخیره شد.');syncBackgroundPushPrefs();}});
+let reminderUiDay=todayLocalDate();
+document.addEventListener('visibilitychange',()=>{if(document.hidden)return;const now=todayLocalDate();if(now!==reminderUiDay){reminderUiDay=now;render();}maybeSystemReminder();});
+setInterval(()=>{if(document.hidden)return;const now=todayLocalDate();if(now!==reminderUiDay){reminderUiDay=now;render();}maybeSystemReminder();},60000);
+navigator.serviceWorker?.addEventListener('message',e=>{if(e.data?.type==='ghestyar-reminder-open')nav('reminders');});
 document.addEventListener('input',e=>{if(e.target.id==='ob-search'){const pos=e.target.selectionStart;state.query=e.target.value;const holder=$('.ob-grid')||$('.empty');const matches=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});if(holder)holder.outerHTML=matches.length?`<div class="ob-grid">${matches.map(obCard).join('')}</div>`:`<div class="panel empty">نتیجه‌ای پیدا نشد.</div>`;}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(state.payment||state.edit)){state.payment=null;state.edit=null;render();}if(e.key==='Enter'&&e.target.matches('[data-action="view"]')){state.selectedId=e.target.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}});
+window.addEventListener('hashchange',()=>{if(location.hash==='#reminders')nav('reminders');});
 render();if(storageRecoveryNeeded)toast('فایل اطلاعات قبلی قابل خواندن نیست؛ برای جلوگیری از حذف، بازنویسی نشده است. ابتدا از داده مرورگر نسخه پشتیبان تهیه کن.','error');
 </script>
 </body>
