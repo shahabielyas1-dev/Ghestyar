@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<meta name="theme-color" content="#f7f8fd" />
+<meta name="theme-color" content="#0c1420" />
 <link rel="manifest" href="./manifest.webmanifest" />
 <link rel="apple-touch-icon" href="./icon-192.png" />
 <script>
@@ -11,12 +11,12 @@
 (function(){
   var preference = null;
   try { preference = localStorage.getItem('ghestyar_theme_v1'); } catch(e) {}
-  var dark = preference === 'dark' || (preference !== 'light' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  var dark = preference === 'dark' || (preference !== 'light');
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0c1420' : '#f3f6f3');
 })();
 </script>
-<title>قسط‌یار ۳.۷ | پایداری و حفاظت از داده‌ها</title>
+<title>قسط‌یار ۳.۸ | بازطراحی گرافیکی و تجربه کاربری</title>
 <script src="./ghestyar-config.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -841,6 +841,268 @@ html[data-theme="dark"] .reminder-hero{background:linear-gradient(120deg,#44317f
 .sync-safety-banner span{font-size:12px;color:var(--muted)}
 .sync-safety-banner .btn{flex-shrink:0;min-height:42px}
 @media(max-width:390px){.sync-safety-banner{flex-direction:column;align-items:stretch}.sync-safety-banner .btn{width:100%}}
+
+/* =========================================================
+   Ghestyar 3.8 - Graphite & Lime visual system
+   Inspired by the supplied finance-app reference.
+   Presentation only: finances, cloud, and Push are unchanged.
+   ========================================================= */
+:root {
+  --ink:#1b2638;--muted:#697587;--teal:#416f16;--teal2:#639b1f;
+  --deep:#1b2939;--canvas:#f3f6f3;--white:#fff;--border:#e1e8e5;
+  --soft:#edf3ec;--green:#3f7720;--orange:#b77521;--rose:#c44e5a;
+  --shadow:0 12px 34px rgba(24,40,53,.055);--radius:22px;
+  --lime:#b2fb39;--accent-text:#132316;
+}
+:root[data-theme="dark"] {
+  color-scheme:dark;
+  --ink:#f4f7ff;--muted:#b3bed0;--teal:#b2fb39;--teal2:#b2fb39;
+  --deep:#c5ff70;--canvas:#0c1420;--white:#182232;--border:#303c4c;
+  --soft:#222e3e;--green:#bcff68;--orange:#ffc77b;--rose:#ff8798;
+  --shadow:0 18px 34px rgba(1,7,15,.22);--lime:#a9f52d;--accent-text:#122011;
+}
+html[data-theme="dark"],html[data-theme="dark"] body {background:#0c1420;color:var(--ink)}
+body {background:var(--canvas);color:var(--ink);font-family:'Vazirmatn',Tahoma,Arial,sans-serif;}
+html[data-theme="dark"] body {background:radial-gradient(ellipse at 85% -30%,#1a2b3d 0,transparent 53%),#0c1420}
+html[data-theme="dark"] .brand h1,html[data-theme="dark"] .page-title,
+html[data-theme="dark"] .section-heading h2,html[data-theme="dark"] .dash-panel .panel-head h3,
+html[data-theme="dark"] .dash-bottom-head h2,html[data-theme="dark"] .panel-head h3 {color:var(--ink)}
+html[data-theme="dark"] .brand span,html[data-theme="dark"] .page-kicker,html[data-theme="dark"] .nav-label {color:var(--muted)}
+.main {max-width:1540px;padding-top:30px}
+.topbar {margin-bottom:24px}
+.page-kicker {color:var(--muted);font-weight:700}
+.page-title {font-size:clamp(23px,2.5vw,29px);letter-spacing:-.3px;color:var(--ink)}
+.sidebar,html[data-theme="dark"] .sidebar {background:var(--white);border-left:1px solid var(--border);box-shadow:none}
+.sidebar {width:250px;padding:29px 17px 20px}
+.main {width:calc(100% - 250px)}
+.brand {padding-bottom:24px}
+.brand h1 {color:var(--ink);font-weight:900}
+.brand-logo {background:var(--lime);color:var(--accent-text);box-shadow:0 9px 23px #9bee2d21;border-radius:15px}
+.nav button,html[data-theme="dark"] .nav button {color:var(--muted);font-weight:800;border-radius:15px}
+.nav button:hover,html[data-theme="dark"] .nav button:hover {background:var(--soft);color:var(--ink)}
+.nav button.active,html[data-theme="dark"] .nav button.active {background:var(--lime);color:var(--accent-text)}
+.nav button.active::before {display:none}
+.sidebar-box,html[data-theme="dark"] .sidebar-box {background:var(--soft);border-color:var(--border);border-radius:19px;color:var(--ink)}
+.sidebar-box .tiny,html[data-theme="dark"] .sidebar-box .tiny {color:var(--muted)}
+.sidebar-box button,html[data-theme="dark"] .sidebar-box button {background:var(--white);border:1px solid var(--border);color:var(--teal)}
+.demo-note,html[data-theme="dark"] .demo-note {color:var(--muted)}
+.icon-btn,.pill-btn,.account-trigger,.theme-toggle,html[data-theme="dark"] .icon-btn,html[data-theme="dark"] .pill-btn,html[data-theme="dark"] .account-trigger {background:var(--white);border:1px solid var(--border);color:var(--ink);border-radius:16px;box-shadow:none}
+.account-trigger.signed-out,html[data-theme="dark"] .account-trigger.signed-out {background:var(--soft);color:var(--ink);border-color:var(--border)}
+.account-trigger svg,html[data-theme="dark"] .account-trigger svg {color:var(--teal)}
+.account-trigger-text .account-state-label,html[data-theme="dark"] .account-trigger .account-state-label {color:var(--muted)}
+.alert-count {background:var(--lime);color:var(--accent-text);border-color:var(--white)}
+.btn,.pill-btn,.icon-btn {border-radius:14px}
+.btn.primary,html[data-theme="dark"] .btn.primary {background:var(--lime);border-color:var(--lime);color:var(--accent-text);box-shadow:0 8px 22px #a9f52c19;font-weight:900}
+.btn.primary:hover,html[data-theme="dark"] .btn.primary:hover {background:#c5ff6b;border-color:#c5ff6b;color:var(--accent-text)}
+.btn.subtle,html[data-theme="dark"] .btn.subtle {background:var(--soft);border-color:var(--border);color:var(--teal)}
+html[data-theme="dark"] .btn:not(.primary):not(.subtle):not(.danger) {background:var(--soft);color:var(--ink);border-color:var(--border)}
+.link-btn,html[data-theme="dark"] .link-btn,.backbutton,html[data-theme="dark"] .backbutton {color:var(--teal)}
+:where(button,input,select,textarea,a):focus-visible {outline:3px solid var(--lime);outline-offset:3px}
+.panel,.stat,.ob-card,.dash-panel,.metric-bento,.detail-banner,.modal,.list-table,
+html[data-theme="dark"] .panel,html[data-theme="dark"] .stat,html[data-theme="dark"] .ob-card,
+html[data-theme="dark"] .dash-panel,html[data-theme="dark"] .metric-bento,
+html[data-theme="dark"] .detail-banner,html[data-theme="dark"] .modal,html[data-theme="dark"] .list-table {
+ background:var(--white);color:var(--ink);border:1px solid var(--border);border-radius:23px;box-shadow:var(--shadow)
+}
+/* Reference-like balance card */
+.dash-v2 {gap:19px}
+.dash-v2 .hero-bento {grid-template-columns:minmax(0,1.2fr) minmax(300px,.82fr);gap:15px}
+.month-card,html[data-theme="dark"] .month-card {
+ background:linear-gradient(135deg,#263344 0%,#202c3d 58%,#1b2736 100%);color:#f7faff;
+ border:1px solid #3b4858;border-radius:27px;padding:27px 29px 25px;min-height:318px;
+ box-shadow:0 15px 31px #050b142b;position:relative;isolation:isolate
+}
+.month-card:before,.month-card:after,html[data-theme="dark"] .month-card:before,
+html[data-theme="dark"] .month-card:after {display:none}
+.month-card .eyebrow,html[data-theme="dark"] .month-card .eyebrow {color:#b8c6d5;font-size:13px}
+.month-card .eyebrow .small-circle,html[data-theme="dark"] .eyebrow .small-circle {background:var(--lime);box-shadow:0 0 0 4px #a9f52c20}
+.month-card .card-top .icon-btn,html[data-theme="dark"] .month-card .card-top .icon-btn {background:#344052;border-color:#465163;color:#e4edf6;border-radius:13px}
+.month-card .month-heading,html[data-theme="dark"] .month-heading {font-size:16px;font-weight:750;color:#b6c5d3;margin:15px 0 5px}
+.month-card .month-value,html[data-theme="dark"] .month-value {color:#fff;font-size:clamp(27px,3vw,42px);line-height:1.5;margin:5px 0 0;letter-spacing:0;white-space:normal;overflow-wrap:anywhere}
+.month-card .month-value small,html[data-theme="dark"] .month-value small {color:#d1dae7;font-size:14px}
+.month-card .month-subtitle,html[data-theme="dark"] .month-subtitle {font-size:12px;color:#b1bfce;font-weight:650}
+.month-card .month-progress-head,html[data-theme="dark"] .month-progress-head {color:#c3ced9;margin-top:15px}
+.month-card .month-progress-head strong,html[data-theme="dark"] .month-progress-head strong {color:var(--lime)}
+.month-card .month-track,html[data-theme="dark"] .month-track {height:8px;background:#445063;border:0;border-radius:40px;overflow:hidden}
+.month-card .month-track>div,html[data-theme="dark"] .month-track>div {background:var(--lime);border-radius:40px}
+.month-actions {margin-top:11px}
+.month-actions .btn.subtle,html[data-theme="dark"] .month-actions .btn.subtle {background:#394555;color:#f8faff;border-color:#495669}
+.month-actions .text-link,html[data-theme="dark"] .month-actions .text-link {color:#d9e2ea}
+/* Four large touch targets: debt-manager equivalents of wallet shortcuts */
+.month-shortcuts {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:20px}
+.month-shortcuts button {border:1px solid #475364;background:#394555;color:#eef3fb;border-radius:17px;min-width:0;min-height:77px;padding:10px 3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-size:11px;font-weight:800;line-height:1.35;transition:transform .15s,background .15s}
+.month-shortcuts button svg {width:23px;height:23px}
+.month-shortcuts button.primary-shortcut {background:var(--lime);border-color:var(--lime);color:var(--accent-text)}
+.month-shortcuts button:active {transform:scale(.97)}
+.month-shortcuts button:hover {background:#465365}
+.month-shortcuts button.primary-shortcut:hover {background:#c5ff6b}
+/* Secondary featured item / next due */
+.focus-card,html[data-theme="dark"] .focus-card {background:linear-gradient(155deg,#172338 0%,#121f30 100%);border:1px solid #354456;color:#f9fcff;border-radius:27px;box-shadow:0 15px 34px #060d1e29;padding:27px}
+.focus-card:before,.focus-card:after {display:none}
+.focus-card .focus-label,html[data-theme="dark"] .focus-card .focus-label {color:#a9f52d;font-size:12px;letter-spacing:0}
+.focus-card h2 {color:#f7faff;font-size:21px;margin-top:14px}
+.focus-card .focus-date,html[data-theme="dark"] .focus-card .focus-date {color:#bbc8d5}
+.focus-card .focus-number {color:#fff;overflow-wrap:anywhere;white-space:normal;margin-top:20px}
+.focus-card .focus-number span {color:#b9c5d3}
+.focus-card .focus-btns .btn:not(.focus-ghost),html[data-theme="dark"] .focus-card .focus-btns .btn:not(.focus-ghost) {background:var(--lime);border:1px solid var(--lime);color:var(--accent-text);box-shadow:none}
+.focus-card .focus-btns .focus-ghost,html[data-theme="dark"] .focus-card .focus-btns .focus-ghost {background:#28394b;color:#edf4f9;border:1px solid #48596a}
+/* Summary cards and lists */
+.metrics-row {gap:13px}
+.metric-bento,html[data-theme="dark"] .metric-bento {padding:19px;border-radius:21px}
+.metric-bento .metric-number,html[data-theme="dark"] .metric-bento .metric-number {color:var(--ink);font-size:23px;overflow-wrap:anywhere;white-space:normal}
+.metric-bento .metric-title,html[data-theme="dark"] .metric-bento .metric-title,
+.metric-bento .metric-note,html[data-theme="dark"] .metric-bento .metric-note,
+.metric-bento .metric-number small,html[data-theme="dark"] .metric-bento .metric-number small {color:var(--muted)}
+.metric-bento .metric-symbol,html[data-theme="dark"] .metric-bento .metric-symbol {background:var(--soft);color:var(--teal);border-radius:13px}
+.metric-bento.warn-metric,html[data-theme="dark"] .metric-bento.warn-metric {background:var(--white);border-color:#bc5a674a}
+.metric-bento.warn-metric .metric-number,html[data-theme="dark"] .metric-bento.warn-metric .metric-number {color:var(--rose)}
+.metric-bento.warn-metric .metric-symbol,html[data-theme="dark"] .metric-bento.warn-metric .metric-symbol {background:#c95a6e24;color:var(--rose)}
+.metric-bento .metric-action,html[data-theme="dark"] .metric-bento .metric-action {color:var(--rose)}
+.dash-v2 .split-content {gap:14px}
+.dash-panel {padding:20px}
+.dash-panel .panel-head h3,html[data-theme="dark"] .dash-panel .panel-head h3 {color:var(--ink)}
+.dash-panel .panel-head small,html[data-theme="dark"] .dash-panel .panel-head small {color:var(--muted)}
+.dashboard-chips button,html[data-theme="dark"] .dashboard-chips button {background:var(--soft);border:1px solid var(--border);color:var(--muted);border-radius:25px}
+.dashboard-chips button.active,html[data-theme="dark"] .dashboard-chips button.active {background:var(--lime);border-color:var(--lime);color:var(--accent-text);font-weight:900}
+.payment-row,html[data-theme="dark"] .payment-row {border-top:1px solid var(--border);padding-block:17px}
+.payment-row .payment-name {font-size:15px;letter-spacing:0}
+.payment-row .payment-sub,html[data-theme="dark"] .payment-row .payment-sub {color:var(--muted)}
+.payment-row .payment-price small,html[data-theme="dark"] .payment-row .payment-price small {color:var(--muted)}
+.payment-row .pay-cta,html[data-theme="dark"] .payment-row .pay-cta {background:var(--soft);border-color:var(--border);color:var(--teal);font-size:12px}
+.payment-row .pay-cta:hover,html[data-theme="dark"] .payment-row .pay-cta:hover {background:var(--lime);border-color:var(--lime);color:var(--accent-text)}
+.type-icon,html[data-theme="dark"] .type-icon {background:var(--soft);color:var(--teal)}
+.type-icon.purchase,html[data-theme="dark"] .type-icon.purchase {background:#2c796d24;color:#3ba694}
+.type-icon.other,html[data-theme="dark"] .type-icon.other {background:#b77d3026;color:var(--orange)}
+.mini-chart .chart-rail,html[data-theme="dark"] .mini-chart .chart-rail {background:var(--soft)}
+.mini-chart .chart-bar {background:linear-gradient(0deg,#73b421,var(--lime))}
+.mini-chart .chart-label,html[data-theme="dark"] .mini-chart .chart-label {color:var(--muted)}
+.forecast-hint,html[data-theme="dark"] .forecast-hint {background:var(--soft);color:var(--muted);border-radius:14px}
+.report-quick-link {border-color:var(--border);background:var(--soft);color:var(--teal);border-radius:14px}
+.dash-footnote,html[data-theme="dark"] .dash-footnote {color:var(--muted)}
+/* Stacked-feeling obligation cards and elegant subpages */
+.ob-card,html[data-theme="dark"] .ob-card {background:var(--white);border-color:var(--border);overflow:hidden;position:relative}
+.ob-card:before {content:'';position:absolute;right:0;top:0;width:4px;height:100%;background:var(--lime);opacity:.8}
+.ob-card:hover,html[data-theme="dark"] .ob-card:hover {border-color:var(--teal);box-shadow:var(--shadow)}
+.ob-name {font-weight:900}
+.filter,html[data-theme="dark"] .filter {background:var(--soft);border-color:var(--border);color:var(--muted)}
+.filter.active,html[data-theme="dark"] .filter.active {background:var(--lime);border-color:var(--lime);color:var(--accent-text)}
+.searchbox,html[data-theme="dark"] .searchbox {background:var(--white);border-color:var(--border)}
+html[data-theme="dark"] .searchbox svg {color:var(--muted)}
+html[data-theme="dark"] .searchbox input {background:transparent;color:var(--ink)}
+.tabbar button.active,html[data-theme="dark"] .tabbar button.active {color:var(--teal);border-color:var(--lime)}
+.report-pills button.active,html[data-theme="dark"] .report-pills button.active,
+.reminder-tabs button.active {background:var(--lime);color:var(--accent-text);border-color:var(--lime);box-shadow:none}
+.report-kpi,.report-toolbar,.report-box,.report-month-card,.report-payment,.reminder-panel,.reminder-item,.reminder-setting-row,.reminder-background-row {background:var(--white);border-color:var(--border);color:var(--ink)}
+.reminder-hero {background:linear-gradient(110deg,#26374a,#142434)}
+html[data-theme="dark"] .report-kpi.important {background:#233548;border-color:#44576b}
+html[data-theme="dark"] .report-kpi.important .value {color:var(--lime)}
+html[data-theme="dark"] .report-kpi.late .value {color:var(--rose)}
+html[data-theme="dark"] .report-bar {background:var(--lime)}
+html[data-theme="dark"] .report-bar.actual {background:#45c3a7}
+html[data-theme="dark"] .field input,html[data-theme="dark"] .field select,html[data-theme="dark"] .field textarea,
+html[data-theme="dark"] .wizard-mobile-fields .wizard-row-input {background:var(--soft);color:var(--ink);border-color:var(--border)}
+html[data-theme="dark"] .field input:focus,html[data-theme="dark"] .field select:focus,
+html[data-theme="dark"] .field textarea:focus {border-color:var(--lime);box-shadow:0 0 0 3px #a9f52b2e}
+html[data-theme="dark"] .mode-card,html[data-theme="dark"] .wizard-mobile-row {background:var(--soft);border-color:var(--border)}
+html[data-theme="dark"] .mode-card.active {background:#2e432b;border-color:var(--lime);color:#eaffdf;box-shadow:none}
+html[data-theme="dark"] .day.today {background:#253d34;border-color:var(--lime)}
+html[data-theme="dark"] .day.selected {background:#314838;outline-color:var(--lime)}
+html[data-theme="dark"] .day:hover {background:#2e3b42}
+html[data-theme="dark"] .day .dot {background:var(--lime)}
+html[data-theme="dark"] .table th,html[data-theme="dark"] .report-table th {background:var(--soft);color:var(--muted)}
+html[data-theme="dark"] .table td {color:var(--ink);border-top-color:var(--border)}
+html[data-theme="dark"] .table tr:hover td {background:var(--soft)}
+html[data-theme="dark"] .calendar-controls button,html[data-theme="dark"] .report-month-nav button {background:var(--soft);border-color:var(--border);color:var(--ink)}
+html[data-theme="dark"] .toast {background:#263d26;color:#e7ffe0}
+html[data-theme="dark"] .account-trigger.signed-in.is-ready .cloud-dot {background:var(--lime)}
+html[data-theme="dark"] .cloud-banner,html[data-theme="dark"] .cloud-status {background:var(--soft);border-color:var(--border);color:var(--ink)}
+html[data-theme="dark"] .sync-safety-banner {background:var(--white);border-color:var(--border);border-inline-start-color:var(--orange)}
+/* Responsive floating navigation directly inspired by the reference's pill. */
+@media(max-width:720px) {
+ html[data-theme="dark"] body {background:#0c1420}
+ .main {width:100%;padding:19px 15px calc(116px + env(safe-area-inset-bottom))}
+ .topbar {margin-bottom:18px;gap:7px}
+ .page-kicker {font-size:11px}
+ .page-title {font-size:22px}
+ .toolbar {gap:5px}
+ .toolbar>.icon-btn,.toolbar>.theme-toggle {background:var(--white);border-radius:13px}
+ .toolbar>.account-trigger {background:var(--white);border-radius:13px;min-width:75px}
+ .dash-v2 {gap:15px}
+ .dash-v2 .hero-bento {grid-template-columns:minmax(0,1fr);gap:12px}
+ .month-card,html[data-theme="dark"] .month-card {padding:19px 18px 18px;border-radius:24px;min-height:0}
+ .month-card .month-heading {font-size:14px;margin-top:12px}
+ .month-card .month-value,html[data-theme="dark"] .month-value {font-size:clamp(25px,7vw,34px);margin-top:4px}
+ .month-card .month-value small {font-size:12px}
+ .month-card .month-subtitle {font-size:11px}
+ .month-card .month-progress-head {font-size:11px;margin-top:12px}
+ .month-shortcuts {gap:7px;margin-top:16px}
+ .month-shortcuts button {min-height:70px;border-radius:14px;font-size:10px;padding:8px 3px}
+ .month-shortcuts button svg {height:20px;width:20px}
+ .month-actions {display:none}
+ .focus-card,html[data-theme="dark"] .focus-card {padding:18px;border-radius:23px;min-height:auto}
+ .focus-card h2 {font-size:18px}
+ .focus-card .focus-number {font-size:24px;margin:8px 0 11px}
+ .metrics-row {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .metrics-row .metric-bento:first-child {grid-column:1/-1}
+ .metric-bento {padding:16px;border-radius:19px}
+ .metric-bento .metric-number {font-size:20px}
+ .dash-panel {padding:15px}
+ .payment-row {grid-template-columns:minmax(0,1fr) auto;row-gap:10px}
+ .payment-row .pay-cta {grid-column:1/-1;justify-self:stretch;min-height:43px}
+ .payment-row .payment-price {font-size:13px}
+ .payment-row .payment-desc .type-icon {width:40px;height:40px}
+ .bottom-nav,html[data-theme="dark"] .bottom-nav {
+  display:flex;align-items:center;gap:3px;
+  position:fixed;left:14px;right:14px;bottom:calc(10px + env(safe-area-inset-bottom));
+  width:auto;max-width:calc(100vw - 28px);padding:7px;border-radius:999px;
+  background:#1f2a39;border:1px solid #43515f;z-index:40;
+  box-shadow:0 10px 35px #04091475;
+ }
+ .bottom-nav button,html[data-theme="dark"] .bottom-nav button {
+  flex:1 1 0;min-width:0;min-height:49px;border-radius:999px;padding:7px 4px;
+  display:flex;flex-direction:row;justify-content:center;gap:6px;
+  color:#b8c5d2;font-size:12px;font-weight:800;background:transparent
+ }
+ .bottom-nav button span {display:none}
+ .bottom-nav button svg {width:22px;height:22px;color:inherit}
+ .bottom-nav button.active,html[data-theme="dark"] .bottom-nav button.active {
+  background:var(--lime);color:var(--accent-text);flex:1.55 1 0
+ }
+ .bottom-nav button.active span {display:inline;white-space:nowrap}
+ .bottom-nav button.add-nav svg,html[data-theme="dark"] .bottom-nav button.add-nav svg {width:22px;height:22px;padding:0;box-shadow:none;background:transparent;border-radius:0;color:inherit}
+ .bottom-nav button:focus-visible {outline:3px solid var(--lime);outline-offset:1px}
+ .sidebar {display:none}
+}
+@media(max-width:360px) {
+ .main {padding-inline:11px}
+ .month-card,html[data-theme="dark"] .month-card {padding-inline:14px}
+ .month-shortcuts {gap:5px}
+ .month-shortcuts button {font-size:9px;min-height:67px}
+ .bottom-nav,html[data-theme="dark"] .bottom-nav {left:9px;right:9px;max-width:calc(100vw - 18px)}
+ .bottom-nav button,html[data-theme="dark"] .bottom-nav button {font-size:11px}
+}
+@media(min-width:721px) and (max-width:1200px) {.dash-v2 .hero-bento {grid-template-columns:1fr 1fr}.month-card .month-value {font-size:30px}.month-shortcuts button {font-size:10px}}
+@media(max-width:950px) and (min-width:721px) {.dash-v2 .hero-bento {grid-template-columns:1fr}.month-card .month-value {font-size:37px}}
+@media(prefers-reduced-motion:reduce) {.month-shortcuts button {transition:none}}
+/* End-of-cascade refinements: visible page titles and consistent wizard accents */
+html[data-theme="dark"] .step-item.current,
+html[data-theme="dark"] .step-item.done {color:var(--lime)}
+html[data-theme="dark"] .step-item.current .step-number,
+html[data-theme="dark"] .step-item.done .step-number {background:var(--lime);color:var(--accent-text);border-color:var(--lime)}
+html[data-theme="dark"] .mode-card.active {background:#2a3d27;border-color:var(--lime);color:#efffdf}
+html[data-theme="dark"] .reminder-tabs button.active {background:var(--lime);color:var(--accent-text);border-color:var(--lime)}
+html[data-theme="dark"] .welcome-empty-icon {background:#2b4027;color:var(--lime)}
+html[data-theme="dark"] .report-quick-link {color:var(--lime)}
+html[data-theme="dark"] .report-type-fill {background:var(--lime)}
+html[data-theme="dark"] .report-type-fill.purchase {background:#4cd0af}
+@media(max-width:720px) {
+ .topbar {display:grid;grid-template-columns:minmax(0,1fr);gap:8px;align-items:start}
+ .topbar>div:first-child {grid-column:1;grid-row:2;min-width:0}
+ .topbar>.toolbar {grid-column:1;grid-row:1;display:flex;justify-content:space-between;align-items:center;width:100%}
+ .page-kicker {white-space:normal;overflow:visible;text-overflow:clip;font-size:11px}
+ .page-title {font-size:24px;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.45}
+}
+
 </style>
 </head>
 <body>
@@ -1167,7 +1429,7 @@ function themeButton(){const dark=document.documentElement.dataset.theme==='dark
 function applyTheme(theme, persist=true){
   const dark=theme==='dark';
   document.documentElement.dataset.theme=dark?'dark':'light';
-  document.querySelector('meta[name="theme-color"]').setAttribute('content',dark?'#0f1220':'#f7f8fd');
+  document.querySelector('meta[name="theme-color"]').setAttribute('content',dark?'#0c1420':'#f3f6f3');
   if(persist){try{localStorage.setItem('ghestyar_theme_v1',dark?'dark':'light');}catch(e){}}
   document.querySelectorAll('.theme-toggle').forEach(button=>{button.innerHTML=icon(dark?'sun':'moon')+`<span class="theme-button-label">${dark?'روشن':'شب'}</span>`;button.setAttribute('aria-label',`فعال کردن حالت ${dark?'روشن':'تاریک'}`);button.title=`حالت ${dark?'روشن':'تاریک'}`;button.setAttribute('aria-pressed',String(dark));});
 }
@@ -1183,9 +1445,9 @@ function accountAccessButton(){
  const detail=signedIn?`<span class="account-state-label">${cloud.phase==='ready'?'همگام':cloud.phase==='pending'?'در حال ارسال':cloud.phase==='conflict'?'تعارض':cloud.phase==='error'?'خطای اتصال':cloud.phase==='loading'?'در حال دریافت':'حساب فعال'}</span>`:'';
  return `<button class="account-trigger ${phaseClass} is-${cloud.phase}" type="button" data-action="account-open" aria-label="${help}" title="${help}">${icon(iconName)}<span class="account-trigger-text"><span class="account-main-label">${label}</span>${detail}</span>${signedIn?'<span class="cloud-dot" aria-hidden="true"></span>':''}</button>`;
 }
-function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],reminders:['پرداخت‌های نزدیک و سررسیدهای عقب‌افتاده','یادآوری اقساط'],reports:['تحلیل پرداخت‌های واقعی و اقساط آینده','گزارش‌های مالی'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}${accountAccessButton()}<span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn alert-bell" title="یادآوری اقساط" data-nav="reminders" aria-label="یادآوری اقساط، ${reminderList().length} مورد نیازمند پیگیری">${icon('bell')}${reminderList().length?`<span class="alert-count">${fnum(Math.min(99,reminderList().length))}</span>`:''}</button></div></header>`;}
+function header(){const h={dashboard:['خوش برگشتی · مدیریت اقساط','وضعیت مالی من'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],reminders:['پرداخت‌های نزدیک و سررسیدهای عقب‌افتاده','یادآوری اقساط'],reports:['تحلیل پرداخت‌های واقعی و اقساط آینده','گزارش‌های مالی'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}${accountAccessButton()}<span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn alert-bell" title="یادآوری اقساط" data-nav="reminders" aria-label="یادآوری اقساط، ${reminderList().length} مورد نیازمند پیگیری">${icon('bell')}${reminderList().length?`<span class="alert-count">${fnum(Math.min(99,reminderList().length))}</span>`:''}</button></div></header>`;}
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['reminders','bell','یادآورها'],['reports','chart','گزارش‌ها'],['settings','shield','مدیریت داده']];
-function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۷</div></div></aside>`;}
+function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۸</div></div></aside>`;}
 function bottomNav(){return `<nav class="bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['add','plus','افزودن']].map(([k,ic,t])=>`<button data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
  const all=closest();const overdue=all.filter(x=>x.i.due<todayISO);
@@ -1216,6 +1478,12 @@ function dashboard(){
    <div class="month-subtitle">از ${fnum(thisMonthEntries.length)} قسط با سررسید همین ماه ${monthSum?'· مبلغ کل '+amount(monthSum)+' تومان':''}</div>
    <div class="month-progress-head"><span>پیشرفت پرداخت اقساط سررسید این ماه</span><strong>${fnum(progress)}٪</strong></div>
    <div class="month-track" role="progressbar" aria-label="درصد پرداخت اقساط ماه" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"><div style="width:${progress}%"></div></div>
+   <div class="month-shortcuts" aria-label="کارهای سریع">
+    ${focus?`<button type="button" class="primary-shortcut" data-action="pay" data-ob="${focus.o.id}" data-inst="${focus.i.id}">${icon('check')}<span>ثبت پرداخت</span></button>`:`<button type="button" class="primary-shortcut" data-nav="obligations">${icon('wallet')}<span>اقساط من</span></button>`}
+    <button type="button" data-nav="add">${icon('plus')}<span>تعهد جدید</span></button>
+    <button type="button" data-nav="calendar">${icon('calendar')}<span>تقویم</span></button>
+    <button type="button" data-nav="reports">${icon('chart')}<span>گزارش‌ها</span></button>
+   </div>
    <div class="month-actions"><button class="btn subtle" data-action="dash-filter-shortcut" data-filter="month">${icon('list')} اقساط همین ماه</button><button class="text-link" data-nav="calendar">تقویم ${icon('chevron-left')}</button></div>
   </section>
   <section class="focus-card" aria-labelledby="focus-heading"><div class="focus-content">
