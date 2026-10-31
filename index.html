@@ -16,7 +16,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#0f1220' : '#f7f8fd');
 })();
 </script>
-<title>قسط‌یار ۳.۶.۱ | رفع ابهام خطای Push</title>
+<title>قسط‌یار ۳.۷ | پایداری و حفاظت از داده‌ها</title>
 <script src="./ghestyar-config.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -834,6 +834,13 @@ html[data-theme="dark"] .reminder-hero{background:linear-gradient(120deg,#44317f
 .reminder-background-row p{max-width:520px;overflow-wrap:anywhere}
 .reminder-background-row button{min-width:145px}
 @media(max-width:600px){.reminder-background-row{flex-direction:column;align-items:stretch;gap:11px}.reminder-background-row button{width:100%}}
+/* 3.7: actionable status while cloud writes are pending or have failed. */
+.sync-safety-banner{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--border);border-inline-start:4px solid var(--orange);background:var(--white);color:var(--ink);padding:12px 14px;border-radius:14px;margin-bottom:17px;line-height:1.8}
+.sync-safety-banner>div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.sync-safety-banner strong{font-weight:850;font-size:14px}
+.sync-safety-banner span{font-size:12px;color:var(--muted)}
+.sync-safety-banner .btn{flex-shrink:0;min-height:42px}
+@media(max-width:390px){.sync-safety-banner{flex-direction:column;align-items:stretch}.sync-safety-banner .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -891,7 +898,8 @@ function yearIndex(y){if(yCache.has(y))return yCache.get(y);const map=new Map();
 function jISO(y,m,d){return yearIndex(y).get(`${m}/${d}`)||null;}
 function jParse(value){const a=String(value||'').replace(/[۰-۹]/g,c=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).split(/[\/\-.]/).map(Number);return a.length===3&&a.every(Number.isInteger)?jISO(a[0],a[1],a[2]):null;}
 function addJMonth(start,offset,day){const j=typeof start==='string'?jalali(start):start;const ind=j.y*12+j.m-1+offset;const y=Math.floor(ind/12),m=(ind%12+12)%12+1;for(let d=day||j.d;d>=1;d--){const iso=jISO(y,m,d);if(iso)return iso;}return null;}
-const _localNow=new Date();const todayISO=[_localNow.getFullYear(),String(_localNow.getMonth()+1).padStart(2,'0'),String(_localNow.getDate()).padStart(2,'0')].join('-');const todayJ=jalali(todayISO);
+function currentLocalISO(){const n=new Date();return [n.getFullYear(),String(n.getMonth()+1).padStart(2,'0'),String(n.getDate()).padStart(2,'0')].join('-');}
+let todayISO=currentLocalISO(),todayJ=jalali(todayISO);
 const id=()=>((typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():'id'+Date.now()+Math.random().toString(16).slice(2));
 function makeInstallments(total,n,start,rate=0){const per=rate/1200;const raw=per>0?total*per/(1-Math.pow(1+per,-n)):total/n;let bal=total;const inst=[];for(let i=0;i<n;i++){const interest=Math.round(bal*per);const amount=i===n-1?bal+interest:Math.round(raw);bal=Math.max(0,bal-(amount-interest));inst.push({id:id(),number:i+1,amount,due:addJMonth(start,i)});}return inst;}
 // 3.2: real first-run empty state, with non-destructive legacy demo cleanup.
@@ -939,10 +947,11 @@ function loadLocalData(){
 data=loadLocalData();
 function commit(next){
  if(cloud.user){
+   if(cloudCacheChanged()){showCacheConflict();return false;}
    if(!['ready','pending','error'].includes(cloud.phase)){toast('تا پایان بارگذاری یا حل تعارض، ثبت تغییرات ممکن نیست.','error');return false;}
    try{const validated=validateBackup({version:1,obligations:next});
-     const record={baseRevision:cloud.revision,dirty:true,obligations:validated};
-     localStorage.setItem(cloudCacheKey(),JSON.stringify(record));data=validated;cloud.dirty=true;cloud.phase='pending';
+     const record=JSON.stringify({baseRevision:cloud.revision,dirty:true,obligations:validated});
+     localStorage.setItem(cloudCacheKey(),record);cloudCacheFingerprint=record;data=validated;cloud.dirty=true;cloud.phase='pending';
      queueMicrotask(()=>pushCloud());return true;
    }catch(e){toast('ذخیره محلی پیش از ارسال ابری ناموفق بود: '+e.message,'error');return false;}
  }
@@ -1176,7 +1185,7 @@ function accountAccessButton(){
 }
 function header(){const h={dashboard:['مرور پرداخت‌ها و سررسیدهای پیش رو','خانه'],obligations:['مدیریت و پیگیری بدهی‌ها','تعهدات من'],add:['ایجاد یک برنامه پرداخت تازه','ثبت تعهد'],detail:['مدیریت اقساط و سابقه پرداخت','جزئیات تعهد'],calendar:['نمای ماهانه سررسیدها','تقویم پرداخت‌ها'],reminders:['پرداخت‌های نزدیک و سررسیدهای عقب‌افتاده','یادآوری اقساط'],reports:['تحلیل پرداخت‌های واقعی و اقساط آینده','گزارش‌های مالی'],settings:['حساب کاربری، همگام‌سازی و پشتیبان‌گیری','تنظیمات و اطلاعات']}[state.page];return `<header class="topbar"><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div><div class="toolbar"><button class="icon-btn" data-nav="settings" title="مدیریت داده‌ها" aria-label="مدیریت داده‌ها">${icon('shield')}</button>${themeButton()}${accountAccessButton()}<span class="pill-btn desktop-only">${icon('calendar')} ${fnum(todayJ.d)} ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><button class="icon-btn alert-bell" title="یادآوری اقساط" data-nav="reminders" aria-label="یادآوری اقساط، ${reminderList().length} مورد نیازمند پیگیری">${icon('bell')}${reminderList().length?`<span class="alert-count">${fnum(Math.min(99,reminderList().length))}</span>`:''}</button></div></header>`;}
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['add','plus','افزودن تعهد'],['calendar','calendar','تقویم'],['reminders','bell','یادآورها'],['reports','chart','گزارش‌ها'],['settings','shield','مدیریت داده']];
-function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۵</div></div></aside>`;}
+function sidebar(){return `<aside class="sidebar"><div class="brand"><div class="brand-logo">${icon('wallet')}</div><div><h1>قسط‌یار</h1><span>خیالت از قسط‌ها راحت</span></div></div><div class="nav-label">فضای کار من</div><nav class="nav">${navItems.map(([k,ic,t])=>`<button class="${state.page===k||(state.page==='detail'&&k==='obligations')?'active':''}" data-nav="${k}">${icon(ic)}${t}</button>`).join('')}</nav><div class="sidebar-bottom"><div class="sidebar-box"><div class="tiny">${icon('shield')} وضعیت داده‌ها</div><strong>${cloud.user?'حساب ابری فعال':'حالت محلی'}</strong><div class="tiny">${cloudStatusText()}</div><button data-action="export">${icon('download')} دریافت فایل پشتیبان</button></div><div class="demo-note">قسط‌یار · نسخه ۳.۷</div></div></aside>`;}
 function bottomNav(){return `<nav class="bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['add','plus','افزودن']].map(([k,ic,t])=>`<button data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
  const all=closest();const overdue=all.filter(x=>x.i.due<todayISO);
@@ -1341,18 +1350,34 @@ function validateBackup(parsed){
 /* Phase 3.0: account-aware snapshot synchronization, optimistic locking, safe opt-in migration. */
 const CLOUD_CONFIG=window.GHESTYAR_SUPABASE||{};
 const cloud={client:null,user:null,phase:'local',revision:0,dirty:false,writing:false,accountOpen:false,error:'',authMode:'login',activationId:null,recovery:false};
+let cloudCacheFingerprint=null; // Last cache this tab read or wrote; guards against stale-tab overwrites.
 function cloudCacheKey(){return 'ghestyar_cloud_cache_'+cloud.user.id;}
 function cloudStatusText(){return ({local:'فقط روی دستگاه',disabled:'نیاز به راه‌اندازی',loading:'در حال دریافت',choose:'انتخاب اطلاعات اولیه',ready:'همگام‌سازی‌شده',pending:'در انتظار ارسال',error:'خطای اتصال؛ قابل تکرار',conflict:'تعارض دو دستگاه'})[cloud.phase]||cloud.phase;}
 function cloudConfigReady(){return /^https:\/\/[\w-]+\.supabase\.co\/?$/.test(CLOUD_CONFIG.url||'')&&!String(CLOUD_CONFIG.url).includes('YOUR-')&&typeof CLOUD_CONFIG.publishableKey==='string'&&!CLOUD_CONFIG.publishableKey.includes('YOUR_')&&CLOUD_CONFIG.publishableKey.length>24;}
 function cloudSnapshot(){return {version:1,obligations:data};}
-function readCloudCache(){try{const raw=localStorage.getItem(cloudCacheKey());return raw?JSON.parse(raw):null;}catch(e){return null;}}
-function persistCloudCache(dirty=false){try{localStorage.setItem(cloudCacheKey(),JSON.stringify({baseRevision:cloud.revision,dirty,obligations:data}));return true;}catch(e){toast('ذخیره نسخه بازیابی این دستگاه ممکن نشد.','error');return false;}}
+function readCloudCache(){try{const raw=localStorage.getItem(cloudCacheKey());cloudCacheFingerprint=raw;return raw?JSON.parse(raw):null;}catch(e){return null;}}
+function cloudCacheChanged(){
+ if(!cloud.user)return false;
+ try{return localStorage.getItem(cloudCacheKey())!==cloudCacheFingerprint;}
+ catch(_e){return false;}
+}
+function showCacheConflict(){
+ cloud.phase='conflict';cloud.error='داده‌های این حساب در برگه دیگری از مرورگر تغییر کرده‌اند. برای جلوگیری از بازنویسی، ثبت این برگه متوقف شد. ابتدا پشتیبان بگیر و نسخه سرور را بررسی کن.';
+ // Do not destroy unsaved input fields while informing the user about the conflict.
+ if(hasUnfinishedEntry()){cloud.accountOpen=false;toast('تغییر هم‌زمان شناسایی شد. اطلاعات فرم فعلی باقی است؛ ابتدا آن را یادداشت کن و تعارض حساب را بررسی کن.','error');return;}
+ cloud.accountOpen=true;toast('تغییر هم‌زمان در برگه دیگر شناسایی شد؛ اطلاعات بازنویسی نشد.','error');render();
+}
+function persistCloudCache(dirty=false){try{
+ const raw=JSON.stringify({baseRevision:cloud.revision,dirty,obligations:data});
+ localStorage.setItem(cloudCacheKey(),raw);cloudCacheFingerprint=raw;return true;
+ }catch(e){toast('ذخیره نسخه بازیابی این دستگاه ممکن نشد.','error');return false;}}
+function hasUnfinishedEntry(){return Boolean(state.payment||state.edit||(state.page==='add'&&state.draft));}
 function setCloudPhase(phase,msg=''){cloud.phase=phase;cloud.error=msg;render();}
 function localReload(){data=loadLocalData();}
 async function cloudActivate(user){
  if(!user?.id)return;
  if(cloud.user?.id===user.id&&['loading','ready','pending','choose','conflict'].includes(cloud.phase))return;
- cloud.user=user;cloud.revision=0;cloud.dirty=false;cloud.activationId=user.id;cloud.accountOpen=cloud.recovery;
+ cloud.user=user;cloud.revision=0;cloud.dirty=false;cloudCacheFingerprint=null;cloud.activationId=user.id;cloud.accountOpen=cloud.recovery;
  setCloudPhase('loading');
  try{
   const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',user.id).maybeSingle();
@@ -1396,6 +1421,8 @@ async function pushCloud(){
   if(cloud.user?.id!==uid)return;
   if(!Number.isSafeInteger(Number(newRevision))||Number(newRevision)<=revision)throw Error('پاسخ سرور شماره نسخه معتبر ندارد.');
   cloud.revision=Number(newRevision);
+  // Another tab may have changed its pending snapshot while this request was in flight.
+  if(cloudCacheChanged()){cloud.dirty=true;showCacheConflict();return;}
   const changed=JSON.stringify(cloudSnapshot())!==JSON.stringify(snapshot);
   cloud.dirty=changed;
   persistCloudCache(changed);
@@ -1408,9 +1435,10 @@ async function pushCloud(){
  }finally{cloud.writing=false;if(cloud.user?.id===uid&&cloud.dirty&&cloud.phase==='pending')queueMicrotask(pushCloud);}
 }
 async function cloudCheckUpdates(){
- if(!cloud.user||cloud.dirty||cloud.writing||cloud.phase!=='ready')return;
+ if(!cloud.user||cloud.dirty||cloud.writing||cloud.phase!=='ready'||document.hidden||hasUnfinishedEntry())return;
  try{const uid=cloud.user.id;const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',uid).maybeSingle();
-  if(error)throw error;if(!row||cloud.user?.id!==uid||cloud.dirty)return;
+  if(error)throw error;if(!row||cloud.user?.id!==uid||cloud.dirty||hasUnfinishedEntry())return;
+  if(cloudCacheChanged()){showCacheConflict();return;}
   if(row.revision>cloud.revision){const next=validateBackup(row.payload);data=next;cloud.revision=row.revision;persistCloudCache(false);state.edit=null;state.payment=null;render();toast('آخرین تغییرات دستگاه دیگر دریافت شد.');}
  }catch(e){console.warn('Cloud refresh skipped:',e.message);}
 }
@@ -1487,7 +1515,7 @@ async function initCloud(){
  cloud.client.auth.onAuthStateChange((event,session)=>{
   if(event==='PASSWORD_RECOVERY'){cloud.recovery=true;cloud.accountOpen=true;render();}
   if(event==='SIGNED_OUT'){
-   const previous=cloud.user?.id;cloud.user=null;cloud.revision=0;cloud.dirty=false;cloud.phase='local';cloud.accountOpen=false;cloud.error='';cloud.activationId=null;cloud.recovery=false;localReload();state.payment=null;state.edit=null;state.draft=null;render();
+   const previous=cloud.user?.id;cloud.user=null;cloud.revision=0;cloud.dirty=false;cloudCacheFingerprint=null;cloud.phase='local';cloud.accountOpen=false;cloud.error='';cloud.activationId=null;cloud.recovery=false;localReload();state.payment=null;state.edit=null;state.draft=null;render();
    if(previous)toast('از حساب خارج شدی؛ اطلاعات محلی مستقل نمایش داده می‌شوند.');
   }else if(event==='SIGNED_IN'&&session?.user){queueMicrotask(()=>cloudActivate(session.user));}
  });
@@ -1505,8 +1533,8 @@ document.addEventListener('click',e=>{
  else if(action==='cloud-check')cloudCheckUpdates();
 });
 window.addEventListener('online',()=>{if(cloud.dirty)pushCloud();else cloudCheckUpdates();});
-window.addEventListener('focus',()=>{if(cloud.dirty)pushCloud();else cloudCheckUpdates();});
-setInterval(()=>{if(cloud.dirty&&cloud.phase==='error')pushCloud();else cloudCheckUpdates();},25000);
+window.addEventListener('focus',()=>{refreshCurrentDay();if(cloud.dirty)pushCloud();else cloudCheckUpdates();});
+setInterval(()=>{if(document.hidden)return;if(cloud.dirty&&cloud.phase==='error')pushCloud();else cloudCheckUpdates();},45000);
 window.addEventListener('DOMContentLoaded',initCloud);
 
 function legacyArchiveExists(){try{return !!localStorage.getItem(LEGACY_SAMPLE_ARCHIVE);}catch(e){return false;}}
@@ -1521,7 +1549,13 @@ function editModal(){if(!state.edit)return '';const e=state.edit,o=data.find(x=>
 async function importBackup(file){if(!file)return;if(file.size>4*1024*1024){toast('حجم فایل بیشتر از ۴ مگابایت است.','error');return;}try{const content=await file.text();const loaded=validateBackup(JSON.parse(content));const count=loaded.reduce((sum,o)=>sum+o.installments.length,0);if(!window.confirm(`فایل بررسی شد: ${loaded.length} تعهد و ${count} قسط.\nاطلاعات فعلی (${data.length} تعهد) به‌طور کامل جایگزین می‌شوند.\nپیش از ادامه از داده‌های فعلی پشتیبان گرفته‌ای؟`))return;if(!commit(loaded))return;state.draft=null;state.payment=null;state.edit=null;nav('dashboard');toast('پشتیبان بازیابی شد.');}catch(e){toast('بازیابی انجام نشد: '+e.message,'error');}}
 function reversePayment(obId,paymentId){const o=data.find(x=>x.id===obId),p=o?.payments.find(x=>x.id===paymentId);if(!p||p.reversedAt)return;const reason=window.prompt('دلیل ابطال ثبت پرداخت را وارد کن (مثلاً مبلغ اشتباه):','ثبت اشتباه');if(reason===null)return;if(!reason.trim()||reason.length>200){toast('دلیل ابطال را وارد کن (حداکثر ۲۰۰ نویسه).','error');return;}if(!window.confirm(`پرداخت ${fmt(p.amount)} تومانی باطل شود؟\nسوابق حذف نمی‌شوند و مبلغ به مانده قسط برمی‌گردد.`))return;const next=data.map(x=>x.id===obId?{...x,payments:x.payments.map(y=>y.id===paymentId?{...y,reversedAt:todayISO,reverseReason:reason.trim()}:y)}:x);if(!commit(next))return;render();toast('پرداخت باطل شد؛ مانده قسط اصلاح شد.');}
 
-function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='reminders')content=reminderPage();else if(state.page==='reports')content=reports();else if(state.page==='settings')content=settingsPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${content}</main>`+bottomNav()+payModal()+editModal()+accountModal();if(cloud.phase==='ready')queueMicrotask(maybeSystemReminder);document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',reminders:'یادآوری اقساط',reports:'گزارش‌های مالی',settings:'مدیریت داده‌ها'}[state.page]}`;}
+function syncSafetyBanner(){
+ if(!cloud.user||!['pending','error','conflict'].includes(cloud.phase))return '';
+ const title=cloud.phase==='conflict'?'تغییر هم‌زمان شناسایی شد':cloud.phase==='error'?'ارسال اطلاعات به ابر ناموفق بود':'تغییرات هنوز در حال ارسال‌اند';
+ const desc=cloud.phase==='conflict'?'قبل از ویرایش بیشتر، نسخه پشتیبان بگیر و وضعیت دو دستگاه را بررسی کن.':cloud.phase==='error'?'اطلاعات در مرورگر نگهداری شده‌اند؛ برای تلاش مجدد وارد حساب من شو.':'تا تأیید همگام‌سازی، از پاک‌کردن داده‌های مرورگر خودداری کن.';
+ return `<aside class="sync-safety-banner" role="status"><div><strong>${escapeHTML(title)}</strong><span>${escapeHTML(desc)}</span></div><button class="btn" data-action="account-open">حساب من</button></aside>`;
+}
+function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='reminders')content=reminderPage();else if(state.page==='reports')content=reports();else if(state.page==='settings')content=settingsPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${syncSafetyBanner()}${content}</main>`+bottomNav()+payModal()+editModal()+accountModal();if(cloud.phase==='ready')queueMicrotask(maybeSystemReminder);document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',reminders:'یادآوری اقساط',reports:'گزارش‌های مالی',settings:'مدیریت داده‌ها'}[state.page]}`;}
 let toastTimer;function toast(msg,type=''){document.querySelector('.toast')?.remove();const x=document.createElement('div');x.className='toast '+type;x.setAttribute('role','status');x.textContent=msg;document.body.appendChild(x);clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.remove(),3900);}
 function paymentOpen(ob,inst){const o=data.find(x=>x.id===ob),i=o?.installments.find(x=>x.id===inst);if(!o||!i||left(o,i)<=0)return;state.payment={ob,inst,amount:String(left(o,i)),date:jText(todayISO,true),note:''};render();}
 function calendarShift(delta){const {y,m}=state.calendarMonth;const idx=y*12+m-1+delta;state.calendarMonth={y:Math.floor(idx/12),m:(idx%12+12)%12+1};const date=jISO(state.calendarMonth.y,state.calendarMonth.m,1);state.selectedDay=date||todayISO;render();}
@@ -1583,9 +1617,19 @@ document.addEventListener('change',e=>{if(e.target.id==='backup-file'){const fil
 document.addEventListener('click',e=>{const type=e.target.closest('[data-draft-type]');if(type){state.draft.type=type.dataset.draftType;state.draft.rows=[];render();}const mode=e.target.closest('[data-draft-mode]');if(mode){state.draft.mode=mode.dataset.draftMode;state.draft.rows=[];render();}const tab=e.target.closest('[data-tab]');if(tab){state.detailTab=tab.dataset.tab;render();}});
 document.addEventListener('change',e=>{if(e.target.dataset.draft){state.draft[e.target.dataset.draft]=e.target.value;state.draft.rows=[];render();}if(e.target.dataset.row!==undefined){const idx=+e.target.dataset.row,prop=e.target.dataset.prop;if(prop==='amount'){const value=number(e.target.value);state.draft.rows[idx].amount=value;}else if(prop==='due'){state.draft.rows[idx].due=jParse(e.target.value);}if(state.draft.rows[idx].due===null)toast('تاریخ شمسی این ردیف معتبر نیست.','error');}});
 document.addEventListener('change',e=>{const setting=e.target.dataset.reminderSetting;if(!setting)return;const before=reminderSettings();const next={...before};if(setting==='lead')next.lead=[0,1,3,7].includes(Number(e.target.value))?Number(e.target.value):3;else next[setting]=Boolean(e.target.checked);if(!next.enabled)next.system=false;if(writeReminder('settings',next)){render();toast('تنظیمات یادآوری ذخیره شد.');syncBackgroundPushPrefs();}});
-let reminderUiDay=todayLocalDate();
-document.addEventListener('visibilitychange',()=>{if(document.hidden)return;const now=todayLocalDate();if(now!==reminderUiDay){reminderUiDay=now;render();}maybeSystemReminder();});
-setInterval(()=>{if(document.hidden)return;const now=todayLocalDate();if(now!==reminderUiDay){reminderUiDay=now;render();}maybeSystemReminder();},60000);
+let reminderUiDay=todayISO;
+function refreshCurrentDay(){
+ const now=currentLocalISO();if(now===todayISO)return false;
+ todayISO=now;todayJ=jalali(now);reminderUiDay=now;
+ // Preserve a deliberately selected calendar day; the «today» action always uses the new date.
+ render();return true;
+}
+document.addEventListener('visibilitychange',()=>{
+ if(document.hidden)return;
+ refreshCurrentDay();maybeSystemReminder();
+ if(cloud.user&&!cloud.dirty&&!hasUnfinishedEntry())cloudCheckUpdates();
+});
+setInterval(()=>{if(document.hidden)return;refreshCurrentDay();maybeSystemReminder();},60000);
 navigator.serviceWorker?.addEventListener('message',e=>{if(e.data?.type==='ghestyar-reminder-open')nav('reminders');});
 document.addEventListener('input',e=>{if(e.target.id==='ob-search'){const pos=e.target.selectionStart;state.query=e.target.value;const holder=$('.ob-grid')||$('.empty');const matches=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});if(holder)holder.outerHTML=matches.length?`<div class="ob-grid">${matches.map(obCard).join('')}</div>`:`<div class="panel empty">نتیجه‌ای پیدا نشد.</div>`;}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(state.payment||state.edit)){state.payment=null;state.edit=null;render();}if(e.key==='Enter'&&e.target.matches('[data-action="view"]')){state.selectedId=e.target.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}});
