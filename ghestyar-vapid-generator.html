@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>ساخت کلید امن اعلان قسط‌یار</title>
+<style>
+:root{color-scheme:light dark;font-family:Tahoma,Arial,sans-serif}body{margin:0;padding:20px;min-height:100vh;background:#f4f2fb;color:#201d38;box-sizing:border-box}main{max-width:590px;margin:16px auto;padding:22px;border-radius:24px;background:#fff;border:1px solid #e1ddee;box-shadow:0 8px 35px #352c6e12}h1{font-size:1.35rem;margin:0 0 16px}p{font-size:.92rem;line-height:2}button{cursor:pointer;border:0;background:#7358dd;color:white;border-radius:12px;padding:12px 16px;font-size:1rem;font-weight:700;min-height:44px}.label{font-weight:700;font-size:.87rem;display:block;margin:22px 0 7px}.field{display:flex;gap:6px;align-items:stretch}input{min-width:0;flex:1;border-radius:12px;border:1px solid #cfc8ea;background:#fff;color:#17142a;direction:ltr;text-align:left;padding:12px;font-family:monospace;font-size:13px}button.copy{font-size:.85rem;background:#e9e5f8;color:#35257a}small{display:block;color:#655b82;line-height:2}.info{border-radius:12px;padding:12px;background:#f0ecff}.warning{border-radius:12px;padding:12px;background:#fff3db;color:#6a460e}.hidden{display:none}.result{margin-top:20px}#message{min-height:25px;color:#287662;font-size:.88rem;font-weight:bold}
+@media(prefers-color-scheme:dark){body{background:#10111d;color:#f5f2ff}main{background:#1e2032;border-color:#34354b}input{background:#151626;color:#f7f3ff;border-color:#57526e}.info{background:#30304d}.warning{background:#4b3c28;color:#ffdda2}small{color:#c0b9d2}button.copy{background:#383454;color:#efeaff}}
+</style></head>
+<body><main>
+<h1>🔐 ساخت کلیدهای اعلان قسط‌یار</h1>
+<p class="info">این صفحه بدون کتابخانه خارجی کار می‌کند. کلیدها در مرورگر خودت ساخته می‌شوند؛ هیچ درخواستی به اینترنت ارسال نمی‌شود و نتیجه در حافظه دائمی ذخیره نمی‌شود.</p>
+<p class="warning">کلید خصوصی و رمز زمان‌بند را در GitHub، ChatGPT، اسکرین‌شات یا فایل عمومی قرار نده. فقط در Supabase Edge Function Secrets ذخیره کن.</p>
+<button id="generate" type="button">ساخت سه کلید جدید</button><div id="message" role="status"></div>
+<section id="results" class="result hidden">
+  <label for="public" class="label">۱. GHESTYAR_VAPID_PUBLIC_KEY (عمومی)</label>
+  <div class="field"><input id="public" readonly spellcheck="false" autocomplete="off"><button type="button" class="copy" data-target="public">کپی</button></div>
+  <label for="private" class="label">۲. GHESTYAR_VAPID_PRIVATE_KEY (محرمانه)</label>
+  <div class="field"><input id="private" type="password" readonly spellcheck="false" autocomplete="off"><button type="button" class="copy" data-target="private">کپی</button></div>
+  <label for="cron" class="label">۳. GHESTYAR_CRON_SECRET (محرمانه)</label>
+  <div class="field"><input id="cron" type="password" readonly spellcheck="false" autocomplete="off"><button type="button" class="copy" data-target="cron">کپی</button></div>
+  <p><small>با هر بار زدن «ساخت»، کلیدهای قبلی جایگزین می‌شوند. پس از ذخیره آن‌ها در Supabase، دوباره کلید جدید نساز؛ در غیر این صورت اشتراک‌های قبلی Push به تنظیم مجدد نیاز خواهند داشت.</small></p>
+</section>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+function base64url(bytes){let s='';for(const n of bytes)s+=String.fromCharCode(n);return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+$('generate').addEventListener('click', async()=>{
+  const b=$('generate');b.disabled=true;$('message').textContent='در حال ساخت کلیدها…';
+  try{
+    if(!window.isSecureContext||!crypto?.subtle)throw new Error('لطفاً این صفحه را از آدرس HTTPS سایت GitHub Pages خودت باز کن.');
+    const kp=await crypto.subtle.generateKey({name:'ECDSA',namedCurve:'P-256'},true,['sign','verify']);
+    const rawPub=new Uint8Array(await crypto.subtle.exportKey('raw',kp.publicKey));
+    const jwk=await crypto.subtle.exportKey('jwk',kp.privateKey);
+    if(rawPub.length!==65||!jwk.d)throw new Error('ساخت کلید معتبر انجام نشد.');
+    const secret=new Uint8Array(32);crypto.getRandomValues(secret);
+    $('public').value=base64url(rawPub);
+    $('private').value=jwk.d;
+    $('cron').value=base64url(secret);
+    $('results').classList.remove('hidden');
+    $('message').textContent='کلیدها ساخته شدند؛ اکنون هر مقدار را جداگانه در Supabase ذخیره کن.';
+  }catch(e){$('message').textContent='خطا: '+(e?.message||e);}
+  finally{b.disabled=false;}
+});
+document.querySelectorAll('.copy').forEach(button=>button.addEventListener('click',async()=>{
+  const input=$(button.dataset.target);
+  try{await navigator.clipboard.writeText(input.value);$('message').textContent='مقدار در کلیپ‌بورد کپی شد. آن را فقط در Supabase وارد کن.';}
+  catch {input.type='text';input.focus();input.select();$('message').textContent='کپی خودکار مجاز نیست؛ مقدار را انتخاب و کپی کن.';}
+}));
+</script></body></html>
