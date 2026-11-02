@@ -1256,7 +1256,8 @@ html[data-theme=dark] .calendar-v39 .calendar-stats>div{background:var(--white);
 .personal-header-title{min-width:0}.personal-header .page-title{font-weight:900;font-size:27px;line-height:1.35}.personal-header .page-kicker{margin-bottom:3px;font-size:12px}
 .personal-toolbar{gap:9px;align-items:center}.personal-toolbar .personal-top-icon{height:47px;width:47px;padding:0;border-radius:15px;color:var(--ink);background:var(--white);border:1px solid var(--border);box-shadow:none;position:relative}
 .personal-toolbar .personal-top-icon svg{height:21px;width:21px}
-.personal-sync{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 13px;background:var(--white);color:var(--muted);font-size:11px;font-weight:800;border-radius:13px;border:1px solid var(--border);white-space:nowrap}
+.personal-sync{display:flex;align-items:center;gap:7px;min-height:44px;padding:8px 13px;background:var(--white);color:var(--muted);font-size:11px;font-weight:800;border-radius:13px;border:1px solid var(--border);white-space:nowrap;position:relative}
+.personal-sync-icon{display:grid;place-items:center}.personal-sync-icon svg{width:18px;height:18px}
 .personal-sync-dot{height:8px;width:8px;border-radius:100%;background:var(--lime);box-shadow:0 0 0 3px color-mix(in srgb,var(--lime) 15%,transparent);flex-shrink:0}
 .personal-sync.is-warning .personal-sync-dot{background:#ef9a66}
 .personal-notice-dot{position:absolute;top:8px;inset-inline-end:8px;background:var(--lime);border:2px solid var(--white);height:10px;width:10px;border-radius:50%}
@@ -1480,13 +1481,13 @@ html .sync-safety-banner,html .warn,html .calculation-hint{border-radius:14px}
 html .personal-settings .personal-advanced,html .personal-settings .personal-setting-shortcuts{border-radius:20px}
 /* footer navigation: neon centered create control, real button handlers kept */
 @media(max-width:900px){
- html .sidebar{display:none}html .main{width:100%;max-width:100%;padding:20px 16px calc(117px + env(safe-area-inset-bottom))}
- html .neo-header{margin-bottom:20px;gap:8px;padding-bottom:14px}
+ html .sidebar{display:none}html .main{width:100%;max-width:100%;padding:20px 16px calc(142px + env(safe-area-inset-bottom))}
+ html .neo-header{display:flex;flex-direction:column;align-items:stretch;margin-bottom:20px;gap:12px;padding-bottom:14px}
  html .neo-page-mark{height:38px;width:38px;border-radius:13px}.neo-page-mark img{width:38px;height:38px}
- html .neo-header-title{gap:8px}html .neo-header-title .page-title{font-size:19px}html .neo-header-title .page-kicker{font-size:9px}
+ html .neo-header-title{gap:8px;justify-content:flex-start}html .neo-header-title .page-title{font-size:19px}html .neo-header-title .page-kicker{font-size:9px}
  html .neo-toolbar .neo-header-add{display:none}
- html .neo-toolbar{gap:6px}html .neo-toolbar .personal-top-icon{width:37px;height:39px;min-height:39px;border-radius:12px}html .neo-toolbar .personal-top-icon svg{height:19px;width:19px}
- html .neo-toolbar .personal-sync{width:37px;min-height:39px;height:39px;padding:0;justify-content:center;font-size:0}html .neo-toolbar .personal-sync-dot{width:9px;height:9px}
+ html .neo-toolbar{display:grid;grid-template-columns:repeat(3,39px);justify-content:start;align-items:center;gap:8px;align-self:start}html .neo-toolbar .personal-top-icon{width:39px;height:39px;min-height:39px;border-radius:12px}html .neo-toolbar .personal-top-icon svg{height:19px;width:19px}
+ html .neo-toolbar .personal-sync{position:relative;width:39px;min-height:39px;height:39px;padding:0;justify-content:center;font-size:0}html .neo-toolbar .personal-sync-icon{display:grid;place-items:center}html .neo-toolbar .personal-sync-icon svg{width:18px;height:18px}html .neo-toolbar .personal-sync-dot{position:absolute;top:7px;left:7px;width:9px;height:9px}
  html .neo-bottom-nav,html[data-theme="dark"] .neo-bottom-nav{position:fixed!important;inset:auto 12px calc(10px + env(safe-area-inset-bottom)) 12px!important;display:flex!important;align-items:center;justify-content:space-around;height:70px;min-height:70px;padding:6px 7px;z-index:40;border-radius:22px;border:1px solid #4871ad80;background:color-mix(in srgb,var(--white) 91%,transparent);box-shadow:0 13px 40px #0009;backdrop-filter:blur(18px)}
  html .neo-bottom-nav button{flex:1;min-width:0;min-height:57px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;font-size:9px;color:var(--muted);border:0;background:transparent;border-radius:14px;position:relative;padding:4px 2px}
  html .neo-bottom-nav button svg{width:20px;height:20px}
@@ -1556,6 +1557,108 @@ html .gh-install-feature span{color:#72c5ff}
 html .gh-install-primary{background:linear-gradient(100deg,#1468fa,#4aaaff);border:1px solid #87cfff77;color:white;box-shadow:0 9px 24px #1c74ff38}
 html .gh-install-secondary{background:#172946;border:1px solid #41699a;color:#cbdfff}
 html .gh-install-steps li::marker{color:#7dccff}
+
+
+/* 4.4.2 Mobile UX: one-row header, usable floating navigation, compact calendar. */
+html .neo-header{min-height:70px}
+html .neo-dashboard .neo-dash-top{margin-bottom:0}
+html .neo-dashboard .neo-balance .neo-kicker{font-weight:700}
+html .neo-dashboard .neo-stat:nth-child(1) strong{font-size:clamp(15px,2vw,21px)}
+html .neo-dashboard .neo-stat:nth-child(1) small{line-height:1.4}
+html .calendar-overdue-note{display:flex;align-items:center;gap:8px;padding:10px 13px;background:#ed9a4020;border:1px solid #d99a4c56;border-radius:12px;font-size:12px;color:var(--ink)}
+html .calendar-overdue-note svg{color:#eda74b;width:17px;height:17px}
+html .calendar-v39 .calgrid .day{font-variant-numeric:tabular-nums}
+html .calendar-v39 .day .dots{margin-top:auto;justify-content:center;align-items:center;min-height:9px}
+html .calendar-v39 .calendar-intro{margin-bottom:0}
+html .calendar-v39 .calendar-stats{grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr)}
+html .calendar-v39 .calendar-stats strong{font-weight:800;letter-spacing:-.4px}
+html .calendar-v39 .calendar-stats>div{min-width:0}
+html .calendar-v39 .calendar-stat-focus{border-color:#398cfb79;background:linear-gradient(130deg,var(--white),#287eff0d)}
+html .calendar-v39 .calendar-head{display:flex;align-items:center;justify-content:space-between}
+html .calendar-v39 .calendar-controls{display:flex;align-items:center;gap:7px}
+html .calendar-v39 .calgrid{grid-auto-rows:minmax(0,1fr)}
+html .calendar-v39 .calgrid .day{overflow:hidden}
+html .calendar-v39 .cal-legend{justify-content:flex-start;align-items:center}
+html .calendar-v39 .calendar-agenda{scroll-margin-top:20px}
+html .calendar-v39 .calendar-agenda .panel-head{align-items:center}
+html .calendar-v39 .agenda-bottom{gap:10px}
+html .calendar-v39 .agenda-bottom .btn{min-height:40px}
+html .detail-banner .detail-actions{align-items:stretch}
+html .detail-actions .btn{white-space:normal;text-align:center;line-height:1.5}
+@media(max-width:900px){
+ html .main{padding-bottom:calc(170px + env(safe-area-inset-bottom))!important}
+ html .neo-header{display:flex!important;flex-direction:row!important;justify-content:space-between!important;align-items:center!important;gap:8px!important;padding-bottom:15px!important;margin-bottom:16px!important}
+ html .neo-header-title{flex:1 1 auto;min-width:0;gap:8px!important}
+ html .neo-page-mark,html .neo-page-mark img{width:38px;height:38px;flex-shrink:0}
+ html .neo-header-title .page-title{font-size:clamp(16px,4.6vw,22px)!important;white-space:nowrap;letter-spacing:-.5px}
+ html .neo-header-title .page-kicker{font-size:9px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ html .neo-toolbar{flex:0 0 auto!important;display:flex!important;align-self:center!important;align-items:center!important;justify-content:flex-end!important;gap:6px!important}
+ html .neo-toolbar .personal-top-icon,html .neo-toolbar .personal-sync{width:39px!important;height:40px!important;min-height:40px!important;border-radius:12px!important}
+ html .neo-toolbar .personal-top-icon svg{width:18px;height:18px}
+ html .neo-toolbar .personal-sync-dot{left:4px!important;top:4px!important}
+ html .neo-bottom-nav,html[data-theme="dark"] .neo-bottom-nav{height:65px!important;min-height:65px!important;inset:auto 12px calc(12px + env(safe-area-inset-bottom)) 12px!important;border-radius:22px!important;overflow:visible!important;isolation:isolate}
+ html .neo-bottom-nav button{min-height:52px!important;padding:3px 2px!important;gap:1px!important}
+ html .neo-bottom-nav button:not(.add-nav) svg{height:21px;width:21px}
+ html .neo-bottom-nav button:not(.add-nav) span{display:none!important}
+ html .neo-bottom-nav button.active:not(.add-nav) span{display:block!important;font-size:10px!important}
+ html .neo-bottom-nav button.add-nav{transform:translateY(-8px)!important;max-width:66px;overflow:visible!important;z-index:2}
+ html .neo-bottom-nav button.add-nav:before{content:"";display:block;position:absolute;inset:2px auto auto 50%;transform:translateX(-50%);height:49px;width:49px;border-radius:50%;border:1px solid #88d9ff;background:radial-gradient(circle at 28% 17%,#7fdcff,#2585ff 62%,#1454c7);box-shadow:0 0 0 5px #368cff20,0 0 22px #248fff94;z-index:-1}
+ html .neo-bottom-nav button.add-nav svg,html[data-theme="dark"] .neo-bottom-nav button.add-nav svg{width:25px!important;height:25px!important;min-width:25px!important;padding:0!important;margin:0!important;fill:none!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:white!important;stroke-width:2.3!important}
+ html .neo-bottom-nav button.add-nav span{display:none!important}
+ html .detail-banner{scroll-margin-bottom:110px}
+ html .detail-grid,html .calendar-layout{padding-bottom:12px}
+}
+@media(max-width:650px){
+ html .neo-balance-value{font-size:clamp(25px,7vw,37px)!important;line-height:1.65}
+ html .neo-balance-value>span{display:inline-block;white-space:nowrap}
+ html .neo-dashboard .neo-stat-grid{gap:7px}
+ html .neo-dashboard .neo-stat{padding:12px 8px}
+ html .neo-dashboard .neo-stat strong{line-height:1.4;overflow-wrap:anywhere}
+ html .calendar-v39 .calendar-intro{align-items:flex-start;display:flex;gap:7px}
+ html .calendar-v39 .calendar-intro p{max-width:350px;font-size:11px;line-height:1.8}
+ html .calendar-v39 .calendar-add-shortcut{display:none}
+ html .calendar-v39 .calendar-stats{gap:6px}
+ html .calendar-v39 .calendar-stats>div{padding:11px 8px;border-radius:13px;min-height:74px}
+ html .calendar-v39 .calendar-stats span{font-size:9px;line-height:1.5}
+ html .calendar-v39 .calendar-stats strong{font-size:clamp(11px,3.05vw,15px);line-height:1.4;overflow-wrap:anywhere}
+ html .calendar-v39 .calendar-stats small{font-size:9px;white-space:nowrap}
+ html .calendar-v39 .calendar-surface{padding:16px 9px!important}
+ html .calendar-v39 .calendar-head{gap:7px}
+ html .calendar-v39 .calendar-head strong{font-size:17px!important;white-space:nowrap}
+ html .calendar-v39 .calendar-head .small{font-size:9px!important;max-width:180px;line-height:1.5}
+ html .calendar-v39 .calendar-controls{gap:4px}
+ html .calendar-v39 .calendar-controls button{min-width:31px!important;min-height:35px!important;width:33px;height:35px;padding:4px!important}
+ html .calendar-v39 .calendar-controls button[data-action="cal-today"]{width:auto;min-width:39px!important;font-size:10px}
+ html .calendar-v39 .calgrid,html .calendar-v39 .weekgrid{gap:4px!important}
+ html .calendar-v39 .calgrid .day{min-height:58px!important;max-height:68px!important;border-radius:10px!important;justify-content:space-around!important;padding:5px 1px!important}
+ html .calendar-v39 .calgrid .day .number{font-size:14px!important;line-height:1.2}
+ html .calendar-v39 .cal-event-count{font-size:8px!important;line-height:1.3}
+ html .calendar-v39 .dots{gap:3px!important}
+ html .calendar-v39 .dots .dot{width:6px!important;height:6px!important}
+ html .calendar-v39 .calendar-side .panel{padding:16px 13px}
+ html .calendar-v39 .agenda-bottom strong{font-size:14px}
+ html .calendar-v39 .agenda-bottom .btn{padding:7px 10px;font-size:11px}
+ html .detail-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:9px!important}
+ html .detail-actions .btn{min-width:0;min-height:46px!important;font-size:11px!important;padding:10px 6px!important}
+ html .detail-banner{padding:17px 15px!important}
+ html .tabbar{overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+ html .tabbar button{flex:0 0 auto;padding:10px 9px!important;font-size:11px}
+ html .schedule-filters{display:flex;overflow-x:auto;gap:6px}
+ html .schedule-filters button{min-height:40px;flex:1;white-space:nowrap;font-size:11px}
+}
+@media(max-width:365px){
+ html .neo-header{gap:5px!important}
+ html .neo-page-mark,html .neo-page-mark img{width:32px!important;height:32px!important}
+ html .neo-header-title{gap:4px!important}
+ html .neo-header-title .page-title{font-size:15px!important}
+ html .neo-header-title .page-kicker{font-size:8px!important}
+ html .neo-toolbar{gap:4px!important}
+ html .neo-toolbar .personal-top-icon,html .neo-toolbar .personal-sync{height:34px!important;min-height:34px!important;width:34px!important}
+ html .calendar-v39 .calgrid .day{min-height:51px!important}
+ html .calendar-v39 .cal-event-count{display:none!important}
+ html .calendar-v39 .calendar-head strong{font-size:15px!important}
+ html .calendar-v39 .calendar-head .small{max-width:130px}
+}
 
 </style>
 </head>
@@ -2015,7 +2118,7 @@ function header(){
  const h={dashboard:['داشبورد شخصی','وضعیت مالی من'],obligations:['مدیریت وام‌ها و خریدهای من','تعهدات من'],add:['با چند قدم ساده','تعهد جدید'],detail:['مدیریت و پرداخت اقساط','جزئیات تعهد'],calendar:['برنامه‌ریزی سررسیدها','تقویم اقساط'],reminders:['سررسیدهای مهم','یادآوری‌ها'],reports:['گزارش و تحلیل پرداخت‌ها','گزارش‌های من'],settings:['تنظیمات شخصی و پشتیبان','تنظیمات من']}[state.page]||['دستیار اقساط شخصی','قسط‌یار'];
  const noticeCount=reminderList().length;
  const syncLabel=cloud.user?(cloud.phase==='ready'?'همگام':cloud.phase==='pending'?'در حال ذخیره':cloud.phase==='error'?'خطای اتصال':cloud.phase==='conflict'?'تعارض داده':'در حال بررسی'):'ورود';
- return `<header class="topbar personal-header neo-header"><div class="personal-header-title neo-header-title"><span class="neo-page-mark"><img src="./logo.svg" alt="" /></span><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div></div><div class="toolbar personal-toolbar neo-toolbar"><button class="neo-header-add btn primary" data-nav="add">${icon('plus')} افزودن تعهد</button><button type="button" class="personal-sync ${cloud.phase==='error'||cloud.phase==='conflict'?'is-warning':''}" data-action="account-open" title="حساب و همگام‌سازی" aria-label="حساب من: ${syncLabel}"><span class="personal-sync-dot"></span><span>${syncLabel}</span></button><button type="button" class="icon-btn personal-top-icon" data-nav="reminders" title="یادآوری‌ها" aria-label="یادآوری‌ها${noticeCount?'؛ '+fnum(noticeCount)+' قسط نیازمند توجه':''}">${icon('bell')}${noticeCount?'<span class="personal-notice-dot"></span>':''}</button><button type="button" class="icon-btn personal-top-icon" data-nav="settings" title="تنظیمات" aria-label="تنظیمات">${icon('settings')}</button></div></header>`;
+ return `<header class="topbar personal-header neo-header"><div class="personal-header-title neo-header-title"><span class="neo-page-mark"><img src="./logo.svg" alt="" /></span><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div></div><div class="toolbar personal-toolbar neo-toolbar"><button class="neo-header-add btn primary" data-nav="add">${icon('plus')} افزودن تعهد</button><button type="button" class="personal-sync ${cloud.phase==='error'||cloud.phase==='conflict'?'is-warning':''}" data-action="account-open" title="حساب و همگام‌سازی" aria-label="حساب من: ${syncLabel}"><span class="personal-sync-icon">${icon('cloud-check')}</span><span class="personal-sync-dot"></span><span>${syncLabel}</span></button><button type="button" class="icon-btn personal-top-icon" data-nav="reminders" title="یادآوری‌ها" aria-label="یادآوری‌ها${noticeCount?'؛ '+fnum(noticeCount)+' قسط نیازمند توجه':''}">${icon('bell')}${noticeCount?'<span class="personal-notice-dot"></span>':''}</button><button type="button" class="icon-btn personal-top-icon" data-nav="settings" title="تنظیمات" aria-label="تنظیمات">${icon('settings')}</button></div></header>`;
 }
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم اقساط']];
 function sidebar(){
@@ -2029,6 +2132,8 @@ function dashboard(){
  const monthDue=monthRows.reduce((n,x)=>n+x.i.amount,0);
  const monthRemain=monthRows.reduce((n,x)=>n+x.rem,0);
  const monthPaid=Math.max(0,monthDue-monthRemain);
+ const monthPercent=monthDue?Math.min(100,Math.round(100*monthPaid/monthDue)):0;
+ const monthOpenCount=monthRows.filter(x=>x.rem>0).length;
  const overdue=open.filter(x=>x.i.due<todayISO),overdueAmount=overdue.reduce((n,x)=>n+x.rem,0);
  const totalSchedule=data.reduce((n,o)=>n+o.installments.reduce((m,i)=>m+i.amount,0),0);
  const totalRemain=data.reduce((n,o)=>n+outstanding(o),0);
@@ -2046,10 +2151,10 @@ function dashboard(){
  const money=n=>state.hideAmounts?'••••••':fmt(n);
  if(!data.length)return `<div class="neo-dashboard"><section class="neo-empty-state"><div class="neo-empty-illustration"><img src="./logo.svg" alt="" /></div><span class="neo-eyebrow">به قسط‌یار خوش آمدی</span><h2>اقساطت، همیشه روبه‌راه</h2><p>وام‌ها و خریدهای اقساطی رو ثبت کن؛ قسط بعدی و مانده پرداخت‌ها رو اینجا می‌بینی.</p><button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>${!cloud.user?'<button class="btn" data-action="account-open">ورود و همگام‌سازی</button>':''}</section></div>`;
  return `<div class="neo-dashboard">
-  <div class="neo-dash-top"><div><span class="neo-eyebrow">یک نگاه به وضعیت پرداخت‌ها</span><h2>همه اقساط، در یک نگاه</h2></div><button class="neo-quiet-action" data-nav="obligations">مشاهده تعهدات ${icon('chevron-left')}</button></div>
+  <div class="neo-dash-top"><div><span class="neo-eyebrow">برنامه پرداخت شخصی</span><h2>اقساط این ماه</h2></div><button class="neo-quiet-action" data-nav="obligations">مشاهده تعهدات ${icon('chevron-left')}</button></div>
   <div class="neo-dashboard-layout"><div class="neo-col-primary">
-   <section class="neo-balance" aria-label="خلاصه بدهی‌ها"><div class="neo-balance-head"><div class="neo-balance-symbol"><img src="./logo.svg" alt="" /></div><div><span class="neo-kicker">کل مانده اقساط</span><h3>باقی‌مانده پرداخت</h3></div><button class="neo-privacy" data-action="toggle-amounts" aria-label="${state.hideAmounts?'نمایش':'مخفی کردن'} مبالغ">${icon(state.hideAmounts?'eye':'eyeoff')}</button></div><div class="neo-balance-value">${money(totalRemain)}<span>تومان</span></div><p class="neo-balance-context">از مجموع <b>${money(totalSchedule)}</b> تومان تعهد ثبت‌شده</p><div class="neo-track-head"><span>${fnum(percent)}٪ از اقساط پرداخت شده</span><strong>${money(paidTotal)} تومان</strong></div><div class="neo-track" role="progressbar" aria-label="درصد پرداخت کل اقساط" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100"><i style="width:${percent}%"></i></div></section>
-   <div class="neo-stat-grid"><div class="neo-stat"><div class="neo-stat-icon">${icon('chart')}</div><span>پرداخت‌شده</span><strong>${money(paidTotal)}</strong><small>تومان</small></div><div class="neo-stat"><div class="neo-stat-icon">${icon('calendar')}</div><span>اقساط باقی‌مانده</span><strong>${fnum(unpaidCount)}</strong><small>قسط</small></div><div class="neo-stat"><div class="neo-stat-icon">${icon('wallet')}</div><span>تعهد فعال</span><strong>${fnum(activeCount)}</strong><small>مورد</small></div></div>
+   <section class="neo-balance" aria-label="خلاصه این ماه"><div class="neo-balance-head"><div class="neo-balance-symbol"><img src="./logo.svg" alt="" /></div><div><span class="neo-kicker">ماه جاری · ${jmonths[todayJ.m-1]} ${fnum(todayJ.y)}</span><h3>باقی‌مانده اقساط این ماه</h3></div><button class="neo-privacy" data-action="toggle-amounts" aria-label="${state.hideAmounts?'نمایش':'مخفی کردن'} مبالغ">${icon(state.hideAmounts?'eye':'eyeoff')}</button></div><div class="neo-balance-value">${money(monthRemain)}<span>تومان</span></div><p class="neo-balance-context">از مجموع <b>${money(monthDue)}</b> تومان سررسید این ماه · ${fnum(monthOpenCount)} قسط باقی‌مانده</p><div class="neo-track-head"><span>${fnum(monthPercent)}٪ از اقساط این ماه پرداخت شده</span><strong>${money(monthPaid)} تومان</strong></div><div class="neo-track" role="progressbar" aria-label="درصد پرداخت اقساط این ماه" aria-valuenow="${monthPercent}" aria-valuemin="0" aria-valuemax="100"><i style="width:${monthPercent}%"></i></div></section>
+   <div class="neo-stat-grid"><div class="neo-stat"><div class="neo-stat-icon">${icon('wallet')}</div><span>مانده همه ماه‌ها</span><strong>${money(totalRemain)}</strong><small>تومان · جدا از مانده ماه</small></div><div class="neo-stat"><div class="neo-stat-icon">${icon('calendar')}</div><span>اقساط باز این ماه</span><strong>${fnum(monthOpenCount)}</strong><small>قسط</small></div><div class="neo-stat"><div class="neo-stat-icon">${icon('chart')}</div><span>تعهد فعال</span><strong>${fnum(activeCount)}</strong><small>مورد</small></div></div>
    <section class="neo-next-card"><div class="neo-card-heading"><div><span class="neo-kicker">اقدام بعدی</span><h3>${focus?(focus.i.due<todayISO?'قسط معوق':'پرداخت بعدی'):'همه اقساط تسویه شده'}</h3></div><span class="neo-date-chip">${icon('calendar')} ${focus?jText(focus.i.due):'—'}</span></div>${focus?`<div class="neo-next-content">${typeicon(focus.o.type)}<div class="neo-next-label"><strong>${escapeHTML(focus.o.title)}</strong><span>قسط ${fnum(focus.i.number)} · ${escapeHTML(focus.o.party)}</span></div><div class="neo-next-amount">${money(focus.rem)} <small>تومان</small></div></div><div class="neo-next-footer"><span>${focus.i.due<todayISO?'نیازمند پیگیری':focus.i.due===todayISO?'سررسید امروز':'سررسید نزدیک'}</span><div><button class="btn" data-action="view" data-ob="${focus.o.id}">جزئیات</button><button class="btn primary" data-action="pay" data-ob="${focus.o.id}" data-inst="${focus.i.id}">پرداخت ${icon('chevron-left')}</button></div></div>`:`<p class="neo-empty-message">در حال حاضر قسط پرداخت‌نشده‌ای نداری.</p><button class="btn" data-nav="obligations">مشاهده سوابق</button>`}</section>
    <section class="neo-due-card"><div class="neo-card-heading"><div><span class="neo-kicker">برنامه من</span><h3>سررسیدهای ۳۰ روز آینده</h3></div><button class="neo-quiet-action" data-nav="calendar">تقویم کامل ${icon('chevron-left')}</button></div>${next30.length?`<div class="neo-due-timeline">${next30.map(({o,i,rem})=>`<div class="neo-due-item"><div class="neo-due-marker"></div><div class="neo-due-info"><strong>${escapeHTML(o.title)}</strong><span>${jText(i.due,true)} · قسط ${fnum(i.number)}</span></div><div class="neo-due-side"><b>${money(rem)}</b><small>تومان</small></div><button data-action="pay" data-ob="${o.id}" data-inst="${i.id}" aria-label="ثبت پرداخت ${escapeHTML(o.title)}">${icon('chevron-left')}</button></div>`).join('')}</div>`:'<p class="neo-empty-message">تا ۳۰ روز آینده قسط دیگری نداری.</p>'}</section>
   </div><aside class="neo-col-secondary">
@@ -2157,16 +2262,16 @@ function calendar(){
  const week=(parseISO(first).getUTCDay()+1)%7,len=monthLength(y,m),inMonth=(iso)=>{const j=jalali(iso);return j.y===y&&j.m===m;};
  const all=data.flatMap(o=>o.installments.map(i=>{const rem=left(o,i);return {o,i,rem,stat:rem<=0?'paid':i.due<todayISO?'overdue':i.due===todayISO?'soon':rem<i.amount?'partial':'open'};}));
  const month=all.filter(x=>inMonth(x.i.due));const byDay=new Map();for(const x of month){const k=x.i.due;const arr=byDay.get(k)||[];arr.push(x);byDay.set(k,arr);}
- const monthDue=month.reduce((s,x)=>s+x.i.amount,0),monthRemaining=month.reduce((s,x)=>s+x.rem,0),late=month.filter(x=>x.rem>0&&x.i.due<todayISO).length;
+ const monthDue=month.reduce((s,x)=>s+x.i.amount,0),monthRemaining=month.reduce((s,x)=>s+x.rem,0),late=month.filter(x=>x.rem>0&&x.i.due<todayISO).length,settled=month.filter(x=>x.rem===0).length;
  const selected=all.filter(x=>x.i.due===state.selectedDay).sort((a,b)=>a.o.title.localeCompare(b.o.title,'fa'));
  const nextDays=[...byDay.entries()].filter(([date,items])=>items.some(x=>x.rem>0)&&date>=todayISO).sort((a,b)=>a[0].localeCompare(b[0])).slice(0,5);
- return `<section class="calendar-v39" aria-label="تقویم اقساط"><div class="calendar-intro"><div><span class="page-eyebrow">همه اقساط در یک نگاه</span><p>سررسیدها و اقساط تسویه‌شده رو در یک تقویم ببین.</p></div><button class="btn primary" data-nav="add">${icon('plus')} تعهد جدید</button></div>
- <div class="calendar-stats"><div><span>اقساط این ماه</span><strong>${fnum(month.length)}</strong></div><div><span>مانده این ماه</span><strong>${fmt(monthRemaining)} <small>تومان</small></strong></div><div><span>معوق</span><strong class="${late?'is-late':''}">${fnum(late)}</strong></div></div>
- <div class="calendar-layout"><div class="panel calendar-surface"><div class="calendar-head"><div><strong>${jmonths[m-1]} ${fnum(y)}</strong><div class="small muted">${fnum(month.length)} قسط · جمع سررسید ${fmt(monthDue)} تومان</div></div><div class="calendar-controls"><button type="button" data-action="cal-prev" aria-label="ماه قبل" title="ماه قبل">${icon('chevron-right')}</button><button type="button" data-action="cal-today" aria-label="ماه جاری">امروز</button><button type="button" data-action="cal-next" aria-label="ماه بعد" title="ماه بعد">${icon('chevron-left')}</button></div></div>
+ return `<section class="calendar-v39" aria-label="تقویم اقساط"><div class="calendar-intro"><div><span class="page-eyebrow">برنامه پرداخت‌های من</span><p>روزهای دارای قسط را انتخاب کن؛ جزئیات و ثبت پرداخت پایین تقویم قرار دارند.</p></div><button class="btn calendar-add-shortcut" data-nav="add">${icon('plus')} افزودن تعهد</button></div>
+ <div class="calendar-stats"><div><span>تعداد اقساط</span><strong>${fnum(month.length)} <small>قسط</small></strong></div><div class="calendar-stat-focus"><span>مانده سررسیدهای ماه</span><strong>${fmt(monthRemaining)} <small>تومان</small></strong></div><div><span>تسویه‌شده</span><strong>${fnum(settled)} <small>قسط</small></strong></div></div>${late?`<div class="calendar-overdue-note">${icon('info')} ${fnum(late)} قسط معوق از همین ماه وجود دارد.</div>`:''}
+ <div class="calendar-layout"><div class="panel calendar-surface"><div class="calendar-head"><div><strong>${jmonths[m-1]} ${fnum(y)}</strong><div class="small muted">${fnum(month.length)} قسط در این ماه · ${fmt(monthDue)} تومان سررسید</div></div><div class="calendar-controls"><button type="button" data-action="cal-prev" aria-label="ماه قبل" title="ماه قبل">${icon('chevron-right')}</button><button type="button" data-action="cal-today" aria-label="ماه جاری">امروز</button><button type="button" data-action="cal-next" aria-label="ماه بعد" title="ماه بعد">${icon('chevron-left')}</button></div></div>
  <div class="weekgrid" aria-label="روزهای هفته">${[['شنبه','ش'],['یکشنبه','ی'],['دوشنبه','د'],['سه‌شنبه','س'],['چهارشنبه','چ'],['پنجشنبه','پ'],['جمعه','ج']].map(([full,short])=>`<span aria-label="${full}"><span class="weekday-full">${full}</span><span class="weekday-short">${short}</span></span>`).join('')}</div>
  <div class="calgrid" role="grid" aria-label="${jmonths[m-1]} ${fnum(y)}">${Array.from({length:week},()=>'<span class="day blank" aria-hidden="true"></span>').join('')}${Array.from({length:len},(_,k)=>{const iso=jISO(y,m,k+1),items=byDay.get(iso)||[],unpaid=items.filter(x=>x.rem>0),paid=items.filter(x=>x.rem===0),overdue=unpaid.some(x=>x.i.due<todayISO),selected=iso===state.selectedDay;return `<button type="button" class="day ${iso===todayISO?'today':''} ${selected?'selected':''} ${overdue?'has-overdue':''} ${unpaid.length?'has-due':''}" data-action="cal-day" data-date="${iso}" aria-pressed="${selected}" aria-label="${fnum(k+1)} ${jmonths[m-1]}؛ ${fnum(items.length)} قسط، ${fnum(unpaid.length)} پرداخت‌نشده"><span class="number">${fnum(k+1)}</span><span class="cal-event-count">${items.length?`${fnum(items.length)} قسط`:''}</span><span class="dots">${unpaid.length?`<i class="dot ${overdue?'overdue':''}"></i>`:''}${paid.length?'<i class="dot paid"></i>':''}</span></button>`}).join('')}</div>
  <div class="cal-legend"><span><i class="dot"></i> پرداخت‌نشده</span><span><i class="dot overdue"></i> معوق</span><span><i class="dot paid"></i> پرداخت‌شده</span></div>
- </div><aside class="calendar-side"><div class="panel calendar-agenda"><div class="panel-head"><div><span class="page-eyebrow">روز انتخاب‌شده</span><h3>${jText(state.selectedDay,true)}</h3></div><button type="button" class="btn subtle" data-action="cal-today">امروز</button></div>${selected.length?`<div class="agenda-list">${selected.map(({o,i,rem,stat})=>`<article class="agenda-item"><div class="agenda-top">${o.providerId?providerMark(o.providerId):typeicon(o.type)}<div><strong>${escapeHTML(o.title)}</strong><small>قسط ${fnum(i.number)} · ${escapeHTML(o.party)}</small></div>${tag(stat)}</div><div class="agenda-bottom"><strong>${fmt(rem>0?rem:i.amount)} <small>تومان ${rem>0?'مانده':'پرداخت‌شده'}</small></strong>${rem>0?`<button type="button" class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button>`:`<button type="button" class="btn" data-action="view" data-ob="${o.id}">جزئیات</button>`}</div></article>`).join('')}</div>`:`<div class="cal-empty">${icon('calendar')}<strong>در این روز قسطی ثبت نشده</strong><span>روزهای علامت‌دار رو انتخاب کن.</span></div>`}</div>
+ </div><aside class="calendar-side"><div class="panel calendar-agenda"><div class="panel-head"><div><span class="page-eyebrow">جزئیات روز انتخاب‌شده · ${fnum(selected.length)} قسط</span><h3>${jText(state.selectedDay,true)}</h3></div><button type="button" class="btn subtle" data-action="cal-today">امروز</button></div>${selected.length?`<div class="agenda-list">${selected.map(({o,i,rem,stat})=>`<article class="agenda-item"><div class="agenda-top">${o.providerId?providerMark(o.providerId):typeicon(o.type)}<div><strong>${escapeHTML(o.title)}</strong><small>قسط ${fnum(i.number)} · ${escapeHTML(o.party)}</small></div>${tag(stat)}</div><div class="agenda-bottom"><strong>${fmt(rem>0?rem:i.amount)} <small>تومان ${rem>0?'مانده':'پرداخت‌شده'}</small></strong>${rem>0?`<button type="button" class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button>`:`<button type="button" class="btn" data-action="view" data-ob="${o.id}">جزئیات</button>`}</div></article>`).join('')}</div>`:`<div class="cal-empty">${icon('calendar')}<strong>در این روز قسطی ثبت نشده</strong><span>روزهای علامت‌دار رو انتخاب کن.</span></div>`}</div>
  ${nextDays.length?`<div class="panel upcoming-agenda"><h3>سررسیدهای آینده این ماه</h3>${nextDays.map(([iso,items])=>`<button type="button" data-action="cal-day" data-date="${iso}"><span>${jText(iso)}</span><strong>${fnum(items.filter(x=>x.rem>0).length)} قسط</strong>${icon('chevron-left')}</button>`).join('')}</div>`:''}</aside></div></section>`;
 }
 function payModal(){const p=state.payment;if(!p)return '';const o=data.find(x=>x.id===p.ob),i=o?.installments.find(x=>x.id===p.inst);if(!o||!i)return '';return `<div class="modal-backdrop" data-action="close-modal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="pay-title"><div class="modal-head"><h2 id="pay-title">ثبت پرداخت قسط ${fnum(i.number)}</h2><button class="close-btn" data-action="close-modal" aria-label="بستن">${icon('close')}</button></div><div class="row-list"><span class="muted">تعهد</span><strong>${escapeHTML(o.title)}</strong></div><div class="row-list"><span class="muted">مانده قابل پرداخت</span><strong>${fmt(left(o,i))} تومان</strong></div><div class="modal-form" style="margin-top:16px"><div class="field"><label>مبلغ پرداختی (تومان) *</label><input id="pay-amount" value="${escapeHTML(groupedInput(p.amount))}" data-money-input="true" inputmode="numeric" /></div><div class="field"><label>تاریخ پرداخت (شمسی) *</label>${dateFieldButton("pay-date",p.date,"pay")}</div><div class="field"><label>توضیح یا شماره پیگیری</label><input id="pay-note" value="${escapeHTML(p.note)}" placeholder="اختیاری" /></div><div class="warn">پرداخت در سوابق می‌ماند و در صورت اشتباه می‌توانی آن را از تب «تاریخچه پرداخت‌ها» با دلیل ابطال کنی.</div><div class="row-inline"><button class="btn primary" data-action="pay-save">${icon('check')} ثبت پرداخت</button><button class="btn" data-action="close-modal">انصراف</button></div></div></section></div>`;}
