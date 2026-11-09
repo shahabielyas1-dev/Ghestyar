@@ -20,7 +20,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#091229' : '#eef3ff');
 })();
 </script>
-<title>قسط‌یار ۴.۴.۶ | دستیار مالی شخصی</title>
+<title>قسط‌یار ۴.۵.۰ | دستیار مالی شخصی</title>
 <script>
 /* Capture Chromium's native PWA install offer before app initialization. */
 window.__ghestyarDeferredInstall = null;
@@ -1742,6 +1742,47 @@ html .tag.paid,html .cal-legend .paid{color:#7bc5ff}
  html .neo-balance h3{font-size:13px}
  html .neo-stat-grid .neo-stat:first-child strong{font-size:clamp(16px,5.2vw,21px)!important}
 }
+
+/* 4.5.0 — six-month cash-flow forecast; responsive and dark-mode aware. */
+html .neo-cashflow-card{border:1px solid var(--border);background:var(--white);border-radius:22px;padding:20px 21px;min-width:0;box-shadow:var(--shadow)}
+html .neo-cashflow-card .neo-card-heading{align-items:center;margin-bottom:15px}
+html .neo-cashflow-card .neo-card-heading h3{font-size:17px;margin:3px 0}
+html .neo-cashflow-subtitle{margin:2px 0 0;font-size:11px;color:var(--muted)}
+html .neo-cashflow-mark{width:39px;height:39px;border:1px solid #3286ff35;background:#3286ff12;border-radius:13px;display:grid;place-items:center;color:var(--teal);flex:0 0 auto}
+html .neo-cashflow-mark svg{width:20px;height:20px}
+html .neo-cashflow-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+html .neo-cashflow-kpi{min-width:0;padding:12px 14px;border:1px solid var(--border);background:var(--canvas);border-radius:15px;display:flex;flex-direction:column;gap:4px}
+html .neo-cashflow-kpi>span{font-size:10px;color:var(--muted)}
+html .neo-cashflow-kpi>strong{font-size:clamp(14px,1.7vw,20px);font-weight:900;line-height:1.55;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+html .neo-cashflow-kpi>strong small{display:block;font-size:10px;color:var(--muted);font-weight:600;white-space:normal}
+html .neo-cashflow-kpi>small{font-size:9px;color:var(--muted)}
+html .neo-cashflow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+html .neo-cashflow-month{min-width:0;border:1px solid var(--border);border-radius:15px;padding:13px 14px;background:var(--white)}
+html .neo-cashflow-month.current{border-color:#3286ff70;background:linear-gradient(145deg,#3286ff0d,var(--white) 75%)}
+html .neo-cashflow-month.has-overdue{border-color:#e7a15e80}
+html .neo-cashflow-month-head{display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0}
+html .neo-cashflow-month-head strong{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+html .neo-cashflow-month-head>span{font-size:9px;color:var(--teal);white-space:nowrap;background:#3286ff12;padding:3px 6px;border-radius:7px}
+html .neo-cashflow-amount{font-size:clamp(14px,1.55vw,19px);font-weight:900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:10px 0 8px;text-align:right;direction:rtl;font-variant-numeric:tabular-nums}
+html .neo-cashflow-amount small{font-size:9px;color:var(--muted);font-weight:600}
+html .neo-cashflow-meter{height:8px;background:var(--soft);border-radius:20px;overflow:hidden}
+html .neo-cashflow-meter>i{display:block;height:100%;min-width:0;border-radius:20px;background:linear-gradient(90deg,#2878f5,#62c5ff);box-shadow:0 0 12px #3286ff28}
+html .neo-cashflow-meta{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-top:8px;color:var(--muted);font-size:9px}
+html .neo-cashflow-overdue{display:block;color:var(--orange);font-size:9px;margin-top:7px;line-height:1.7}
+html .neo-cashflow-empty{padding:18px;border:1px dashed var(--border);border-radius:13px;color:var(--muted);text-align:center;font-size:11px}
+html .neo-cashflow-note{margin:13px 0 0;color:var(--muted);font-size:10px;line-height:1.9}
+html .neo-cashflow-actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:10px;padding-top:8px}
+html[data-theme="dark"] .neo-cashflow-month.current{background:linear-gradient(145deg,#3286ff1c,var(--white) 75%)}
+@media(max-width:900px){html .neo-cashflow-card{padding:16px 15px}html .neo-cashflow-summary{grid-template-columns:repeat(2,minmax(0,1fr))}html .neo-cashflow-kpi:first-child{grid-column:1/-1}html .neo-cashflow-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){html .neo-cashflow-summary{gap:7px}html .neo-cashflow-kpi{padding:10px}html .neo-cashflow-grid{grid-template-columns:minmax(0,1fr)}html .neo-cashflow-month{padding:12px 13px}html .neo-cashflow-amount{font-size:16px}}
+
+
+html .neo-cashflow-month-open{width:100%;display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:10px;padding:8px 9px;border:1px solid var(--border);border-radius:10px;background:var(--canvas);color:var(--teal);font:inherit;font-size:10px;font-weight:800;cursor:pointer;transition:background .15s,border-color .15s}
+html .neo-cashflow-month-open:hover{background:#3286ff12;border-color:#3286ff55}
+html .neo-cashflow-month-open svg{width:14px;height:14px;flex:0 0 auto}
+html .neo-cashflow-overdue-link{border:0;background:transparent;color:var(--orange);font:inherit;font-weight:900;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:0 2px}
+html .neo-cashflow-overdue-link:focus-visible,html .neo-cashflow-month-open:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
 </style>
 </head>
 <body>
@@ -2207,7 +2248,7 @@ function header(){
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم اقساط']];
 function sidebar(){
  const active=k=>state.page===k||(state.page==='detail'&&k==='obligations');
- return `<aside class="sidebar personal-sidebar neo-sidebar"><div class="brand neo-brand"><div class="brand-logo"><img src="./logo.svg" alt="لوگوی قسط‌یار"></div><div><h1>قسط‌یار</h1><span>دستیار اقساط شخصی</span></div></div><div class="nav-label">فضای من</div><nav class="nav" aria-label="بخش‌های اصلی">${navItems.map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}" ${active(k)?'aria-current="page"':''}>${icon(ic)}<span>${t}</span></button>`).join('')}<button class="personal-add-side" data-nav="add">${icon('plus')}<span>افزودن تعهد</span></button></nav><div class="nav-label personal-secondary-label">بیشتر</div><nav class="nav personal-secondary-nav" aria-label="امکانات بیشتر">${[['reports','chart','گزارش‌های مالی'],['reminders','bell','یادآوری‌ها'],['settings','settings','تنظیمات و پشتیبان']].map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="personal-sidebar-foot"><span class="personal-sync-dot"></span>${cloudStatusText()}</div><button class="personal-backup-link" data-action="export">${icon('download')} دریافت پشتیبان JSON</button><div class="demo-note">قسط‌یار · نسخه ۴.۴.۵</div></div></aside>`;
+ return `<aside class="sidebar personal-sidebar neo-sidebar"><div class="brand neo-brand"><div class="brand-logo"><img src="./logo.svg" alt="لوگوی قسط‌یار"></div><div><h1>قسط‌یار</h1><span>دستیار اقساط شخصی</span></div></div><div class="nav-label">فضای من</div><nav class="nav" aria-label="بخش‌های اصلی">${navItems.map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}" ${active(k)?'aria-current="page"':''}>${icon(ic)}<span>${t}</span></button>`).join('')}<button class="personal-add-side" data-nav="add">${icon('plus')}<span>افزودن تعهد</span></button></nav><div class="nav-label personal-secondary-label">بیشتر</div><nav class="nav personal-secondary-nav" aria-label="امکانات بیشتر">${[['reports','chart','گزارش‌های مالی'],['reminders','bell','یادآوری‌ها'],['settings','settings','تنظیمات و پشتیبان']].map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="personal-sidebar-foot"><span class="personal-sync-dot"></span>${cloudStatusText()}</div><button class="personal-backup-link" data-action="export">${icon('download')} دریافت پشتیبان JSON</button><div class="demo-note">قسط‌یار · نسخه ۴.۵.۰</div></div></aside>`;
 }
 function bottomNav(){return `<nav class="bottom-nav personal-bottom-nav neo-bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['add','plus','افزودن'],['calendar','calendar','تقویم'],['reports','chart','گزارش‌ها']].map(([k,ic,t])=>`<button type="button" data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}" ${state.page===k?'aria-current="page"':''} aria-label="${t}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
@@ -2229,6 +2270,7 @@ function dashboard(){
  const cutoff=cutoffDate.toISOString().slice(0,10);
  const next30=open.filter(x=>x.i.due>=todayISO&&x.i.due<=cutoff&&x!==focus).slice(0,5);
  const currentKey=reportMonthKey(todayISO);
+ const cashflow=cashflowForecast(6);
  // RTL timeline: newest month is the first flex item, therefore shown on the right.
  const chartMonths=Array.from({length:6},(_,k)=>currentKey-k);
  const monthSpends=chartMonths.map(k=>data.reduce((sum,o)=>sum+o.payments.filter(p=>!p.reversedAt&&reportMonthKey(p.date)===k).reduce((v,p)=>v+p.amount,0),0));
@@ -2247,6 +2289,7 @@ function dashboard(){
    <section class="neo-chart-card"><div class="neo-card-heading"><div><span class="neo-kicker">گزارش شخصی</span><h3>پرداخت‌های ۶ ماه اخیر</h3></div>${icon('chart')}</div><div class="neo-chart-body" aria-label="مبالغ پرداختی شش ماه گذشته">${chartMonths.map((k,index)=>`<div class="neo-chart-column"><span title="${money(monthSpends[index])} تومان" style="height:${Math.max(5,Math.round(100*monthSpends[index]/maxChart))}%"></span><small>${reportShortLabel(k)}</small></div>`).join('')}</div><button class="neo-quiet-action" data-nav="reports">گزارش دقیق ${icon('chevron-left')}</button></section>
    ${overdue.length?`<button class="neo-overdue" data-nav="reminders">${icon('bell')}<span><strong>${fnum(overdue.length)} قسط معوق</strong><small>${money(overdueAmount)} تومان مانده</small></span>${icon('chevron-left')}</button>`:''}
   </aside></div>
+  ${cashflowCardHTML(cashflow,money)}
  </div>`;
 }
 
@@ -2255,6 +2298,63 @@ function reportMonthKey(iso){const j=jalali(iso);return j.y*12+j.m-1;}
 function reportCurrentKey(){return todayJ.y*12+todayJ.m-1;}
 function reportLabel(key){const y=Math.floor(key/12),m=(key%12+12)%12+1;return `${jmonths[m-1]} ${fnum(y)}`;}
 function reportShortLabel(key){return jmonths[(key%12+12)%12];}
+/* 4.5.0 — cash-flow forecast based only on unpaid contractual installments.
+   Prior-month arrears are rolled into the current month's immediate cash need.
+   No forecast values are persisted and no income/expense assumptions are invented. */
+function cashflowForecast(span=6){
+ // Keep the horizon bounded and integral; this model is read-only and never persisted.
+ span=Math.max(1,Math.min(24,Math.floor(Number(span)||6)));
+ const current=reportCurrentKey();
+ const rows=Array.from({length:span},(_,i)=>({key:current+i,amount:0,count:0,overdueAmount:0,obligations:new Set()}));
+ const byKey=new Map(rows.map(row=>[row.key,row]));
+ let overdueAmount=0,overdueCount=0;
+ for(const o of data){
+  // Aggregate valid, non-reversed payments once per obligation (O(payments + installments)).
+  const paidByInstallment=new Map();
+  for(const payment of o.payments){
+   if(payment.reversedAt)continue;
+   paidByInstallment.set(payment.installmentId,(paidByInstallment.get(payment.installmentId)||0)+payment.amount);
+  }
+  for(const inst of o.installments){
+   const key=reportMonthKey(inst.due);
+   if(key>=current+span)continue;
+   const target=byKey.get(key<current?current:key);
+   if(!target)continue;
+   const remaining=Math.max(0,inst.amount-(paidByInstallment.get(inst.id)||0));
+   if(!Number.isSafeInteger(remaining)||remaining<=0)continue;
+   target.amount+=remaining;
+   target.count++;
+   target.obligations.add(o.id);
+   if(inst.due<todayISO){target.overdueAmount+=remaining;overdueAmount+=remaining;overdueCount++;}
+  }
+ }
+ const normalized=rows.map(row=>({...row,obligationsCount:row.obligations.size}));
+ const total=normalized.reduce((sum,row)=>sum+row.amount,0);
+ const peak=normalized.reduce((best,row)=>row.amount>(best?.amount||0)?row:best,null);
+ return {rows:normalized,total,peak:peak?.amount>0?peak:null,installments:normalized.reduce((sum,row)=>sum+row.count,0),overdueAmount,overdueCount};
+}
+function cashflowCardHTML(forecast,money){
+ const max=Math.max(1,...forecast.rows.map(row=>row.amount));
+ const summary=(label,value,note)=>`<div class="neo-cashflow-kpi"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`;
+ return `<section class="neo-cashflow-card" aria-labelledby="cashflow-title">
+  <div class="neo-card-heading"><div><span class="neo-kicker">برنامه‌ریزی مالی</span><h3 id="cashflow-title">پیش‌بینی جریان نقدی</h3><p class="neo-cashflow-subtitle">نیاز پرداخت از ماه جاری تا پنج ماه آینده</p></div><span class="neo-cashflow-mark">${icon('chart')}</span></div>
+  <div class="neo-cashflow-summary">
+   ${summary('مجموع نیاز ۶ ماه',`${money(forecast.total)} <small>تومان</small>`,'با احتساب معوقات قبلی')}
+   ${summary('سنگین‌ترین ماه',forecast.peak?`${reportLabel(forecast.peak.key)}<small>${money(forecast.peak.amount)} تومان</small>`:'—','بیشترین مبلغ موردنیاز')}
+   ${summary('اقساط باز در بازه',fnum(forecast.installments),'قسط در تعهدهای ثبت‌شده')}
+  </div>
+  ${forecast.installments?`<div class="neo-cashflow-grid" dir="rtl">${forecast.rows.map((row,index)=>`<article class="neo-cashflow-month ${index===0?'current':''} ${row.overdueAmount?'has-overdue':''}" data-cashflow-month="${row.key}">
+    <div class="neo-cashflow-month-head"><strong>${reportLabel(row.key)}</strong>${index===0?'<span>ماه جاری</span>':''}</div>
+    <div class="neo-cashflow-amount" dir="ltr">${money(row.amount)} <small>تومان</small></div>
+    <div class="neo-cashflow-meter" role="meter" aria-label="سهم مبلغ ${reportLabel(row.key)} از سنگین‌ترین ماه" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(row.amount/max*100)}"><i style="width:${Math.round(row.amount/max*100)}%"></i></div>
+    <div class="neo-cashflow-meta"><span>${fnum(row.count)} قسط</span><span>${fnum(row.obligationsCount)} تعهد</span></div>
+    ${row.overdueAmount?`<small class="neo-cashflow-overdue">شامل ${money(row.overdueAmount)} تومان معوق · <button type="button" class="neo-cashflow-overdue-link" data-action="overdue">مشاهده معوقات</button></small>`:''}
+    <button type="button" class="neo-cashflow-month-open" data-action="cashflow-month" data-month-key="${row.key}" aria-label="مشاهده اقساط ${reportLabel(row.key)}">مشاهده اقساط ${icon('chevron-left')}</button>
+   </article>`).join('')}</div>`:`<div class="neo-cashflow-empty">در شش ماه پیش رو قسط پرداخت‌نشده‌ای در برنامه ثبت‌شده وجود ندارد.</div>`}
+  <p class="neo-cashflow-note">مبنای پیش‌بینی، مانده اقساط ثبت‌شده است؛ درآمد، هزینه‌های روزمره و خریدهای ثبت‌نشده در این محاسبه نیستند. معوقات ماه‌های قبل نیز در نیاز ماه جاری لحاظ شده‌اند.</p>
+  <div class="neo-cashflow-actions"><button class="neo-quiet-action" data-nav="calendar">مشاهده سررسیدها در تقویم ${icon('chevron-left')}</button><button class="neo-quiet-action" data-nav="reports">گزارش مالی کامل ${icon('chevron-left')}</button></div>
+ </section>`;
+}
 function reportData(){
  const obligations=state.reportType==='all'?data:data.filter(o=>o.type===state.reportType);
  const current=reportCurrentKey(),start=current+state.reportOffset;
@@ -2805,6 +2905,15 @@ else if(action==='reminder-filter'){state.reminderFilter=el.dataset.value;render
 else if(action==='reminder-snooze'){const old=readReminder('snooze',{});old[el.dataset.inst]=todayLocalDate();if(writeReminder('snooze',old)){render();toast('این قسط تا فردا از فهرست یادآورها پنهان شد.');syncPushSnooze(el.dataset.inst);}}
 else if(action==='reminder-permission'){requestReminderPermission();}
 else if(action==='push-toggle'){if(pushState.active)disableBackgroundPush();else enableBackgroundPush();}
+else if(action==='cashflow-month'){
+ const key=Number(el.dataset.monthKey);
+ if(!Number.isSafeInteger(key))return;
+ const y=Math.floor(key/12),m=((key%12)+12)%12+1;
+ state.calendarMonth={y,m};
+ const due=data.flatMap(o=>o.installments.filter(i=>{const j=jalali(i.due);return j.y===y&&j.m===m&&left(o,i)>0;})).sort((a,b)=>a.due.localeCompare(b.due));
+ state.selectedDay=due[0]?.due||jISO(y,m,1)||todayISO;
+ nav('calendar');
+}
 else if(action==='report-type'){state.reportType=el.dataset.value;render();}
 else if(action==='report-span'){state.reportSpan=Number(el.dataset.value)===12?12:6;render();}
 else if(action==='report-prev'){state.reportOffset=Math.max(-36,state.reportOffset-6);render();}
