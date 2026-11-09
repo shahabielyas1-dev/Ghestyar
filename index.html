@@ -20,7 +20,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#091229' : '#eef3ff');
 })();
 </script>
-<title>قسط‌یار ۴.۴.۵ | دستیار مالی شخصی</title>
+<title>قسط‌یار ۴.۴.۶ | دستیار مالی شخصی</title>
 <script>
 /* Capture Chromium's native PWA install offer before app initialization. */
 window.__ghestyarDeferredInstall = null;
@@ -263,9 +263,11 @@ button,input,select,textarea{font-family:inherit;font-weight:600}
 .ob-identity{flex:1;min-width:0}
 .ob-card .tag{flex-shrink:0}
 .ob-card .ob-name{font-size:16px;line-height:1.5}
-.ob-card .ob-party{font-size:12px;line-height:1.55;margin-top:2px}
+.ob-card .ob-party{font-size:12px;line-height:1.55;margin-top:2px;display:flex;align-items:center;gap:6px;min-width:0}
+.ob-card .ob-party .brand-mark{margin:0;vertical-align:middle}
 .ob-finance{margin:16px 0 13px}
 .ob-finance-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--muted);font-weight:700}
+.ob-remaining-count{color:var(--teal);font-size:13px;font-weight:900;white-space:nowrap}
 .ob-amount{display:flex;align-items:baseline;gap:7px;min-width:0;margin-top:4px;flex-wrap:wrap}
 .ob-amount strong{font-size:clamp(19px,2.2vw,24px);line-height:1.6;font-weight:900;direction:ltr;unicode-bidi:isolate;white-space:nowrap;max-width:100%}
 .ob-amount span{font-size:12px;font-weight:700;color:var(--muted)}
@@ -1150,7 +1152,9 @@ html[data-theme=dark] .calendar-v39 .calendar-stats>div{background:var(--white);
 .provider-logo,.brand-mark{width:46px;height:46px;display:inline-grid;place-items:center;flex-shrink:0;border-radius:13px;border:1px solid var(--border);background:var(--soft);position:relative;overflow:hidden}
 .provider-logo svg{color:var(--teal)}
 .brand-mark{width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--brand-color) 13%,var(--white));border:1px solid color-mix(in srgb,var(--brand-color) 26%,var(--border));vertical-align:middle;direction:rtl}
-.brand-letters{font-size:10px;font-weight:900;color:var(--brand-color);white-space:nowrap}
+.brand-letters{font-size:10px;font-weight:900;color:var(--brand-color);white-space:nowrap;display:grid;place-items:center;line-height:1}
+.brand-mark-snappay{background:#00a982;border-color:#008f70;color:#fff;box-shadow:0 2px 7px #00a98230}
+.brand-mark-snappay .brand-letters{font-family:Vazirmatn,Tahoma,sans-serif;color:#fff;font-size:9px;font-weight:900;letter-spacing:-.3px}
 .brand-mark img{position:absolute;inset:5px;width:calc(100% - 10px);height:calc(100% - 10px);object-fit:contain;border-radius:4px;background:#fff}
 .provider-logo .brand-mark{width:40px;height:40px}
 .ob-party .brand-mark,.row-list .brand-mark,.detail-title .brand-mark{width:25px;height:25px;margin-inline-end:6px}
@@ -1440,7 +1444,7 @@ html .neo-balance:after{content:'';width:300px;height:300px;position:absolute;in
 .neo-due-card{padding:19px 21px}.neo-due-card .neo-card-heading{margin-bottom:9px}.neo-due-timeline{display:flex;flex-direction:column;position:relative}
 .neo-due-item{display:flex;align-items:center;gap:10px;position:relative;padding:13px 0;border-bottom:1px solid var(--border)}.neo-due-item:last-child{border-bottom:0}.neo-due-marker{height:10px;width:10px;flex:0 0 10px;border-radius:100%;background:#318cf7;border:2px solid #98d8ff;box-shadow:0 0 0 4px #237afa15}.neo-due-info{flex:1;min-width:0;display:grid;gap:1px}.neo-due-info strong{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.neo-due-info span{font-size:10px;color:var(--muted)}.neo-due-side{display:grid;gap:0;text-align:left;white-space:nowrap}.neo-due-side b{font-size:12px}.neo-due-side small{font-size:10px;color:var(--muted)}.neo-due-item>button{background:var(--soft);border:1px solid var(--border);border-radius:10px;width:32px;height:33px;display:grid;place-items:center;color:var(--teal)}.neo-due-item>button svg{width:15px;height:15px}
 .neo-month-card,.neo-chart-card{padding:19px 19px 17px;overflow:hidden}.neo-month-card{position:relative}.neo-month-rows{display:flex;flex-direction:column;gap:0;position:relative;z-index:1}.neo-month-rows>div{display:flex;align-items:center;justify-content:space-between;gap:9px;border-bottom:1px solid var(--border);padding:13px 0}.neo-month-rows>div:last-child{border-bottom:0}.neo-month-rows span{font-size:11px;color:var(--muted)}.neo-month-rows b{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%;text-align:left}.neo-month-rows b small{font-size:9px;color:var(--muted);font-weight:500}.neo-month-rows .neo-ok{color:#69c3ff}.neo-month-rows .neo-highlight{color:#71b9ff}.neo-month-wave{height:35px;inset:auto 0 0;position:absolute;background:radial-gradient(ellipse at 70% 110%,#238bff55,transparent 70%);pointer-events:none}
-.neo-chart-body{height:155px;display:flex;align-items:flex-end;justify-content:space-between;gap:9px;border-bottom:1px solid var(--border);padding:22px 3px 0;margin-bottom:10px}.neo-chart-column{height:100%;flex:1;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;gap:9px;min-width:0}.neo-chart-column>span{display:block;width:clamp(13px,70%,34px);min-height:5px;border-radius:6px 6px 0 0;background:linear-gradient(0deg,#1359cd,#49b4ff);box-shadow:0 0 15px #1c80f129}.neo-chart-column small{font-size:9px;color:var(--muted);white-space:nowrap}
+.neo-chart-body{height:155px;display:flex;flex-direction:row;direction:rtl;align-items:flex-end;justify-content:space-between;gap:9px;border-bottom:1px solid var(--border);padding:22px 3px 0;margin-bottom:10px}.neo-chart-column{height:100%;flex:1;display:flex;align-items:center;justify-content:flex-end;flex-direction:column;gap:9px;min-width:0}.neo-chart-column>span{display:block;width:clamp(13px,70%,34px);min-height:5px;border-radius:6px 6px 0 0;background:linear-gradient(0deg,#1359cd,#49b4ff);box-shadow:0 0 15px #1c80f129}.neo-chart-column small{font-size:9px;color:var(--muted);white-space:nowrap}
 .neo-overdue{display:flex;gap:11px;align-items:center;text-align:right;border-radius:15px;background:#ffb35d0a;border:1px solid #e6a15e67;padding:15px;color:var(--ink)}.neo-overdue>svg:first-child{color:var(--orange)}.neo-overdue>span{display:grid;flex:1}.neo-overdue strong{font-size:12px}.neo-overdue small{font-size:11px;color:var(--muted)}.neo-overdue>svg:last-child{width:16px;height:16px}
 .neo-empty-state{display:flex;align-items:center;flex-direction:column;text-align:center;padding:50px 25px;gap:12px;background:radial-gradient(circle at top,#216bff16,transparent 54%),var(--white)}.neo-empty-illustration{width:112px;height:112px;filter:drop-shadow(0 0 24px #357dff5e)}.neo-empty-illustration img{width:100%;height:100%}.neo-empty-state h2{margin:5px 0 0;font-size:26px}.neo-empty-state p{max-width:435px;color:var(--muted);font-size:12px}.neo-empty-message{font-size:12px;color:var(--muted);margin:9px 0}
 /* all secondary app pages: shared glass-panel component hierarchy */
@@ -1667,7 +1671,7 @@ html .detail-actions .btn{white-space:normal;text-align:center;line-height:1.5}
 
 
 /* =========================================================
-   Ghestyar 4.4.5 - personal home polish / blue-only palette
+   Ghestyar 4.4.6 - obligation count, RTL chart, provider mark alignment
    UI-only: no storage, financial model, cloud, Push changes
    ========================================================= */
 :root{--teal:#126df4;--teal2:#43adff;--green:#238ddc;--lime:#287bff}
@@ -1792,7 +1796,7 @@ const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 
 /* 3.9: provider quick picks; network imagery is decorative, fallback is local. */
 function providerById(id){return PROVIDERS.find(p=>p.id===id)||null;}
-function providerMark(pid,alt=''){const p=providerById(pid);if(!p)return icon('building');return `<span class="brand-mark" style="--brand-color:${p.color}" title="${escapeHTML(p.name)}"><span class="brand-letters">${escapeHTML(p.mark)}</span><img src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(p.domain)}&sz=64" alt="" loading="lazy" onerror="this.remove()"></span>`;}
+function providerMark(pid,alt=''){const p=providerById(pid);if(!p)return icon('building');if(pid==='snapp-pay')return `<span class="brand-mark brand-mark-snappay" role="img" aria-label="لوگوی اسنپ‌پی" title="${escapeHTML(p.name)}"><span class="brand-letters">اسنپ</span></span>`;return `<span class="brand-mark" style="--brand-color:${p.color}" role="img" aria-label="لوگوی ${escapeHTML(p.name)}" title="${escapeHTML(p.name)}"><span class="brand-letters">${escapeHTML(p.mark)}</span><img src="https://www.google.com/s2/favicons?domain=${encodeURIComponent(p.domain)}&sz=64" alt="" loading="lazy" onerror="this.remove()"></span>`;}
 function providerOptions(type,selected){const list=PROVIDERS.filter(p=>p.type===(type==='purchase'?'bnpl':'bank'));return `<option value="">انتخاب از فهرست (اختیاری)</option>${list.map(p=>`<option value="${p.id}" ${selected===p.id?'selected':''}>${escapeHTML(p.name)}</option>`).join('')}<option value="custom" ${selected==='custom'?'selected':''}>سایر / ورود دستی</option>`;}
 function providerPicker(d){if(d.type==='other')return '';const p=providerById(d.providerId);return `<div class="field full-width provider-field"><label for="d-providerId">${d.type==='loan'?'بانک ارائه‌دهنده':'پلتفرم خرید اقساطی'} <span class="field-optional">اختیاری</span></label><div class="provider-line"><div class="provider-logo">${p?providerMark(p.id):icon('building')}</div><select id="d-providerId" data-draft="providerId" aria-label="انتخاب ${d.type==='loan'?'بانک':'پلتفرم'}">${providerOptions(d.type,d.providerId)}</select><button type="button" class="btn provider-browse" data-action="provider-open">${icon('search')} لوگوها</button></div><small>نام ارائه‌دهنده بعد از انتخاب به‌صورت خودکار تکمیل می‌شود؛ امکان ورود دستی هم داری.</small></div>`;}
 function providerListHTML(){const query=state.providerQuery.trim().toLowerCase();const items=PROVIDERS.filter(p=>p.type===(state.draft?.type==='purchase'?'bnpl':'bank')&&(!query||p.name.toLowerCase().includes(query)));return items.length?items.map(p=>`<button type="button" class="provider-option ${state.draft?.providerId===p.id?'active':''}" data-action="provider-choose" data-provider-id="${p.id}">${providerMark(p.id)}<span>${escapeHTML(p.name)}</span>${state.draft?.providerId===p.id?icon('check'):icon('chevron-left')}</button>`).join(''):'<div class="cal-empty">نتیجه‌ای پیدا نشد. نام بانک یا سرویس رو تغییر بده.</div>';}
@@ -2225,7 +2229,8 @@ function dashboard(){
  const cutoff=cutoffDate.toISOString().slice(0,10);
  const next30=open.filter(x=>x.i.due>=todayISO&&x.i.due<=cutoff&&x!==focus).slice(0,5);
  const currentKey=reportMonthKey(todayISO);
- const chartMonths=Array.from({length:6},(_,k)=>currentKey-5+k);
+ // RTL timeline: newest month is the first flex item, therefore shown on the right.
+ const chartMonths=Array.from({length:6},(_,k)=>currentKey-k);
  const monthSpends=chartMonths.map(k=>data.reduce((sum,o)=>sum+o.payments.filter(p=>!p.reversedAt&&reportMonthKey(p.date)===k).reduce((v,p)=>v+p.amount,0),0));
  const maxChart=Math.max(1,...monthSpends);
  const money=n=>state.hideAmounts?'••••••':fmt(n);
@@ -2309,7 +2314,7 @@ function reportExportCSV(){
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ghestyar-report-'+todayISO+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('فایل گزارش ماهانه آماده شد.');
 }
 
-function obCard(o){const completion=total(o)?Math.min(100,Math.round(paidTotal(o)/total(o)*100)):100;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party">${o.providerId?providerMark(o.providerId):''}${escapeHTML(o.party||types[o.type].label)}</div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>مانده پرداختنی</span><span>${fnum(completion)}٪ پرداخت‌شده</span></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان</span></div></div><div class="progress" role="progressbar" aria-label="درصد بازپرداخت" aria-valuenow="${completion}" aria-valuemin="0" aria-valuemax="100"><div style="width:${completion}%"></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
+function obCard(o){const remainingCount=o.installments.filter(i=>left(o,i)>0).length;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party">${o.providerId?providerMark(o.providerId):''}<span>${escapeHTML(o.party||types[o.type].label)}</span></div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>اقساط باقی‌مانده</span><strong class="ob-remaining-count">${fnum(remainingCount)} قسط</strong></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان مانده</span></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
 function obligations(){let list=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});return `<section class="obligations-page"><div class="ob-list-header"><div class="ob-list-heading"><h2>فهرست تعهدات</h2><p>${fmt(data.length)} تعهد ثبت‌شده</p></div><button class="btn primary ob-add-button" data-nav="add" aria-label="افزودن تعهد جدید">${icon('plus')} <span>تعهد جدید</span></button></div><div class="ob-list-tools"><div class="filters" role="group" aria-label="فیلتر وضعیت تعهدات">${[['all','همه'],['active','فعال'],['overdue','معوق'],['paid','تسویه']].map(([k,t])=>`<button type="button" class="filter ${state.filter===k?'active':''}" data-filter="${k}" aria-pressed="${state.filter===k}">${t}</button>`).join('')}</div><label class="searchbox">${icon('search')}<input id="ob-search" type="search" aria-label="جست‌وجوی تعهدات" placeholder="جست‌وجوی نام تعهد یا بانک" value="${escapeHTML(state.query)}"/></label></div>${list.length?`<div class="ob-grid">${list.map(obCard).join('')}</div>`:`<div class="panel empty">${icon('wallet')}<strong>${data.length?'تعهدی پیدا نشد':'هنوز تعهدی ثبت نکردی'}</strong><p>${data.length?'عبارت جست‌وجو یا فیلتر رو تغییر بده.':'برای شروع، اولین وام یا خرید قسطی رو وارد کن.'}</p>${!data.length?`<button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>`:''}</div>`}</section>`;}
 function freshDraft(){return {type:'purchase',title:'',party:'',providerId:'',loanKind:'interest',mode:'manual',amount:'',rate:'18',count:'',first:jText(addJMonth(todayJ,1,5),true),rows:[]};}
 function prepareDraft(){if(!state.draft)state.draft=freshDraft();}
