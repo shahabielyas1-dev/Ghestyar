@@ -1783,6 +1783,72 @@ html .neo-cashflow-month-open svg{width:14px;height:14px;flex:0 0 auto}
 html .neo-cashflow-overdue-link{border:0;background:transparent;color:var(--orange);font:inherit;font-weight:900;text-decoration:underline;text-underline-offset:2px;cursor:pointer;padding:0 2px}
 html .neo-cashflow-overdue-link:focus-visible,html .neo-cashflow-month-open:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 
+
+/* 4.6.0 — personal cash ledger */
+html .cashflow-page{display:flex;flex-direction:column;gap:16px;min-width:0}
+html .cashflow-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+html .cashflow-intro h2{margin:5px 0;font-size:23px;font-weight:900;color:var(--ink)}
+html .cashflow-intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.9}
+html .cashflow-add-actions{display:flex;gap:8px;flex-wrap:wrap}
+html .cash-balance-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,340px);gap:18px;align-items:center;padding:20px;border:1px solid var(--border);border-radius:20px;background:linear-gradient(135deg,var(--white),var(--soft));box-shadow:var(--shadow)}
+html .cash-balance-card>div:first-child{display:flex;flex-direction:column;gap:6px}
+html .cash-balance-card>div:first-child>span{font-size:12px;color:var(--muted)}
+html .cash-balance-card>div:first-child>strong{font-size:clamp(20px,3vw,29px);font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+html .cash-balance-card>div:first-child>small{font-size:10px;color:var(--muted)}
+html .cash-balance-edit{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:end}
+html .cash-balance-edit label{grid-column:1/-1;font-size:11px;color:var(--muted)}
+html .cash-balance-edit input{min-width:0;width:100%;height:43px;border:1px solid var(--border);border-radius:12px;background:var(--white);color:var(--ink);padding:0 12px;font-variant-numeric:tabular-nums}
+html .cash-kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+html .cash-kpi-grid article{min-width:0;padding:15px;border:1px solid var(--border);border-radius:16px;background:var(--white);display:flex;flex-direction:column;gap:7px}
+html .cash-kpi-grid article>span{font-size:10px;color:var(--muted)}
+html .cash-kpi-grid article>strong{font-size:clamp(14px,1.8vw,20px);font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
+html .cash-kpi-grid article>strong small{font-size:9px;color:var(--muted);font-weight:600}
+html .cash-kpi-grid article.negative{border-color:#d75c654f;background:#d75c650d}
+html .cash-info-note,html .cash-warning-note,html .cash-good-note{display:flex;align-items:flex-start;gap:9px;padding:12px 15px;border-radius:14px;font-size:11px;line-height:1.9}
+html .cash-info-note{background:var(--soft);border:1px solid var(--border);color:var(--muted)}
+html .cash-warning-note{background:#d75c6510;border:1px solid #d75c6545;color:var(--ink)}
+html .cash-good-note{background:#2b9b7410;border:1px solid #2b9b7440;color:var(--ink)}
+html .cash-forecast-panel,html .cash-ledger-panel{padding:18px}
+html .cash-forecast-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+html .cash-month-card{min-width:0;padding:14px;border:1px solid var(--border);border-radius:15px;background:var(--canvas)}
+html .cash-month-card.current{border-color:#3286ff70;background:color-mix(in srgb,var(--soft) 70%,var(--white))}
+html .cash-month-card.negative{border-color:#d75c6590;background:#d75c650d}
+html .cash-month-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px}
+html .cash-month-top span{font-size:9px;color:var(--teal)}
+html .cash-month-net{font-size:11px;color:var(--muted);margin:12px 0}
+html .cash-month-net b{color:var(--ink);font-size:13px;font-variant-numeric:tabular-nums}
+html .cash-month-lines{display:grid;gap:7px}
+html .cash-month-lines span{display:flex;justify-content:space-between;gap:8px;font-size:10px;color:var(--muted)}
+html .cash-month-lines b{color:var(--ink);font-variant-numeric:tabular-nums}
+html .cash-overdue-note{display:block;margin-top:9px;color:#c56b53;font-size:9px}
+html .cash-ledger-panel .panel-head{gap:12px;flex-wrap:wrap}
+html .cash-ledger-row{display:grid;grid-template-columns:38px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--border)}
+html .cash-ledger-icon{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:#2b9b7414;color:#299b73}
+html .cash-ledger-row.expense .cash-ledger-icon{background:#d75c6512;color:#d75c65}
+html .cash-ledger-main{min-width:0;display:flex;flex-direction:column;gap:3px}
+html .cash-ledger-main strong{font-size:12px;overflow-wrap:anywhere}
+html .cash-ledger-main small{font-size:9px;color:var(--muted)}
+html .cash-ledger-amount{white-space:nowrap;font-size:12px;font-variant-numeric:tabular-nums;color:#299b73}
+html .cash-ledger-row.expense .cash-ledger-amount{color:#d75c65}
+html .cash-ledger-amount small{font-size:9px;color:var(--muted)}
+html .cash-ledger-actions{display:flex;gap:4px}
+html .cash-ledger-actions button{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--border);border-radius:10px;background:var(--white);color:var(--muted)}
+html .cash-ledger-actions button:last-child{color:#c75b65}
+html .cash-empty{padding:24px 10px;text-align:center;color:var(--muted);font-size:12px}
+html .cash-empty strong{display:block;color:var(--ink);margin-bottom:5px}
+html .cash-empty p{margin:0;font-size:11px}
+html .cashflow-footnote{font-size:10px;color:var(--muted);margin:0}
+html .cash-entry-modal{width:min(520px,100%)}
+html .cash-kind-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+html .cash-kind-switch button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;border:1px solid var(--border);border-radius:12px;background:var(--soft);color:var(--muted);font-weight:800}
+html .cash-kind-switch button.active{background:#3286ff16;border-color:#3286ff80;color:var(--teal)}
+html .cash-entry-grid{grid-template-columns:1fr 1fr}
+html .cash-entry-modal .modal-form{display:flex;flex-direction:column;gap:12px}
+html .cash-entry-modal .field{margin:0}
+html .cash-entry-modal input,html .cash-entry-modal select{min-height:43px}
+@media(max-width:900px){html .cash-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}html .cash-forecast-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){html .cashflow-intro{align-items:stretch}html .cashflow-add-actions{width:100%}html .cashflow-add-actions .btn{flex:1}html .cash-balance-card{grid-template-columns:1fr;padding:16px}html .cash-balance-edit{grid-template-columns:minmax(0,1fr) auto}html .cash-kpi-grid{gap:8px}html .cash-kpi-grid article{padding:12px}html .cash-forecast-grid{grid-template-columns:1fr 1fr;gap:8px}html .cash-month-card{padding:11px}html .cash-ledger-row{grid-template-columns:34px minmax(0,1fr) auto;gap:7px}html .cash-ledger-amount{grid-column:2;grid-row:2;justify-self:start;font-size:11px}html .cash-ledger-actions{grid-column:3;grid-row:1/3;flex-direction:column}html .cash-ledger-panel .panel-head .row-inline{width:100%}html .cash-ledger-panel .panel-head .row-inline .btn{flex:1;padding-inline:8px}html .neo-bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))}html .neo-bottom-nav button{font-size:8px}html .neo-bottom-nav button svg{width:18px;height:18px}}
+
 </style>
 </head>
 <body>
@@ -1849,10 +1915,10 @@ function formatMoneyOnInput(el){const prior=el.value;const before=el.selectionSt
 /* Gregorian ISO storage is preserved; the visible picker is Persian/Jalali. */
 function pickerMonth(y,m,offset){const v=y*12+m-1+offset;return {y:Math.floor(v/12),m:(v%12+12)%12+1};}
 function monthLength(y,m){for(let d=31;d>=28;d--)if(jISO(y,m,d))return d;return 0;}
-function saveOpenFields(){if(state.payment){state.payment.amount=document.getElementById('pay-amount')?.value??state.payment.amount;state.payment.date=document.getElementById('pay-date')?.value??state.payment.date;state.payment.note=document.getElementById('pay-note')?.value??state.payment.note;}if(state.edit?.kind==='inst'){state.edit.amount=document.getElementById('edit-amount')?.value??state.edit.amount;state.edit.due=document.getElementById('edit-due')?.value??state.edit.due;}}
-function openPersianPicker(target,index=-1){saveOpenFields();let iso=target==='draft'?jParse(state.draft?.first):target==='pay'?jParse(state.payment?.date):target==='edit'?jParse(state.edit?.due):state.draft?.rows[index]?.due;iso=iso||todayISO;const j=jalali(iso);state.datePicker={target,index,month:{y:j.y,m:j.m},selected:iso};render();}
+function saveOpenFields(){if(state.payment){state.payment.amount=document.getElementById('pay-amount')?.value??state.payment.amount;state.payment.date=document.getElementById('pay-date')?.value??state.payment.date;state.payment.note=document.getElementById('pay-note')?.value??state.payment.note;}if(state.edit?.kind==='inst'){state.edit.amount=document.getElementById('edit-amount')?.value??state.edit.amount;state.edit.due=document.getElementById('edit-due')?.value??state.edit.due;}if(state.cashEntryModal){state.cashEntryModal.title=document.getElementById('cash-title')?.value??state.cashEntryModal.title;state.cashEntryModal.amount=document.getElementById('cash-amount')?.value??state.cashEntryModal.amount;state.cashEntryModal.category=document.getElementById('cash-category')?.value??state.cashEntryModal.category;state.cashEntryModal.recurrence=document.getElementById('cash-recurrence')?.value??state.cashEntryModal.recurrence;state.cashEntryModal.note=document.getElementById('cash-note')?.value??state.cashEntryModal.note;}}
+function openPersianPicker(target,index=-1){saveOpenFields();let iso=target==='draft'?jParse(state.draft?.first):target==='pay'?jParse(state.payment?.date):target==='edit'?jParse(state.edit?.due):target==='cash'?state.cashEntryModal?.date:state.draft?.rows[index]?.due;iso=iso||todayISO;const j=jalali(iso);state.datePicker={target,index,month:{y:j.y,m:j.m},selected:iso};render();}
 function closePersianPicker(){state.datePicker=null;render();}
-function choosePersianDate(iso){const p=state.datePicker;if(!p||!validISO(iso))return;if(p.target==='pay'&&iso>todayISO){toast('تاریخ پرداخت نباید در آینده باشد.','error');return;}if(p.target==='draft'){state.draft.first=jText(iso,true);state.draft.rows=[];}else if(p.target==='pay'){state.payment.date=jText(iso,true);}else if(p.target==='edit'){state.edit.due=jText(iso,true);}else if(p.target==='row'&&state.draft?.rows[p.index]){state.draft.rows[p.index].due=iso;}state.datePicker=null;render();}
+function choosePersianDate(iso){const p=state.datePicker;if(!p||!validISO(iso))return;if(p.target==='pay'&&iso>todayISO){toast('تاریخ پرداخت نباید در آینده باشد.','error');return;}if(p.target==='draft'){state.draft.first=jText(iso,true);state.draft.rows=[];}else if(p.target==='pay'){state.payment.date=jText(iso,true);}else if(p.target==='edit'){state.edit.due=jText(iso,true);}else if(p.target==='cash'&&state.cashEntryModal){state.cashEntryModal.date=iso;}else if(p.target==='row'&&state.draft?.rows[p.index]){state.draft.rows[p.index].due=iso;}state.datePicker=null;render();}
 function dateFieldButton(id,value,target,index=-1){return `<button type="button" class="date-pick-trigger" id="${id}" data-action="pick-open" data-target="${target}" data-index="${index}" aria-haspopup="dialog">${icon('calendar')}<span>${escapeHTML(value)}</span>${icon('chevron-left')}</button>`;}
 function pickerOverlay(){const p=state.datePicker;if(!p)return '';const {y,m}=p.month;const first=jISO(y,m,1);if(!first)return '';const week=(parseISO(first).getUTCDay()+1)%7, len=monthLength(y,m);return `<div class="picker-backdrop" data-action="pick-close"><section class="picker-dialog" role="dialog" aria-modal="true" aria-label="انتخاب تاریخ شمسی"><div class="picker-heading"><strong>انتخاب تاریخ</strong><button type="button" class="icon-btn" data-action="pick-close" aria-label="بستن">${icon('close')}</button></div><div class="picker-nav"><button type="button" data-action="pick-month" data-step="-1" aria-label="ماه قبل">${icon('chevron-right')}</button><strong>${jmonths[m-1]} ${fnum(y)}</strong><button type="button" data-action="pick-month" data-step="1" aria-label="ماه بعد">${icon('chevron-left')}</button></div><div class="picker-week">${['ش','ی','د','س','چ','پ','ج'].map(x=>`<span>${x}</span>`).join('')}</div><div class="picker-grid">${Array.from({length:week},()=>'<span></span>').join('')}${Array.from({length:len},(_,i)=>{const iso=jISO(y,m,i+1),disabled=p.target==='pay'&&iso>todayISO;return `<button type="button" data-action="pick-day" data-date="${iso}" class="${iso===p.selected?'selected':''} ${iso===todayISO?'today':''}" ${disabled?'disabled':''} aria-label="${fnum(i+1)} ${jmonths[m-1]} ${fnum(y)}">${fnum(i+1)}</button>`}).join('')}</div><div class="picker-foot"><button type="button" class="btn" data-action="pick-today">امروز</button><span>تاریخ‌ها به تقویم شمسی هستند</span></div></section></div>`;}
 
@@ -1905,7 +1971,7 @@ function makeInstallments(total,n,start,rate=0,kind='interest'){
 const KEY='ghestyar_v1_demo';
 const LEGACY_SAMPLE_ARCHIVE='ghestyar_legacy_seeded_backup_v1';
 const LEGACY_RESTORE_KEEP='ghestyar_legacy_restore_requested_v1';
-let data=[];let storageAvailable=true;let storageRecoveryNeeded=false;
+let data=[];let cashEntries=[];let cashSettings={balance:0,configured:false};let storageAvailable=true;let storageRecoveryNeeded=false;
 function isExactLegacySampleOnly(items){
  // Never remove custom or cloud data. Only the exact three auto-generated old demo files qualify.
  if(!Array.isArray(items)||items.length!==3)return false;
@@ -1926,16 +1992,14 @@ function isExactLegacySampleOnly(items){
 function loadLocalData(){
  try{
   const raw=localStorage.getItem(KEY);
-  if(!raw){storageRecoveryNeeded=false;storageAvailable=true;return [];}
-  const entries=validateBackup(JSON.parse(raw));
-  if(isExactLegacySampleOnly(entries)&&localStorage.getItem(LEGACY_RESTORE_KEEP)!=='yes'){
-   // Archive first: never discard existing stored bytes without a recoverable copy.
+  if(!raw){cashEntries=[];cashSettings={balance:0,configured:false};storageRecoveryNeeded=false;storageAvailable=true;return [];}
+  const parsed=JSON.parse(raw),entries=validateBackup(parsed),ledger=validateCashLedger(parsed);
+  if(isExactLegacySampleOnly(entries)&&!ledger.entries.length&&!ledger.settings.configured&&localStorage.getItem(LEGACY_RESTORE_KEEP)!=='yes'){
    if(!localStorage.getItem(LEGACY_SAMPLE_ARCHIVE))localStorage.setItem(LEGACY_SAMPLE_ARCHIVE,raw);
-   localStorage.removeItem(KEY);
-   storageRecoveryNeeded=false;storageAvailable=true;
-   return [];
+   localStorage.removeItem(KEY);cashEntries=[];cashSettings={balance:0,configured:false};
+   storageRecoveryNeeded=false;storageAvailable=true;return [];
   }
-  storageRecoveryNeeded=false;storageAvailable=true;
+  cashEntries=ledger.entries;cashSettings=ledger.settings;storageRecoveryNeeded=false;storageAvailable=true;
   return entries;
  }catch(e){
   storageAvailable=false;storageRecoveryNeeded=true;
@@ -1944,21 +2008,25 @@ function loadLocalData(){
  }
 }
 data=loadLocalData();
-function commit(next){
+function commit(next,nextCashEntries=cashEntries,nextCashSettings=cashSettings){
  if(cloud.user){
-   if(cloudCacheChanged()){showCacheConflict();return false;}
-   if(!['ready','pending','error'].includes(cloud.phase)){toast('تا پایان بارگذاری یا حل تعارض، ثبت تغییرات ممکن نیست.','error');return false;}
-   try{const validated=validateBackup({version:1,obligations:next});
-     const record=JSON.stringify({baseRevision:cloud.revision,dirty:true,obligations:validated});
-     localStorage.setItem(cloudCacheKey(),record);cloudCacheFingerprint=record;data=validated;cloud.dirty=true;cloud.phase='pending';
-     queueMicrotask(()=>pushCloud());return true;
-   }catch(e){toast('ذخیره محلی پیش از ارسال ابری ناموفق بود: '+e.message,'error');return false;}
+  if(cloudCacheChanged()){showCacheConflict();return false;}
+  if(!['ready','pending','error'].includes(cloud.phase)){toast('تا پایان بارگذاری یا حل تعارض، ثبت تغییرات ممکن نیست.','error');return false;}
+  try{
+   const validated=validateBackup({version:1,obligations:next}),ledger=validateCashLedger({cashEntries:nextCashEntries,cashSettings:nextCashSettings});
+   const record=JSON.stringify({baseRevision:cloud.revision,dirty:true,obligations:validated,cashEntries:ledger.entries,cashSettings:ledger.settings});
+   localStorage.setItem(cloudCacheKey(),record);cloudCacheFingerprint=record;data=validated;cashEntries=ledger.entries;cashSettings=ledger.settings;cloud.dirty=true;cloud.phase='pending';
+   queueMicrotask(()=>pushCloud());return true;
+  }catch(e){toast('ذخیره محلی پیش از ارسال ابری ناموفق بود: '+e.message,'error');return false;}
  }
- try{localStorage.setItem(KEY,JSON.stringify({version:1,obligations:next}));data=next;storageAvailable=true;return true;}
- catch(e){storageAvailable=false;toast('ذخیره در این مرورگر ناموفق بود. فضای ذخیره را بررسی کن.','error');return false;}
+ try{
+  const validated=validateBackup({version:1,obligations:next}),ledger=validateCashLedger({cashEntries:nextCashEntries,cashSettings:nextCashSettings});
+  localStorage.setItem(KEY,JSON.stringify({version:1,obligations:validated,cashEntries:ledger.entries,cashSettings:ledger.settings}));
+  data=validated;cashEntries=ledger.entries;cashSettings=ledger.settings;storageAvailable=true;return true;
+ }catch(e){storageAvailable=false;toast('ذخیره در این مرورگر ناموفق بود: '+e.message,'error');return false;}
 }
 function save(){return commit(data);}
-const state={datePicker:null,providerOpen:false,providerQuery:'',reminderFilter:'all',page:(location.hash==='#reminders'?'reminders':'dashboard'),reportType:'all',reportSpan:6,reportOffset:0,dashFilter:'all',hideAmounts:false,filter:'active',query:'',selectedId:null,detailTab:'schedule',scheduleFilter:'open',edit:null,deleteTarget:null,settleTarget:null,financeAuditOpen:false,restoreCandidate:null,calendarMonth:{y:todayJ.y,m:todayJ.m},selectedDay:todayISO,payment:null,wizardStep:1,draft:null};
+const state={datePicker:null,providerOpen:false,providerQuery:'',reminderFilter:'all',page:(location.hash==='#reminders'?'reminders':'dashboard'),reportType:'all',reportSpan:6,reportOffset:0,dashFilter:'all',hideAmounts:false,filter:'active',query:'',selectedId:null,detailTab:'schedule',scheduleFilter:'open',edit:null,deleteTarget:null,settleTarget:null,financeAuditOpen:false,restoreCandidate:null,calendarMonth:{y:todayJ.y,m:todayJ.m},selectedDay:todayISO,payment:null,wizardStep:1,draft:null,cashEntryModal:null};
 function total(o){return o.installments.reduce((s,x)=>s+x.amount,0)}
 function paid(o,installmentId){return o.payments.filter(p=>p.installmentId===installmentId&&!p.reversedAt).reduce((s,x)=>s+x.amount,0)}
 function left(o,inst){return Math.max(0,inst.amount-paid(o,inst.id))}
@@ -2240,7 +2308,7 @@ function accountAccessButton(){
  return `<button class="account-trigger ${phaseClass} is-${cloud.phase}" type="button" data-action="account-open" aria-label="${help}" title="${help}">${icon(iconName)}<span class="account-trigger-text"><span class="account-main-label">${label}</span>${detail}</span>${signedIn?'<span class="cloud-dot" aria-hidden="true"></span>':''}</button>`;
 }
 function header(){
- const h={dashboard:['داشبورد شخصی','وضعیت مالی من'],obligations:['مدیریت وام‌ها و خریدهای من','تعهدات من'],add:['با چند قدم ساده','تعهد جدید'],detail:['مدیریت و پرداخت اقساط','جزئیات تعهد'],calendar:['برنامه‌ریزی سررسیدها','تقویم اقساط'],reminders:['سررسیدهای مهم','یادآوری‌ها'],reports:['گزارش و تحلیل پرداخت‌ها','گزارش‌های من'],settings:['تنظیمات شخصی و پشتیبان','تنظیمات من']}[state.page]||['دستیار اقساط شخصی','قسط‌یار'];
+ const h={dashboard:['داشبورد شخصی','وضعیت مالی من'],obligations:['مدیریت وام‌ها و خریدهای من','تعهدات من'],add:['با چند قدم ساده','تعهد جدید'],detail:['مدیریت و پرداخت اقساط','جزئیات تعهد'],calendar:['برنامه‌ریزی سررسیدها','تقویم اقساط'],reminders:['سررسیدهای مهم','یادآوری‌ها'],reports:['گزارش و تحلیل پرداخت‌ها','گزارش‌های من'],settings:['تنظیمات شخصی و پشتیبان','تنظیمات من'],cashflow:['مدیریت درآمد و هزینه','جریان نقدی من']}[state.page]||['دستیار اقساط شخصی','قسط‌یار'];
  const noticeCount=reminderList().length;
  const syncLabel=cloud.user?(cloud.phase==='ready'?'همگام':cloud.phase==='pending'?'در حال ذخیره':cloud.phase==='error'?'خطای اتصال':cloud.phase==='conflict'?'تعارض داده':'در حال بررسی'):'ورود';
  return `<header class="topbar personal-header neo-header"><div class="personal-header-title neo-header-title"><span class="neo-page-mark"><img src="./logo.svg" alt="" /></span><div><p class="page-kicker">${h[0]}</p><h1 class="page-title">${h[1]}</h1></div></div><div class="toolbar personal-toolbar neo-toolbar"><button class="neo-header-add btn primary" data-nav="add">${icon('plus')} افزودن تعهد</button><button type="button" class="icon-btn personal-top-icon top-settings" data-nav="settings" title="تنظیمات و پشتیبان" aria-label="تنظیمات و پشتیبان">${icon('sliders')}</button><button type="button" class="icon-btn personal-top-icon top-reminders" data-nav="reminders" title="یادآوری‌ها" aria-label="یادآوری‌ها${noticeCount?'؛ '+fnum(noticeCount)+' قسط نیازمند توجه':''}">${icon('clock')}${noticeCount?'<span class="personal-notice-dot"></span>':''}</button><button type="button" class="personal-sync top-account ${cloud.phase==='error'||cloud.phase==='conflict'?'is-warning':''}" data-action="account-open" title="حساب و همگام‌سازی" aria-label="حساب من: ${syncLabel}"><span class="personal-sync-icon">${icon('user-badge')}</span><span class="personal-sync-dot"></span><span>${syncLabel}</span></button></div></header>`;
@@ -2248,9 +2316,9 @@ function header(){
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم اقساط']];
 function sidebar(){
  const active=k=>state.page===k||(state.page==='detail'&&k==='obligations');
- return `<aside class="sidebar personal-sidebar neo-sidebar"><div class="brand neo-brand"><div class="brand-logo"><img src="./logo.svg" alt="لوگوی قسط‌یار"></div><div><h1>قسط‌یار</h1><span>دستیار اقساط شخصی</span></div></div><div class="nav-label">فضای من</div><nav class="nav" aria-label="بخش‌های اصلی">${navItems.map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}" ${active(k)?'aria-current="page"':''}>${icon(ic)}<span>${t}</span></button>`).join('')}<button class="personal-add-side" data-nav="add">${icon('plus')}<span>افزودن تعهد</span></button></nav><div class="nav-label personal-secondary-label">بیشتر</div><nav class="nav personal-secondary-nav" aria-label="امکانات بیشتر">${[['reports','chart','گزارش‌های مالی'],['reminders','bell','یادآوری‌ها'],['settings','settings','تنظیمات و پشتیبان']].map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="personal-sidebar-foot"><span class="personal-sync-dot"></span>${cloudStatusText()}</div><button class="personal-backup-link" data-action="export">${icon('download')} دریافت پشتیبان JSON</button><div class="demo-note">قسط‌یار · نسخه ۴.۵.۰</div></div></aside>`;
+ return `<aside class="sidebar personal-sidebar neo-sidebar"><div class="brand neo-brand"><div class="brand-logo"><img src="./logo.svg" alt="لوگوی قسط‌یار"></div><div><h1>قسط‌یار</h1><span>دستیار اقساط شخصی</span></div></div><div class="nav-label">فضای من</div><nav class="nav" aria-label="بخش‌های اصلی">${navItems.map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}" ${active(k)?'aria-current="page"':''}>${icon(ic)}<span>${t}</span></button>`).join('')}<button class="personal-add-side" data-nav="add">${icon('plus')}<span>افزودن تعهد</span></button></nav><div class="nav-label personal-secondary-label">بیشتر</div><nav class="nav personal-secondary-nav" aria-label="امکانات بیشتر">${[['cashflow','wallet','جریان نقدی من'],['reports','chart','گزارش‌های مالی'],['reminders','bell','یادآوری‌ها'],['settings','settings','تنظیمات و پشتیبان']].map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="personal-sidebar-foot"><span class="personal-sync-dot"></span>${cloudStatusText()}</div><button class="personal-backup-link" data-action="export">${icon('download')} دریافت پشتیبان JSON</button><div class="demo-note">قسط‌یار · نسخه ۴.۶.۰</div></div></aside>`;
 }
-function bottomNav(){return `<nav class="bottom-nav personal-bottom-nav neo-bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['add','plus','افزودن'],['calendar','calendar','تقویم'],['reports','chart','گزارش‌ها']].map(([k,ic,t])=>`<button type="button" data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}" ${state.page===k?'aria-current="page"':''} aria-label="${t}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
+function bottomNav(){return `<nav class="bottom-nav personal-bottom-nav neo-bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['add','plus','افزودن'],['calendar','calendar','تقویم'],['cashflow','wallet','نقدینگی'],['reports','chart','گزارش‌ها']].map(([k,ic,t])=>`<button type="button" data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}" ${state.page===k?'aria-current="page"':''} aria-label="${t}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
 function dashboard(){
  const open=closest();
  const monthRows=data.flatMap(o=>o.installments.filter(i=>{const j=jalali(i.due);return j.y===todayJ.y&&j.m===todayJ.m;}).map(i=>({o,i,rem:left(o,i)})));
@@ -2352,9 +2420,62 @@ function cashflowCardHTML(forecast,money){
     <button type="button" class="neo-cashflow-month-open" data-action="cashflow-month" data-month-key="${row.key}" aria-label="مشاهده اقساط ${reportLabel(row.key)}">مشاهده اقساط ${icon('chevron-left')}</button>
    </article>`).join('')}</div>`:`<div class="neo-cashflow-empty">در شش ماه پیش رو قسط پرداخت‌نشده‌ای در برنامه ثبت‌شده وجود ندارد.</div>`}
   <p class="neo-cashflow-note">مبنای پیش‌بینی، مانده اقساط ثبت‌شده است؛ درآمد، هزینه‌های روزمره و خریدهای ثبت‌نشده در این محاسبه نیستند. معوقات ماه‌های قبل نیز در نیاز ماه جاری لحاظ شده‌اند.</p>
-  <div class="neo-cashflow-actions"><button class="neo-quiet-action" data-nav="calendar">مشاهده سررسیدها در تقویم ${icon('chevron-left')}</button><button class="neo-quiet-action" data-nav="reports">گزارش مالی کامل ${icon('chevron-left')}</button></div>
+  <div class="neo-cashflow-actions"><button class="neo-quiet-action" data-nav="cashflow">مدیریت درآمد و هزینه‌ها ${icon('chevron-left')}</button><button class="neo-quiet-action" data-nav="calendar">مشاهده سررسیدها در تقویم ${icon('chevron-left')}</button><button class="neo-quiet-action" data-nav="reports">گزارش مالی کامل ${icon('chevron-left')}</button></div>
  </section>`;
 }
+/* 4.6.0 — personal cash ledger and six-month forecast. */
+function cashEntryOccurrences(entry,key){
+ const current=reportCurrentKey(),entryKey=reportMonthKey(entry.date);
+ if(entry.recurrence==='once')return entryKey===key&&(key>current||entry.date>=todayISO)?entry.amount:0;
+ if(key<current||key<entryKey)return 0;
+ const start=jalali(entry.date),date=addJMonth(entry.date,key-entryKey,start.d);
+ if(!date||(key===current&&date<todayISO))return 0;
+ return entry.amount;
+}
+function cashLedgerForecast(span=6){
+ span=Math.max(1,Math.min(24,Math.floor(Number(span)||6)));
+ const installmentModel=cashflowForecast(span);
+ const rows=installmentModel.rows.map(row=>({key:row.key,income:0,expense:0,installments:row.amount,installmentCount:row.count,overdueAmount:row.overdueAmount,obligationsCount:row.obligationsCount,net:0,balance:null}));
+ for(const entry of cashEntries)for(const row of rows){const amount=cashEntryOccurrences(entry,row.key);if(entry.kind==='income')row.income+=amount;else row.expense+=amount;}
+ const balanceKnown=Boolean(cashSettings.configured);let running=balanceKnown?cashSettings.balance:0;
+ for(const row of rows){row.net=row.income-row.expense-row.installments;if(balanceKnown){running+=row.net;row.balance=running;}}
+ const totalIncome=rows.reduce((n,r)=>n+r.income,0),totalExpense=rows.reduce((n,r)=>n+r.expense,0),totalInstallments=rows.reduce((n,r)=>n+r.installments,0),totalNet=totalIncome-totalExpense-totalInstallments;
+ return {rows,balanceKnown,opening:balanceKnown?cashSettings.balance:null,totalIncome,totalExpense,totalInstallments,totalNet,ending:balanceKnown?running:null,minimum:balanceKnown?Math.min(cashSettings.balance,...rows.map(r=>r.balance)):null,shortage:balanceKnown?rows.filter(r=>r.balance<0):[],overdueAmount:installmentModel.overdueAmount,overdueCount:installmentModel.overdueCount};
+}
+function cashEntryOpen(kind='expense',entryId=''){
+ const entry=cashEntries.find(x=>x.id===entryId);
+ state.cashEntryModal=entry?{...entry}:{id:'',kind:kind==='income'?'income':'expense',title:'',amount:'',date:todayISO,recurrence:'once',category:kind==='income'?'حقوق':'سایر هزینه‌ها',note:''};
+ render();
+}
+function cashEntryModal(){
+ const e=state.cashEntryModal;if(!e)return '';
+ const income=e.kind==='income',categories=income?['حقوق','درآمد جانبی','پاداش','سایر درآمدها']:['مسکن','قبوض','خوراک','حمل‌ونقل','درمان','خرید','تفریح','سایر هزینه‌ها'];
+ return `<div class="modal-backdrop cash-entry-backdrop" data-action="cash-entry-close"><section class="modal cash-entry-modal" role="dialog" aria-modal="true" aria-labelledby="cash-entry-heading"><div class="modal-head"><h2 id="cash-entry-heading">${e.id?'ویرایش':'ثبت'} ${income?'درآمد':'هزینه'}</h2><button type="button" class="close-btn" data-action="cash-entry-close" aria-label="بستن">${icon('close')}</button></div><div class="cash-kind-switch"><button type="button" class="${income?'active':''}" data-action="cash-entry-kind" data-kind="income">${icon('arrow-down-left')} درآمد</button><button type="button" class="${!income?'active':''}" data-action="cash-entry-kind" data-kind="expense">${icon('arrow-up-left')} هزینه</button></div><div class="modal-form"><div class="field"><label for="cash-title">عنوان *</label><input id="cash-title" maxlength="80" value="${escapeHTML(e.title)}" placeholder="${income?'مثلاً حقوق ماهانه':'مثلاً اجاره خانه'}" /></div><div class="field"><label for="cash-amount">مبلغ (تومان) *</label><input id="cash-amount" data-money-input="true" inputmode="numeric" value="${escapeHTML(groupedInput(e.amount))}" placeholder="مثلاً ۳۰,۰۰۰,۰۰۰" /></div><div class="field"><label>تاریخ شروع / سررسید *</label>${dateFieldButton('cash-entry-date',jText(e.date,true),'cash')}</div><div class="form-grid cash-entry-grid"><div class="field"><label for="cash-category">دسته‌بندی</label><select id="cash-category">${categories.map(c=>`<option value="${escapeHTML(c)}" ${e.category===c?'selected':''}>${c}</option>`).join('')}</select></div><div class="field"><label for="cash-recurrence">تکرار</label><select id="cash-recurrence"><option value="once" ${e.recurrence==='once'?'selected':''}>فقط یک‌بار</option><option value="monthly" ${e.recurrence==='monthly'?'selected':''}>هر ماه</option></select></div></div><div class="field"><label for="cash-note">یادداشت (اختیاری)</label><input id="cash-note" maxlength="250" value="${escapeHTML(e.note)}" placeholder="توضیح کوتاه" /></div><div class="row-inline"><button type="button" class="btn primary" data-action="cash-entry-save">${icon('check')} ذخیره</button><button type="button" class="btn" data-action="cash-entry-close">انصراف</button></div></div></section></div>`;
+}
+function cashflowPage(){
+ const model=cashLedgerForecast(6),money=v=>state.hideAmounts?'••••••':fmt(v);
+ const rows=model.rows.map((r,i)=>`<article class="cash-month-card ${i===0?'current':''} ${model.balanceKnown&&r.balance<0?'negative':''}"><div class="cash-month-top"><strong>${reportLabel(r.key)}</strong>${i===0?'<span>ماه جاری</span>':''}</div><div class="cash-month-net">${model.balanceKnown?`مانده پیش‌بینی‌شده: <b>${money(r.balance)} تومان</b>`:`خالص جریان: <b>${r.net>=0?'+':''}${money(r.net)} تومان</b>`}</div><div class="cash-month-lines"><span>درآمد <b>${money(r.income)}</b></span><span>هزینه <b>${money(r.expense)}</b></span><span>اقساط <b>${money(r.installments)}</b></span></div>${r.overdueAmount?`<small class="cash-overdue-note">شامل ${money(r.overdueAmount)} تومان معوق</small>`:''}</article>`).join('');
+ const entries=cashEntries.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<article class="cash-ledger-row ${e.kind}"><span class="cash-ledger-icon">${icon(e.kind==='income'?'arrow-down-left':'arrow-up-left')}</span><div class="cash-ledger-main"><strong>${escapeHTML(e.title)}</strong><small>${escapeHTML(e.category)} · ${jText(e.date,true)} · ${e.recurrence==='monthly'?'ماهانه':'یک‌باره'}</small>${e.note?`<small>${escapeHTML(e.note)}</small>`:''}</div><b class="cash-ledger-amount">${e.kind==='income'?'+':'−'}${money(e.amount)} <small>تومان</small></b><div class="cash-ledger-actions"><button type="button" data-action="cash-entry-edit" data-id="${e.id}" aria-label="ویرایش ${escapeHTML(e.title)}">${icon('edit')}</button><button type="button" data-action="cash-entry-delete" data-id="${e.id}" aria-label="حذف ${escapeHTML(e.title)}">${icon('trash')}</button></div></article>`).join('');
+ return `<section class="cashflow-page"><div class="cashflow-intro"><div><span class="neo-kicker">مدیریت مالی شخصی</span><h2>جریان نقدی من</h2><p>درآمدها و هزینه‌ها را ثبت کن تا در کنار اقساط، تصویر روشن‌تری از ماه‌های آینده داشته باشی.</p></div><div class="cashflow-add-actions"><button class="btn primary" data-action="cash-entry-open" data-kind="income">${icon('plus')} ثبت درآمد</button><button class="btn" data-action="cash-entry-open" data-kind="expense">${icon('plus')} ثبت هزینه</button></div></div>
+ <section class="cash-balance-card"><div><span>موجودی نقدی فعلی</span><strong>${model.balanceKnown?money(cashSettings.balance)+' تومان':'هنوز ثبت نشده'}</strong><small>${model.balanceKnown?'مبنای محاسبه مانده پیش‌بینی‌شده':'برای محاسبه موجودی آینده، موجودی واقعی امروز را ثبت کن.'}</small></div><div class="cash-balance-edit"><label for="cash-opening-balance">موجودی به تومان</label><input id="cash-opening-balance" data-money-input="true" inputmode="numeric" value="${model.balanceKnown?escapeHTML(groupedInput(cashSettings.balance)):''}" placeholder="موجودی فعلی" /><button class="btn primary" data-action="cash-balance-save">ذخیره موجودی</button></div></section>
+ <div class="cash-kpi-grid"><article><span>درآمد پیش‌بینی‌شده · ۶ ماه</span><strong>${money(model.totalIncome)} <small>تومان</small></strong></article><article><span>هزینه‌های پیش‌بینی‌شده · ۶ ماه</span><strong>${money(model.totalExpense)} <small>تومان</small></strong></article><article><span>اقساط و تعهدات · ۶ ماه</span><strong>${money(model.totalInstallments)} <small>تومان</small></strong></article><article class="${model.balanceKnown&&model.ending<0?'negative':''}"><span>${model.balanceKnown?'مانده پایان ماه ششم':'خالص جریان شش‌ماهه'}</span><strong>${model.balanceKnown?money(model.ending):`${model.totalNet>=0?'+':''}${money(model.totalNet)}`} <small>تومان</small></strong></article></div>
+ ${!model.balanceKnown?`<div class="cash-info-note">${icon('info')} موجودی مبنا ثبت نشده است؛ فعلاً فقط خالص درآمد، هزینه و اقساط نمایش داده می‌شود. هشدار کسری موجودی پس از ثبت موجودی واقعی فعال خواهد شد.</div>`:model.shortage.length?`<div class="cash-warning-note" role="alert">${icon('alert-triangle')} در پیش‌بینی فعلی، موجودی در ${fnum(model.shortage.length)} ماه منفی می‌شود. زمان دریافت درآمدها، هزینه‌ها و موجودی مبنا را بررسی کن.</div>`:`<div class="cash-good-note">${icon('shield-check')} بر اساس اطلاعات ثبت‌شده، موجودی پیش‌بینی‌شده در شش ماه آینده منفی نمی‌شود.</div>`}
+ <section class="panel cash-forecast-panel"><div class="panel-head"><div><h3>پیش‌بینی ماه‌به‌ماه</h3><small>درآمد − هزینه − اقساط · شش ماه آینده</small></div>${icon('chart')}</div><div class="cash-forecast-grid">${rows}</div><p class="muted small">معوقات اقساط قبلی در نیاز ماه جاری محاسبه می‌شوند. درآمد و هزینه‌های ثبت‌نشده در پیش‌بینی لحاظ نمی‌شوند. اقساط را دوباره به‌عنوان هزینه ثبت نکن تا دوبار محاسبه نشوند.</p></section>
+ <section class="panel cash-ledger-panel"><div class="panel-head"><div><h3>درآمدها و هزینه‌های ثبت‌شده</h3><small>${fnum(cashEntries.length)} مورد</small></div><div class="row-inline"><button class="btn" data-action="cash-entry-open" data-kind="income">افزودن درآمد</button><button class="btn" data-action="cash-entry-open" data-kind="expense">افزودن هزینه</button></div></div>${entries||`<div class="cash-empty"><strong>هنوز درآمد یا هزینه‌ای ثبت نکرده‌ای</strong><p>برای شروع، حقوق، اجاره، قبوض یا هزینه‌های ثابتت را وارد کن.</p></div>`}</section>
+ <p class="cashflow-footnote">این پیش‌بینی برآوردی و وابسته به اطلاعاتی است که ثبت می‌کنی؛ تراکنش بانکی را خودکار دریافت نمی‌کند.</p></section>`;
+}
+function cashEntrySave(){
+ const e=state.cashEntryModal;if(!e)return;
+ e.title=document.getElementById('cash-title')?.value.trim()||'';e.amount=document.getElementById('cash-amount')?.value||'';
+ e.category=document.getElementById('cash-category')?.value||'سایر';e.recurrence=document.getElementById('cash-recurrence')?.value||'once';e.note=document.getElementById('cash-note')?.value.trim()||'';
+ const amount=number(e.amount);
+ if(e.title.length<2||e.title.length>80||!Number.isSafeInteger(amount)||amount<=0||amount>1e12||!validISO(e.date)||!['once','monthly'].includes(e.recurrence)||e.category.length>50||e.note.length>250){toast('عنوان، مبلغ، تاریخ یا جزئیات ثبت را بررسی کن.','error');return;}
+ const record={id:e.id||id(),kind:e.kind,title:e.title,amount,date:e.date,recurrence:e.recurrence,category:e.category,note:e.note};
+ const next=e.id?cashEntries.map(x=>x.id===e.id?record:x):[...cashEntries,record];
+ if(!commit(data,next,cashSettings))return;
+ state.cashEntryModal=null;render();toast(e.id?'درآمد یا هزینه ویرایش شد.':'درآمد یا هزینه ثبت شد.');
+}
+
 function reportData(){
  const obligations=state.reportType==='all'?data:data.filter(o=>o.type===state.reportType);
  const current=reportCurrentKey(),start=current+state.reportOffset;
@@ -2480,6 +2601,21 @@ function validateBackup(parsed){
  });
  return obligations;
 }
+function validateCashLedger(parsed){
+ const source=parsed&&typeof parsed==='object'?parsed:{};
+ const validId=v=>typeof v==='string'&&/^[a-zA-Z0-9_-]{1,110}$/.test(v);
+ const safeAmount=v=>Number.isSafeInteger(v)&&v>0&&v<=1e12;
+ const raw=source.cashEntries===undefined?[]:source.cashEntries;
+ if(!Array.isArray(raw)||raw.length>1000)throw Error('تعداد درآمدها و هزینه‌ها بیش از حد مجاز است.');
+ const ids=new Set();
+ const entries=raw.map(e=>{
+  if(!e||!validId(e.id)||ids.has(e.id)||!['income','expense'].includes(e.kind)||typeof e.title!=='string'||e.title.trim().length<2||e.title.length>80||!safeAmount(e.amount)||!validISO(e.date)||!['once','monthly'].includes(e.recurrence)||typeof e.category!=='string'||e.category.length>50||typeof e.note!=='string'||e.note.length>250)throw Error('یکی از درآمدها یا هزینه‌های ثبت‌شده معتبر نیست.');
+  ids.add(e.id);return {id:e.id,kind:e.kind,title:e.title.trim(),amount:e.amount,date:e.date,recurrence:e.recurrence,category:e.category.trim()||'سایر',note:e.note};
+ });
+ const rawSettings=source.cashSettings===undefined?{balance:0,configured:false}:source.cashSettings;
+ if(!rawSettings||typeof rawSettings!=='object'||!Number.isSafeInteger(rawSettings.balance)||rawSettings.balance<0||rawSettings.balance>1e12||(rawSettings.configured!==undefined&&typeof rawSettings.configured!=='boolean'))throw Error('موجودی نقدی مبنا معتبر نیست.');
+ return {entries,settings:{balance:rawSettings.balance,configured:rawSettings.balance>0||rawSettings.configured===true}};
+}
 
 /* Phase 3.0: account-aware snapshot synchronization, optimistic locking, safe opt-in migration. */
 const CLOUD_CONFIG=window.GHESTYAR_SUPABASE||{};
@@ -2488,7 +2624,7 @@ let cloudCacheFingerprint=null; // Last cache this tab read or wrote; guards aga
 function cloudCacheKey(){return 'ghestyar_cloud_cache_'+cloud.user.id;}
 function cloudStatusText(){return ({local:'فقط روی دستگاه',disabled:'نیاز به راه‌اندازی',loading:'در حال دریافت',choose:'انتخاب اطلاعات اولیه',ready:'همگام‌سازی‌شده',pending:'در انتظار ارسال',error:'خطای اتصال؛ قابل تکرار',conflict:'تعارض دو دستگاه'})[cloud.phase]||cloud.phase;}
 function cloudConfigReady(){return /^https:\/\/[\w-]+\.supabase\.co\/?$/.test(CLOUD_CONFIG.url||'')&&!String(CLOUD_CONFIG.url).includes('YOUR-')&&typeof CLOUD_CONFIG.publishableKey==='string'&&!CLOUD_CONFIG.publishableKey.includes('YOUR_')&&CLOUD_CONFIG.publishableKey.length>24;}
-function cloudSnapshot(){return {version:1,obligations:data};}
+function cloudSnapshot(){return {version:1,obligations:data,cashEntries,cashSettings};}
 function readCloudCache(){try{const raw=localStorage.getItem(cloudCacheKey());cloudCacheFingerprint=raw;return raw?JSON.parse(raw):null;}catch(e){return null;}}
 function cloudCacheChanged(){
  if(!cloud.user)return false;
@@ -2502,10 +2638,10 @@ function showCacheConflict(){
  cloud.accountOpen=true;toast('تغییر هم‌زمان در برگه دیگر شناسایی شد؛ اطلاعات بازنویسی نشد.','error');render();
 }
 function persistCloudCache(dirty=false){try{
- const raw=JSON.stringify({baseRevision:cloud.revision,dirty,obligations:data});
+ const raw=JSON.stringify({baseRevision:cloud.revision,dirty,obligations:data,cashEntries,cashSettings});
  localStorage.setItem(cloudCacheKey(),raw);cloudCacheFingerprint=raw;return true;
  }catch(e){toast('ذخیره نسخه بازیابی این دستگاه ممکن نشد.','error');return false;}}
-function hasUnfinishedEntry(){return Boolean(state.payment||state.edit||state.settleTarget||state.deleteTarget||(state.page==='add'&&state.draft));}
+function hasUnfinishedEntry(){return Boolean(state.payment||state.edit||state.settleTarget||state.deleteTarget||state.cashEntryModal||(state.page==='add'&&state.draft));}
 function setCloudPhase(phase,msg=''){cloud.phase=phase;cloud.error=msg;render();}
 function localReload(){data=loadLocalData();}
 async function cloudActivate(user){
@@ -2522,25 +2658,25 @@ async function cloudActivate(user){
    // Recover unsent first-write data if the first upload failed, rather than asking to start over.
    if(saved?.dirty){
     try{
-     const pending=validateBackup({version:1,obligations:saved.obligations});
-     data=pending;cloud.dirty=true;
+     const pending=validateBackup(saved),ledger=validateCashLedger(saved);
+     data=pending;cashEntries=ledger.entries;cashSettings=ledger.settings;cloud.dirty=true;
      if(saved.baseRevision===0){cloud.phase='pending';render();queueMicrotask(pushCloud);return;}
      cloud.phase='conflict';cloud.accountOpen=true;render();return;
     }catch(e){cloud.phase='conflict';cloud.accountOpen=true;render();return;}
    }
    // A new cloud account begins blank. Guest records remain separately in KEY for opt-in import.
-   data=[];setCloudPhase('choose');cloud.accountOpen=true;render();return;
+   data=[];cashEntries=[];cashSettings={balance:0,configured:false};setCloudPhase('choose');cloud.accountOpen=true;render();return;
   }
   if(!Number.isSafeInteger(row.revision)||row.revision<1)throw Error('شماره نسخه پرونده ابری معتبر نیست.');
-  const loaded=validateBackup(row.payload);cloud.revision=row.revision;
+  const loaded=validateBackup(row.payload),loadedLedger=validateCashLedger(row.payload);cloud.revision=row.revision;
   if(saved?.dirty){
-    try{const pending=validateBackup({version:1,obligations:saved.obligations});
-      data=pending;cloud.dirty=true;
+    try{const pending=validateBackup(saved),ledger=validateCashLedger(saved);
+      data=pending;cashEntries=ledger.entries;cashSettings=ledger.settings;cloud.dirty=true;
       if(saved.baseRevision===row.revision){cloud.phase='pending';render();queueMicrotask(pushCloud);return;}
       cloud.phase='conflict';cloud.accountOpen=true;render();return;
     }catch(e){cloud.phase='conflict';cloud.accountOpen=true;render();return;}
   }
-  data=loaded;cloud.dirty=false;persistCloudCache(false);setCloudPhase('ready');
+  data=loaded;cashEntries=loadedLedger.entries;cashSettings=loadedLedger.settings;cloud.dirty=false;persistCloudCache(false);setCloudPhase('ready');
   pushState.loaded=false;pushState.active=false;queueMicrotask(refreshBackgroundPushState);
  }catch(e){if(cloud.user?.id!==user.id)return;cloud.accountOpen=true;setCloudPhase('error','بارگذاری پرونده ابری ناموفق بود: '+e.message);}
 }
@@ -2573,24 +2709,24 @@ async function cloudCheckUpdates(){
  try{const uid=cloud.user.id;const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',uid).maybeSingle();
   if(error)throw error;if(!row||cloud.user?.id!==uid||cloud.dirty||hasUnfinishedEntry())return;
   if(cloudCacheChanged()){showCacheConflict();return;}
-  if(row.revision>cloud.revision){const next=validateBackup(row.payload);data=next;cloud.revision=row.revision;persistCloudCache(false);state.edit=null;state.payment=null;render();toast('آخرین تغییرات دستگاه دیگر دریافت شد.');}
+  if(row.revision>cloud.revision){const next=validateBackup(row.payload),ledger=validateCashLedger(row.payload);data=next;cashEntries=ledger.entries;cashSettings=ledger.settings;cloud.revision=row.revision;persistCloudCache(false);state.edit=null;state.payment=null;render();toast('آخرین تغییرات دستگاه دیگر دریافت شد.');}
  }catch(e){console.warn('Cloud refresh skipped:',e.message);}
 }
 async function cloudChoose(importLocal){
  if(!cloud.user||cloud.phase!=='choose')return;
- let chosen=[];
- if(importLocal){try{const raw=localStorage.getItem(KEY);if(!raw)throw Error('اطلاعات محلی پیدا نشد.');chosen=validateBackup(JSON.parse(raw));}catch(e){toast('انتقال اطلاعات محلی ممکن نشد: '+e.message,'error');return;}
- if(!confirm(`انتقال ${chosen.length} تعهد محلی به حساب ابری انجام شود؟ اگر داده‌ها آزمایشی هستند، گزینه «شروع خالی» را انتخاب کن.`))return;}
- data=chosen;cloud.dirty=true;cloud.accountOpen=false;persistCloudCache(true);cloud.phase='pending';render();pushCloud();
+ let chosen=[],ledger={entries:[],settings:{balance:0,configured:false}};
+ if(importLocal){try{const raw=localStorage.getItem(KEY);if(!raw)throw Error('اطلاعات محلی پیدا نشد.');const parsed=JSON.parse(raw);chosen=validateBackup(parsed);ledger=validateCashLedger(parsed);}catch(e){toast('انتقال اطلاعات محلی ممکن نشد: '+e.message,'error');return;}
+ if(!confirm(`انتقال ${chosen.length} تعهد و ${ledger.entries.length} درآمد/هزینه محلی به حساب ابری انجام شود؟ اگر داده‌ها آزمایشی هستند، گزینه «شروع خالی» را انتخاب کن.`))return;}
+ data=chosen;cashEntries=ledger.entries;cashSettings=ledger.settings;cloud.dirty=true;cloud.accountOpen=false;persistCloudCache(true);cloud.phase='pending';render();pushCloud();
 }
 async function cloudReloadServer(){
  if(!cloud.user||!['conflict','error'].includes(cloud.phase))return;
  if(!confirm('تغییرات ارسال‌نشده این دستگاه با آخرین اطلاعات ابر جایگزین می‌شوند. ابتدا از داده‌های فعلی فایل پشتیبان گرفته‌ای؟'))return;
  const uid=cloud.user.id;
  try{const {data:row,error}=await cloud.client.from('ghestyar_wallets').select('revision,payload').eq('user_id',uid).maybeSingle();if(error)throw error;
- if(!row)throw Error('پرونده ابری پیدا نشد.');const next=validateBackup(row.payload);
+ if(!row)throw Error('پرونده ابری پیدا نشد.');const next=validateBackup(row.payload),ledger=validateCashLedger(row.payload);
  if(!safetyCheckpoint('پیش از دریافت نسخه سرور'))return;
- data=next;cloud.revision=row.revision;cloud.dirty=false;persistCloudCache(false);cloud.accountOpen=false;cloud.phase='ready';state.draft=null;state.edit=null;state.payment=null;render();toast('نسخه ابری دریافت شد.');
+ data=next;cashEntries=ledger.entries;cashSettings=ledger.settings;cloud.revision=row.revision;cloud.dirty=false;persistCloudCache(false);cloud.accountOpen=false;cloud.phase='ready';state.draft=null;state.edit=null;state.payment=null;render();toast('نسخه ابری دریافت شد.');
  }catch(e){toast('بارگذاری ناموفق بود: '+e.message,'error');}
 }
 async function cloudAuthAction(action){
@@ -2763,11 +2899,11 @@ function safetyCheckpoints(){
  }catch(_e){return [];}
 }
 function safetyCheckpoint(label,metadata={}){
- if(!data.length)return true;
+ if(!data.length&&!cashEntries.length&&!cashSettings.configured)return true;
  try{
-  const verified=validateBackup({version:1,obligations:data});
+  const verified=validateBackup({version:1,obligations:data}),ledger=validateCashLedger({cashEntries,cashSettings});
   const existing=safetyCheckpoints();
-  const all=[...existing,{createdAt:new Date().toISOString(),label,obligations:verified,...metadata}].slice(-3);
+  const all=[...existing,{createdAt:new Date().toISOString(),label,obligations:verified,cashEntries:ledger.entries,cashSettings:ledger.settings,...metadata}].slice(-3);
   const serialized=JSON.stringify(all);
   localStorage.setItem(safetyCheckpointKey(),serialized);
   if(localStorage.getItem(safetyCheckpointKey())!==serialized)throw Error('ذخیره قابل تأیید نیست');
@@ -2778,9 +2914,9 @@ function safetyCheckpoint(label,metadata={}){
   return false;
  }
 }
-function downloadBackupContents(obligations,filename){
- const verified=validateBackup({version:1,obligations});
- const content={app:'ghestyar',version:1,exportedAt:new Date().toISOString(),obligations:verified};
+function downloadBackupContents(obligations,filename,entries=cashEntries,settings=cashSettings){
+ const verified=validateBackup({version:1,obligations}),ledger=validateCashLedger({cashEntries:entries,cashSettings:settings});
+ const content={app:'ghestyar',version:1,exportedAt:new Date().toISOString(),obligations:verified,cashEntries:ledger.entries,cashSettings:ledger.settings};
  const blob=new Blob([JSON.stringify(content,null,2)],{type:'application/json'});
  const url=URL.createObjectURL(blob),a=document.createElement('a');
  a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
@@ -2791,22 +2927,22 @@ function downloadEmergencyCheckpoint(index=-1){
  const latest=index>=0?all[index]:all.at(-1);
  if(!latest){toast('هنوز نسخه اضطراری وجود ندارد؛ از بخش پشتیبان‌گیری یک نسخه JSON دریافت کن.');return;}
  try{
-  downloadBackupContents(latest.obligations,'ghestyar-emergency-'+latest.createdAt.replace(/[:.]/g,'-')+'.json');
+  downloadBackupContents(latest.obligations,'ghestyar-emergency-'+latest.createdAt.replace(/[:.]/g,'-')+'.json',latest.cashEntries||[],latest.cashSettings||{balance:0,configured:false});
   toast('دانلود نسخه اضطراری آغاز شد؛ فایل دانلودشده را در گوشی نگهداری کن.');
  }catch(e){toast('نسخه اضطراری قابل دریافت نیست: '+e.message,'error');}
 }
 function healthSummary(){
  try{
-  const verified=validateBackup({version:1,obligations:data});
+  const verified=validateBackup({version:1,obligations:data}),ledger=validateCashLedger({cashEntries,cashSettings});
   const installments=verified.reduce((s,o)=>s+o.installments.length,0);
   const payments=verified.reduce((s,o)=>s+o.payments.filter(p=>!p.reversedAt).length,0);
-  return {ok:true,obligations:verified.length,installments,payments};
+  return {ok:true,obligations:verified.length,installments,payments,income:ledger.entries.filter(x=>x.kind==='income').length,expense:ledger.entries.filter(x=>x.kind==='expense').length};
  }catch(e){return {ok:false,error:String(e.message||e)};}
 }
 function checkFinanceHealth(){
  const result=healthSummary();
  if(!result.ok){toast('هشدار: '+result.error,'error');return;}
- toast(`بررسی ساختاری موفق: ${result.obligations} تعهد، ${result.installments} قسط و ${result.payments} پرداخت معتبر.`);
+ toast(`بررسی ساختاری موفق: ${result.obligations} تعهد، ${result.installments} قسط، ${result.payments} پرداخت، ${result.income} درآمد و ${result.expense} هزینه معتبر.`);
 }
 /* 4.2 — Review backups before destructive restore; never apply during uncertain cloud state. */
 function restoreReady(){
@@ -2817,21 +2953,22 @@ function restoreReady(){
  if(['loading','choose','conflict'].includes(cloud.phase))return 'وضعیت حساب هنوز برای بازیابی آماده نیست.';
  return '';
 }
-function restoreStats(items){
+function restoreStats(items,entries=[],settings={balance:0,configured:false}){
  return {obligations:items.length,
   installments:items.reduce((n,o)=>n+o.installments.length,0),
   payments:items.reduce((n,o)=>n+o.payments.filter(p=>!p.reversedAt).length,0),
+  income:entries.filter(x=>x.kind==='income').length,expense:entries.filter(x=>x.kind==='expense').length,balance:settings.configured?settings.balance:null,
   amount:items.reduce((n,o)=>n+o.installments.reduce((m,i)=>m+BigInt(i.amount),0n),0n)};
 }
 function restorePreviewModal(){
  const c=state.restoreCandidate;if(!c)return '';
- const old=restoreStats(data),next=restoreStats(c.items);
- const statHTML=(stats)=>`<div class="restore-stats"><div><strong>${fmt(stats.obligations)}</strong><span>تعهد</span></div><div><strong>${fmt(stats.installments)}</strong><span>قسط</span></div><div><strong>${fmt(stats.payments)}</strong><span>پرداخت فعال</span></div></div><p class="restore-money">جمع مبلغ اقساط: <strong>${stats.amount.toLocaleString('fa-IR')} تومان</strong></p>`;
+ const old=restoreStats(data,cashEntries,cashSettings),next=restoreStats(c.items,c.cashEntries,c.cashSettings);
+ const statHTML=(stats)=>`<div class="restore-stats"><div><strong>${fmt(stats.obligations)}</strong><span>تعهد</span></div><div><strong>${fmt(stats.installments)}</strong><span>قسط</span></div><div><strong>${fmt(stats.payments)}</strong><span>پرداخت فعال</span></div></div><p class="restore-money">جمع مبلغ اقساط: <strong>${stats.amount.toLocaleString('fa-IR')} تومان</strong></p><p class="restore-money">دفتر نقدی: <strong>${fnum(stats.income)} درآمد · ${fnum(stats.expense)} هزینه</strong></p><p class="restore-money">موجودی مبنا: <strong>${stats.balance===null?'ثبت نشده':fmt(stats.balance)+' تومان'}</strong></p>`;
  const blocked=restoreReady();
  return `<div class="modal-backdrop restore-backdrop" data-action="restore-cancel"><section class="modal restore-dialog" role="dialog" aria-modal="true" aria-labelledby="restore-title"><div class="modal-head"><h2 id="restore-title">بررسی فایل پیش از بازیابی</h2><button type="button" class="close-btn" data-action="restore-cancel" aria-label="انصراف">${icon('close')}</button></div>
  <p class="muted small restore-filename">${icon('download')} ${escapeHTML(c.filename)}</p>
  <div class="restore-compare"><div class="restore-compare-box"><span>اطلاعات فعلی</span>${statHTML(old)}</div><div class="restore-compare-box restore-next"><span>فایل انتخاب‌شده</span>${statHTML(next)}</div></div>
- ${blocked?`<div class="soft-alert" role="alert">${icon('shield')} ${escapeHTML(blocked)}</div>`:`<div class="warn" role="alert">${icon('shield')} با تأیید، تمام تعهدات و پرداخت‌های فعلی <strong>جایگزین</strong> می‌شوند؛ فایل با اطلاعات فعلی ادغام نمی‌شود. نسخه اضطراری فقط روی همین دستگاه ذخیره خواهد شد.</div>`}
+ ${blocked?`<div class="soft-alert" role="alert">${icon('shield')} ${escapeHTML(blocked)}</div>`:`<div class="warn" role="alert">${icon('shield')} با تأیید، تعهدات، پرداخت‌ها، درآمدها، هزینه‌ها و موجودی فعلی <strong>جایگزین</strong> می‌شوند؛ فایل با اطلاعات فعلی ادغام نمی‌شود. نسخه اضطراری فقط روی همین دستگاه ذخیره خواهد شد.</div>`}
  <div class="field"><label for="restore-phrase">برای تأیید، واژه «بازیابی» را وارد کن</label><input id="restore-phrase" type="text" autocomplete="off" spellcheck="false" dir="rtl" placeholder="بازیابی" ${blocked?'disabled':''}/></div>
  <label class="restore-ack"><input type="checkbox" id="restore-ack" ${blocked?'disabled':''}/> <span>می‌دانم داده‌های فعلی جایگزین می‌شوند و از آن‌ها پشتیبان گرفته‌ام.</span></label>
  <div class="restore-actions"><button class="btn" type="button" data-action="restore-cancel">انصراف</button><button class="btn danger" type="button" data-action="restore-apply" ${blocked?'disabled':''}>جایگزینی نهایی داده‌ها</button></div></section></div>`;
@@ -2843,11 +2980,11 @@ async function importBackup(file){
  try{
   const content=await file.text();
   const parsed=JSON.parse(content);
-  const loaded=validateBackup(parsed);
+  const loaded=validateBackup(parsed),ledger=validateCashLedger(parsed);
   // Recheck: file reading can take time, during which account state can change.
   const blockedAgain=restoreReady();if(blockedAgain){toast(blockedAgain,'error');return;}
-  state.restoreCandidate={items:loaded,filename:file.name||'backup.json',accountId:cloud.user?.id||null,
-    revision:cloud.revision,cacheFingerprint:cloudCacheFingerprint,beforeJSON:JSON.stringify(data)};
+  state.restoreCandidate={items:loaded,cashEntries:ledger.entries,cashSettings:ledger.settings,filename:file.name||'backup.json',accountId:cloud.user?.id||null,
+    revision:cloud.revision,cacheFingerprint:cloudCacheFingerprint,beforeJSON:JSON.stringify({data,cashEntries,cashSettings})};
   render();document.getElementById('restore-phrase')?.focus();
  }catch(e){toast('فایل پشتیبان معتبر نیست: '+(e.message||String(e)),'error');}
 }
@@ -2855,7 +2992,7 @@ function applyRestoreCandidate(){
  const c=state.restoreCandidate;if(!c)return false;
  const blocked=restoreReady();if(blocked){toast(blocked,'error');return false;}
  if((cloud.user?.id||null)!==c.accountId||cloud.revision!==c.revision||
-    cloudCacheFingerprint!==c.cacheFingerprint||JSON.stringify(data)!==c.beforeJSON){
+    cloudCacheFingerprint!==c.cacheFingerprint||JSON.stringify({data,cashEntries,cashSettings})!==c.beforeJSON){
   state.restoreCandidate=null;render();toast('داده‌ها بعد از انتخاب فایل تغییر کرده‌اند. فایل را دوباره انتخاب کن.','error');return false;
  }
  if(document.getElementById('restore-phrase')?.value.trim()!=='بازیابی'||!document.getElementById('restore-ack')?.checked){
@@ -2863,7 +3000,7 @@ function applyRestoreCandidate(){
  }
  if(!safetyCheckpoint('پیش از بازیابی فایل'))return false;
  // The file has been validated and a recoverable local snapshot was persisted.
- if(!commit(c.items))return false;
+ if(!commit(c.items,c.cashEntries,c.cashSettings))return false;
  state.restoreCandidate=null;state.draft=null;state.payment=null;state.edit=null;
  nav('dashboard');toast('فایل بازیابی شد؛ وضعیت همگام‌سازی را بررسی کن.');return true;
 }
@@ -2876,7 +3013,7 @@ function syncSafetyBanner(){
  const desc=cloud.phase==='conflict'?'قبل از ویرایش بیشتر، نسخه پشتیبان بگیر و وضعیت دو دستگاه را بررسی کن.':cloud.phase==='error'?'اطلاعات در مرورگر نگهداری شده‌اند؛ برای تلاش مجدد وارد حساب من شو.':'تا تأیید همگام‌سازی، از پاک‌کردن داده‌های مرورگر خودداری کن.';
  return `<aside class="sync-safety-banner" role="status"><div><strong>${escapeHTML(title)}</strong><span>${escapeHTML(desc)}</span></div><button class="btn" data-action="account-open">حساب من</button></aside>`;
 }
-function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='reminders')content=reminderPage();else if(state.page==='reports')content=reports();else if(state.page==='settings')content=settingsPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${syncSafetyBanner()}${content}</main>`+bottomNav()+payModal()+bulkPaymentModal()+financialAuditModal()+editModal()+deleteObligationModal()+restorePreviewModal()+accountModal()+pickerOverlay()+providerModal();if(cloud.phase==='ready')queueMicrotask(maybeSystemReminder);document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',reminders:'یادآوری اقساط',reports:'گزارش‌های مالی',settings:'مدیریت داده‌ها'}[state.page]}`;}
+function render(){let content='';if(state.page==='dashboard')content=dashboard();else if(state.page==='obligations')content=obligations();else if(state.page==='add')content=wizard();else if(state.page==='detail')content=detail();else if(state.page==='calendar')content=calendar();else if(state.page==='reminders')content=reminderPage();else if(state.page==='reports')content=reports();else if(state.page==='settings')content=settingsPage();else if(state.page==='cashflow')content=cashflowPage();$('#app').innerHTML=sidebar()+`<main class="main">${header()}${syncSafetyBanner()}${content}</main>`+bottomNav()+payModal()+bulkPaymentModal()+financialAuditModal()+editModal()+deleteObligationModal()+restorePreviewModal()+accountModal()+pickerOverlay()+providerModal()+cashEntryModal();if(cloud.phase==='ready')queueMicrotask(maybeSystemReminder);document.title=`قسط‌یار | ${{dashboard:'داشبورد',obligations:'تعهدات من',add:'ثبت تعهد',detail:'جزئیات اقساط',calendar:'تقویم شمسی',reminders:'یادآوری اقساط',reports:'گزارش‌های مالی',settings:'مدیریت داده‌ها',cashflow:'جریان نقدی'}[state.page]}`;}
 let toastTimer;function toast(msg,type=''){document.querySelector('.toast')?.remove();const x=document.createElement('div');x.className='toast '+type;x.setAttribute('role','status');x.textContent=msg;document.body.appendChild(x);clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.remove(),3900);}
 function paymentOpen(ob,inst){const o=data.find(x=>x.id===ob),i=o?.installments.find(x=>x.id===inst);if(!o||!i||left(o,i)<=0)return;state.payment={ob,inst,amount:String(left(o,i)),date:jText(todayISO,true),note:''};render();}
 function calendarShift(delta){const {y,m}=state.calendarMonth;const idx=y*12+m-1+delta;state.calendarMonth={y:Math.floor(idx/12),m:(idx%12+12)%12+1};const date=jISO(state.calendarMonth.y,state.calendarMonth.m,1);const match=data.flatMap(o=>o.installments).filter(i=>{const j=jalali(i.due);return j.y===state.calendarMonth.y&&j.m===state.calendarMonth.m;}).sort((a,b)=>a.due.localeCompare(b.due))[0];state.selectedDay=match?.due||date||todayISO;render();}
@@ -2934,7 +3071,7 @@ document.addEventListener('click',e=>{
  if(action==='import-pick'){document.getElementById('backup-file')?.click();return;}
  if(action==='restore-cancel'){if(btn.classList.contains('restore-backdrop')&&e.target.closest('.restore-dialog'))return;state.restoreCandidate=null;render();return;}
  if(action==='restore-apply'){applyRestoreCandidate();return;}
- if(action==='erase-all'){if(!window.confirm('همه تعهدات و پرداخت‌های فضای فعلی (در حالت ابری، پس از همگام‌سازی روی حساب) پاک می‌شوند. قبل از ادامه پشتیبان گرفته‌ای؟'))return;if(!window.confirm('تأیید نهایی: اطلاعات مالی فعلی پاک شوند؟'))return;if(!safetyCheckpoint('پیش از پاک‌کردن همه اطلاعات'))return;if(!commit([]))return;state.draft=null;nav('dashboard');toast('اطلاعات این فضا پاک شدند؛ نسخه قبلی در سوابق اضطراری دستگاه حفظ شد.');return;}
+ if(action==='erase-all'){if(!window.confirm('همه تعهدات و پرداخت‌های فضای فعلی (در حالت ابری، پس از همگام‌سازی روی حساب) پاک می‌شوند. قبل از ادامه پشتیبان گرفته‌ای؟'))return;if(!window.confirm('تأیید نهایی: اطلاعات مالی فعلی پاک شوند؟'))return;if(!safetyCheckpoint('پیش از پاک‌کردن همه اطلاعات'))return;if(!commit([] ,[],{balance:0,configured:false}))return;state.draft=null;nav('dashboard');toast('اطلاعات این فضا پاک شدند؛ نسخه قبلی در سوابق اضطراری دستگاه حفظ شد.');return;}
  if(action==='restore-legacy-demo'){
   if(cloud.user){toast('بازیابی این نسخه بایگانی فقط در حالت محلی ممکن است.','error');return;}
   try{const raw=localStorage.getItem(LEGACY_SAMPLE_ARCHIVE);if(!raw)throw Error('نسخه بایگانی موجود نیست.');
@@ -2962,6 +3099,16 @@ document.addEventListener('click',e=>{
   if(!commit(next))return;state.edit=null;render();toast('تغییرات با موفقیت ثبت شدند.');
  }
 });
+document.addEventListener('click',e=>{
+ const el=e.target.closest('[data-action]');if(!el)return;const action=el.dataset.action;
+ if(action==='cash-entry-open'){cashEntryOpen(el.dataset.kind||'expense');return;}
+ if(action==='cash-entry-edit'){cashEntryOpen('expense',el.dataset.id);return;}
+ if(action==='cash-entry-close'){if(el.classList.contains('cash-entry-backdrop')&&e.target.closest('.cash-entry-modal'))return;state.cashEntryModal=null;state.datePicker=null;render();return;}
+ if(action==='cash-entry-kind'){saveOpenFields();if(state.cashEntryModal){state.cashEntryModal.kind=el.dataset.kind==='income'?'income':'expense';state.cashEntryModal.category=state.cashEntryModal.kind==='income'?'حقوق':'سایر هزینه‌ها';render();}return;}
+ if(action==='cash-entry-save'){cashEntrySave();return;}
+ if(action==='cash-entry-delete'){const item=cashEntries.find(x=>x.id===el.dataset.id);if(!item)return;if(!confirm(`«${item.title}» از دفتر درآمد و هزینه حذف شود؟`))return;if(!commit(data,cashEntries.filter(x=>x.id!==item.id),cashSettings))return;render();toast('مورد از دفتر مالی حذف شد.');return;}
+ if(action==='cash-balance-save'){const raw=document.getElementById('cash-opening-balance')?.value??'',amount=number(raw);if(raw.trim()===''||!Number.isSafeInteger(amount)||amount<0||amount>1e12){toast('موجودی معتبر را به تومان وارد کن. برای موجودی صفر هم عدد صفر را ثبت کن.','error');return;}if(!commit(data,cashEntries,{balance:amount,configured:true}))return;render();toast('موجودی مبنا ذخیره شد.');return;}
+});
 document.addEventListener('change',e=>{if(e.target.id==='edit-provider'){const p=providerById(e.target.value);if(p){document.getElementById('edit-party').value=p.name;}return;}if(e.target.id==='backup-file'){const file=e.target.files?.[0];e.target.value='';importBackup(file);}});
 
 document.addEventListener('click',e=>{const type=e.target.closest('[data-draft-type]');if(type){state.draft.type=type.dataset.draftType;if(state.draft.type!=='loan')state.draft.mode='manual';state.draft.providerId='';state.draft.rows=[];render();}const mode=e.target.closest('[data-draft-mode]');if(mode){state.draft.mode=mode.dataset.draftMode;state.draft.rows=[];render();}const loan=e.target.closest('[data-loan-kind]');if(loan){state.draft.loanKind=loan.dataset.loanKind;state.draft.rate=loan.dataset.loanKind==='qard'?'4':'18';state.draft.rows=[];render();}const tab=e.target.closest('[data-tab]');if(tab){state.detailTab=tab.dataset.tab;render();}});
@@ -2982,7 +3129,7 @@ document.addEventListener('visibilitychange',()=>{
 setInterval(()=>{if(document.hidden)return;refreshCurrentDay();maybeSystemReminder();},60000);
 navigator.serviceWorker?.addEventListener('message',e=>{if(e.data?.type==='ghestyar-reminder-open')nav('reminders');});
 document.addEventListener('input',e=>{if(e.target.matches('[data-money-input]'))formatMoneyOnInput(e.target);if(e.target.id==='provider-search'){state.providerQuery=e.target.value;const target=document.getElementById('provider-list');if(target)target.innerHTML=providerListHTML();}if(e.target.dataset.draft&&state.draft){state.draft[e.target.dataset.draft]=e.target.value;state.draft.rows=[];const next=document.querySelector('[data-action="wizard-next"]');if(next)next.disabled=!draftValid();}if(e.target.id==='ob-search'){const pos=e.target.selectionStart;state.query=e.target.value;const holder=$('.ob-grid')||$('.empty');const matches=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});if(holder)holder.outerHTML=matches.length?`<div class="ob-grid">${matches.map(obCard).join('')}</div>`:`<div class="panel empty">نتیجه‌ای پیدا نشد.</div>`;}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.providerOpen){state.providerOpen=false;render();return;}if(e.key==='Escape'&&state.datePicker){closePersianPicker();return;}if(e.key==='Escape'&&state.restoreCandidate){state.restoreCandidate=null;render();return;}if(e.key==='Escape'&&state.deleteTarget){state.deleteTarget=null;render();return;}if(e.key==='Escape'&&state.settleTarget){state.settleTarget=null;render();return;}if(e.key==='Escape'&&state.financeAuditOpen){state.financeAuditOpen=false;render();return;}if(e.key==='Escape'&&(state.payment||state.edit)){state.payment=null;state.edit=null;render();}if(e.key==='Enter'&&e.target.matches('[data-action="view"]')){state.selectedId=e.target.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.cashEntryModal){state.cashEntryModal=null;state.datePicker=null;render();return;}if(e.key==='Escape'&&state.providerOpen){state.providerOpen=false;render();return;}if(e.key==='Escape'&&state.datePicker){closePersianPicker();return;}if(e.key==='Escape'&&state.restoreCandidate){state.restoreCandidate=null;render();return;}if(e.key==='Escape'&&state.deleteTarget){state.deleteTarget=null;render();return;}if(e.key==='Escape'&&state.settleTarget){state.settleTarget=null;render();return;}if(e.key==='Escape'&&state.financeAuditOpen){state.financeAuditOpen=false;render();return;}if(e.key==='Escape'&&(state.payment||state.edit)){state.payment=null;state.edit=null;render();}if(e.key==='Enter'&&e.target.matches('[data-action="view"]')){state.selectedId=e.target.dataset.ob;state.detailTab='schedule';state.scheduleFilter='open';nav('detail');}});
 window.addEventListener('hashchange',()=>{if(location.hash==='#reminders')nav('reminders');});
 render();if(storageRecoveryNeeded)toast('فایل اطلاعات قبلی قابل خواندن نیست؛ برای جلوگیری از حذف، بازنویسی نشده است. ابتدا از داده مرورگر نسخه پشتیبان تهیه کن.','error');
 </script>

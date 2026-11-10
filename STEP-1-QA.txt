@@ -1,0 +1,18 @@
+Ghestyar — Step 1: Syntax recovery
+
+Change:
+- Removed one redundant closing brace immediately after validateCashLedger() in index.html.
+
+Verification:
+- All inline JavaScript blocks passed Node.js syntax validation.
+- Headless Chromium smoke test passed:
+  - dashboard renders
+  - cash-flow page renders
+  - adding an income record works
+  - grouped amount is parsed as an integer
+  - local persistence contains the new income record
+  - explicitly configured zero opening balance is preserved
+  - six-month forecast returns six rows
+  - no browser runtime exceptions were recorded
+
+No Supabase schema, credentials, service worker, manifest, reminder, or other financial logic was changed in this step.
