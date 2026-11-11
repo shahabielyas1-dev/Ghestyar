@@ -1,0 +1,23 @@
+Ghestyar — Step 2: Provider logo placement in obligation cards
+
+Implemented:
+- Provider name is now rendered as a distinct text element.
+- Provider logo is placed in a dedicated fixed-size slot beside the provider name.
+- The logo no longer participates as an inline text fragment, preventing it from appearing between or over text.
+- Added constrained widths, ellipsis handling, and small-screen sizing.
+- Kept the existing providerMark() source, provider IDs, and provider data unchanged.
+- Updated the displayed app version to 4.6.2.
+
+Verification:
+- Confirmed exactly one obligation-card renderer was updated.
+- Confirmed the provider logo is wrapped in a dedicated .ob-provider-logo element.
+- Confirmed card layout uses a stable 28px logo slot and a shrinking text column.
+- All four inline JavaScript blocks passed Node.js syntax validation.
+- ZIP integrity check passed.
+- Full visual browser QA was not available in this execution environment; the change is syntax- and structure-checked, not visually certified.
+
+Scope:
+- Only index.html and this QA note were changed.
+- Calendar selected-day totals from Step 1 are preserved.
+- No payment, installment, account, storage, Supabase, reminder, or service-worker data was modified.
+- Floating navigation redesign and multi-account cashflow remain future steps.

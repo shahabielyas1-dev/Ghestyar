@@ -1,0 +1,24 @@
+Ghestyar 4.6.3 — Step 3: mobile floating navigation
+
+Implemented
+- Replaced the six-item mobile navigation row with five equally sized destinations:
+  Dashboard, Obligations, Calendar, Cashflow, Reports.
+- Moved Add Obligation to a separate, prominent circular floating action button on the physical left side of the navigation dock.
+- Kept the navigation dock RTL while using an LTR outer layout to anchor the add button on the left.
+- Added compact-screen sizing for widths at or below 360px.
+- Added light/dark theme styling and safe-area-aware bottom positioning.
+- Kept all actions on the existing delegated [data-nav] click handler.
+- Preserved desktop sidebar navigation and all page/business logic.
+- Updated displayed app version to 4.6.3.
+
+Verification
+- Confirmed the mobile navigation contains exactly five destination buttons and one separate add button.
+- Confirmed every destination and the add button retains its existing data-nav route.
+- Confirmed the old centered add-nav item is no longer rendered in the mobile navigation.
+- All inline JavaScript blocks passed Node.js syntax validation.
+- ZIP integrity check passed.
+- Visual browser/device QA is still recommended for real handset safe-area and touch-target confirmation.
+
+Scope
+- Changed index.html, README-fa.md, and this QA note only.
+- No installment, payment, cashflow, storage, backup, Supabase, reminder, or service-worker data model was changed.

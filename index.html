@@ -20,7 +20,7 @@
   document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#091229' : '#eef3ff');
 })();
 </script>
-<title>قسط‌یار ۴.۶.۰ | دستیار مالی شخصی</title>
+<title>قسط‌یار ۴.۶.۳ | دستیار مالی شخصی</title>
 <script>
 /* Capture Chromium's native PWA install offer before app initialization. */
 window.__ghestyarDeferredInstall = null;
@@ -1853,6 +1853,115 @@ html .cash-entry-modal input,html .cash-entry-modal select{min-height:43px}
 @media(max-width:900px){html .cash-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}html .cash-forecast-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:720px){html .cashflow-intro{align-items:stretch}html .cashflow-add-actions{width:100%}html .cashflow-add-actions .btn{flex:1}html .cash-balance-card{grid-template-columns:1fr;padding:16px}html .cash-balance-edit{grid-template-columns:minmax(0,1fr) auto}html .cash-kpi-grid{gap:8px}html .cash-kpi-grid article{padding:12px}html .cash-forecast-grid{grid-template-columns:1fr 1fr;gap:8px}html .cash-month-card{padding:11px}html .cash-ledger-row{grid-template-columns:34px minmax(0,1fr) auto;gap:7px}html .cash-ledger-amount{grid-column:2;grid-row:2;justify-self:start;font-size:11px}html .cash-ledger-actions{grid-column:3;grid-row:1/3;flex-direction:column}html .cash-ledger-panel .panel-head .row-inline{width:100%}html .cash-ledger-panel .panel-head .row-inline .btn{flex:1;padding-inline:8px}html .neo-bottom-nav{grid-template-columns:repeat(6,minmax(0,1fr))}html .neo-bottom-nav button{font-size:8px}html .neo-bottom-nav button svg{width:18px;height:18px}}
 
+
+/* Step 1: selected calendar day amount summary */
+.calendar-day-totals{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px;margin:14px 0 15px;padding:12px;border:1px solid var(--border);border-radius:15px;background:var(--soft)}
+.calendar-day-totals>div{display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:0}
+.calendar-day-totals>div+div{border-inline-start:1px solid var(--border);padding-inline-start:9px}
+.calendar-day-totals span{font-size:10px;color:var(--muted);font-weight:700;line-height:1.5}
+.calendar-day-totals strong{font-size:clamp(12px,2vw,16px);font-weight:900;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums}
+.calendar-day-totals .calendar-day-total-main strong{color:var(--teal);font-size:clamp(14px,2.2vw,19px)}
+.calendar-day-totals small{font-size:9px;color:var(--muted);font-weight:600}
+@media(max-width:480px){.calendar-day-totals{gap:5px;padding:9px}.calendar-day-totals>div+div{padding-inline-start:6px}.calendar-day-totals span{font-size:9px}.calendar-day-totals strong{font-size:12px}.calendar-day-totals .calendar-day-total-main strong{font-size:14px}.calendar-day-totals small{font-size:8px}}
+
+
+/* Step 2: keep provider marks in a dedicated, stable slot on obligation cards */
+.ob-card .ob-top{min-width:0}
+.ob-card .ob-identity{flex:1 1 auto;min-width:0;overflow:hidden}
+.ob-card .ob-name{min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ob-card .ob-party{display:block;min-width:0;max-width:100%;margin-top:3px;line-height:1.5;overflow:hidden}
+.ob-card .ob-party.has-provider{display:grid;grid-template-columns:minmax(0,1fr) 28px;align-items:center;column-gap:8px;direction:rtl;width:max-content;max-width:100%;overflow:visible}
+.ob-card .ob-party-name{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ob-card .ob-provider-logo{width:28px;height:28px;flex:0 0 28px;display:grid;place-items:center;border:1px solid var(--border);border-radius:9px;background:var(--white);overflow:hidden}
+.ob-card .ob-provider-logo .brand-mark{width:23px;height:23px;min-width:23px;max-width:23px;margin:0!important;border-radius:7px;border-width:1px;vertical-align:middle}
+.ob-card .ob-provider-logo .brand-letters{font-size:8px;line-height:1}
+.ob-card .ob-provider-logo .brand-mark img{inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain}
+.ob-card .ob-provider-logo .brand-mark-snappay .brand-letters{font-size:7px;letter-spacing:-.2px}
+.ob-card .ob-top>.tag{flex:0 0 auto;align-self:flex-start}
+@media(max-width:380px){
+ .ob-card .ob-party.has-provider{grid-template-columns:minmax(0,1fr) 26px;column-gap:6px}
+ .ob-card .ob-provider-logo{width:26px;height:26px;flex-basis:26px}
+ .ob-card .ob-provider-logo .brand-mark{width:21px;height:21px;min-width:21px;max-width:21px}
+}
+
+
+/* Step 3 — balanced mobile navigation + separate add action */
+.mobile-nav-dock{display:none}
+@media(max-width:720px){
+  html body .mobile-nav-dock{
+    position:fixed!important;z-index:80!important;left:12px!important;right:12px!important;
+    bottom:calc(10px + env(safe-area-inset-bottom))!important;
+    display:flex!important;align-items:center!important;gap:9px!important;
+    direction:ltr!important;width:auto!important;pointer-events:none
+  }
+  html body .mobile-nav-dock>*{pointer-events:auto}
+  html body .mobile-nav-dock .bottom-nav{
+    position:relative!important;inset:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+    display:grid!important;flex:1 1 0!important;min-width:0!important;width:auto!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:0!important;direction:rtl!important;direction:rtl!important;
+    margin:0!important;padding:5px!important;
+    border:1px solid #e5eaf2!important;border-radius:21px!important;
+    background:rgba(255,255,255,.97)!important;
+    box-shadow:0 8px 28px rgba(32,65,105,.13)!important;
+    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+  }
+  html body .mobile-nav-dock .bottom-nav button,
+  html body .mobile-nav-dock .bottom-nav button:not(.add-nav){
+    display:flex!important;position:relative!important;min-width:0!important;max-width:none!important;
+    min-height:52px!important;height:52px!important;padding:4px 1px!important;margin:0!important;
+    flex-direction:column!important;align-items:center!important;justify-content:center!important;
+    gap:2px!important;overflow:hidden!important;transform:none!important;
+    border:0!important;border-radius:14px!important;background:transparent!important;
+    color:#8291a5!important;font-size:8.5px!important;font-weight:800!important;line-height:1.3!important;
+    box-shadow:none!important
+  }
+  html body .mobile-nav-dock .bottom-nav button svg{
+    display:block!important;width:20px!important;height:20px!important;min-width:20px!important;
+    padding:0!important;margin:0!important;background:transparent!important;border:0!important;
+    border-radius:0!important;box-shadow:none!important;color:inherit!important;stroke-width:2.1!important
+  }
+  html body .mobile-nav-dock .bottom-nav button span{
+    display:block!important;max-width:100%!important;overflow:hidden!important;
+    white-space:nowrap!important;text-overflow:clip!important;font-size:8.5px!important
+  }
+  html body .mobile-nav-dock .bottom-nav button.active{
+    color:#2479d8!important;background:#edf5ff!important
+  }
+  html body .mobile-nav-dock .bottom-nav button.active svg{color:#2479d8!important}
+  html body .mobile-nav-dock .mobile-add-fab{
+    display:flex!important;flex:0 0 54px!important;width:54px!important;height:54px!important;
+    min-width:54px!important;min-height:54px!important;padding:0!important;margin:0!important;
+    align-items:center!important;justify-content:center!important;
+    border:1px solid rgba(255,255,255,.75)!important;border-radius:50%!important;
+    background:linear-gradient(145deg,#65bdff 0%,#2788ef 58%,#1764d2 100%)!important;
+    color:#fff!important;box-shadow:0 7px 19px rgba(37,126,220,.34),0 0 0 5px rgba(67,151,239,.12)!important;
+    cursor:pointer;-webkit-tap-highlight-color:transparent
+  }
+  html body .mobile-nav-dock .mobile-add-fab svg{
+    display:block!important;width:25px!important;height:25px!important;min-width:25px!important;
+    padding:0!important;margin:0!important;background:transparent!important;border:0!important;
+    color:#fff!important;stroke-width:2.5!important
+  }
+  html[data-theme="dark"] body .mobile-nav-dock .bottom-nav{
+    background:rgba(20,31,47,.97)!important;border-color:#33445b!important;
+    box-shadow:0 8px 28px rgba(0,0,0,.34)!important
+  }
+  html[data-theme="dark"] body .mobile-nav-dock .bottom-nav button{color:#a6b5c9!important}
+  html[data-theme="dark"] body .mobile-nav-dock .bottom-nav button.active{
+    color:#8dc8ff!important;background:#203b59!important
+  }
+  html[data-theme="dark"] body .mobile-nav-dock .bottom-nav button.active svg{color:#8dc8ff!important}
+}
+@media(max-width:360px){
+  html body .mobile-nav-dock{left:8px!important;right:8px!important;gap:7px!important}
+  html body .mobile-nav-dock .mobile-add-fab{flex-basis:50px!important;width:50px!important;height:50px!important;min-width:50px!important;min-height:50px!important}
+  html body .mobile-nav-dock .bottom-nav{padding:4px!important}
+  html body .mobile-nav-dock .bottom-nav button,
+  html body .mobile-nav-dock .bottom-nav button:not(.add-nav){font-size:8px!important;min-height:49px!important;height:49px!important}
+  html body .mobile-nav-dock .bottom-nav button span{font-size:8px!important}
+  html body .mobile-nav-dock .bottom-nav button svg{width:19px!important;height:19px!important}
+}
+
 </style>
 </head>
 <body>
@@ -2320,9 +2429,9 @@ function header(){
 const navItems=[['dashboard','home','داشبورد'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم اقساط']];
 function sidebar(){
  const active=k=>state.page===k||(state.page==='detail'&&k==='obligations');
- return `<aside class="sidebar personal-sidebar neo-sidebar"><div class="brand neo-brand"><div class="brand-logo"><img src="./logo.svg" alt="لوگوی قسط‌یار"></div><div><h1>قسط‌یار</h1><span>دستیار اقساط شخصی</span></div></div><div class="nav-label">فضای من</div><nav class="nav" aria-label="بخش‌های اصلی">${navItems.map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}" ${active(k)?'aria-current="page"':''}>${icon(ic)}<span>${t}</span></button>`).join('')}<button class="personal-add-side" data-nav="add">${icon('plus')}<span>افزودن تعهد</span></button></nav><div class="nav-label personal-secondary-label">بیشتر</div><nav class="nav personal-secondary-nav" aria-label="امکانات بیشتر">${[['cashflow','wallet','جریان نقدی من'],['reports','chart','گزارش‌های مالی'],['reminders','bell','یادآوری‌ها'],['settings','settings','تنظیمات و پشتیبان']].map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="personal-sidebar-foot"><span class="personal-sync-dot"></span>${cloudStatusText()}</div><button class="personal-backup-link" data-action="export">${icon('download')} دریافت پشتیبان JSON</button><div class="demo-note">قسط‌یار · نسخه ۴.۶.۰</div></div></aside>`;
+ return `<aside class="sidebar personal-sidebar neo-sidebar"><div class="brand neo-brand"><div class="brand-logo"><img src="./logo.svg" alt="لوگوی قسط‌یار"></div><div><h1>قسط‌یار</h1><span>دستیار اقساط شخصی</span></div></div><div class="nav-label">فضای من</div><nav class="nav" aria-label="بخش‌های اصلی">${navItems.map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}" ${active(k)?'aria-current="page"':''}>${icon(ic)}<span>${t}</span></button>`).join('')}<button class="personal-add-side" data-nav="add">${icon('plus')}<span>افزودن تعهد</span></button></nav><div class="nav-label personal-secondary-label">بیشتر</div><nav class="nav personal-secondary-nav" aria-label="امکانات بیشتر">${[['cashflow','wallet','جریان نقدی من'],['reports','chart','گزارش‌های مالی'],['reminders','bell','یادآوری‌ها'],['settings','settings','تنظیمات و پشتیبان']].map(([k,ic,t])=>`<button class="${active(k)?'active':''}" data-nav="${k}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav><div class="sidebar-bottom"><div class="personal-sidebar-foot"><span class="personal-sync-dot"></span>${cloudStatusText()}</div><button class="personal-backup-link" data-action="export">${icon('download')} دریافت پشتیبان JSON</button><div class="demo-note">قسط‌یار · نسخه ۴.۶.۳</div></div></aside>`;
 }
-function bottomNav(){return `<nav class="bottom-nav personal-bottom-nav neo-bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['add','plus','افزودن'],['calendar','calendar','تقویم'],['cashflow','wallet','نقدینگی'],['reports','chart','گزارش‌ها']].map(([k,ic,t])=>`<button type="button" data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active ':'')+(k==='add'?'add-nav':'')}" ${state.page===k?'aria-current="page"':''} aria-label="${t}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav>`;}
+function bottomNav(){return `<div class="mobile-nav-dock" aria-label="ناوبری سریع"><button type="button" class="mobile-add-fab" data-nav="add" aria-label="افزودن تعهد جدید" title="افزودن تعهد جدید">${icon('plus')}</button><nav class="bottom-nav personal-bottom-nav neo-bottom-nav" aria-label="ناوبری موبایل">${[['dashboard','home','خانه'],['obligations','wallet','تعهدات'],['calendar','calendar','تقویم'],['cashflow','wallet','نقدینگی'],['reports','chart','گزارش‌ها']].map(([k,ic,t])=>`<button type="button" data-nav="${k}" class="${(state.page===k||(state.page==='detail'&&k==='obligations')?'active':'')}" ${state.page===k?'aria-current="page"':''} aria-label="${t}">${icon(ic)}<span>${t}</span></button>`).join('')}</nav></div>`;}
 function dashboard(){
  const open=closest();
  const monthRows=data.flatMap(o=>o.installments.filter(i=>{const j=jalali(i.due);return j.y===todayJ.y&&j.m===todayJ.m;}).map(i=>({o,i,rem:left(o,i)})));
@@ -2568,7 +2677,7 @@ function reportExportCSV(){
  const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ghestyar-report-'+todayISO+'.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);toast('فایل گزارش ماهانه آماده شد.');
 }
 
-function obCard(o){const remainingCount=o.installments.filter(i=>left(o,i)>0).length;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party">${o.providerId?providerMark(o.providerId):''}<span>${escapeHTML(o.party||types[o.type].label)}</span></div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>اقساط باقی‌مانده</span><strong class="ob-remaining-count">${fnum(remainingCount)} قسط</strong></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان مانده</span></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
+function obCard(o){const remainingCount=o.installments.filter(i=>left(o,i)>0).length;const next=o.installments.filter(i=>left(o,i)>0).sort((a,b)=>a.due.localeCompare(b.due))[0];return `<article class="ob-card" data-action="view" data-ob="${o.id}" tabindex="0" role="button" aria-label="مشاهده جزئیات ${escapeHTML(o.title)}"><div class="ob-top">${typeicon(o.type)}<div class="ob-identity"><div class="ob-name">${escapeHTML(o.title)}</div><div class="ob-party ${o.providerId?'has-provider':''}"><span class="ob-party-name">${escapeHTML(o.party||types[o.type].label)}</span>${o.providerId?`<span class="ob-provider-logo">${providerMark(o.providerId)}</span>`:''}</div></div>${tag(obligationStatus(o))}</div><div class="ob-finance"><div class="ob-finance-meta"><span>اقساط باقی‌مانده</span><strong class="ob-remaining-count">${fnum(remainingCount)} قسط</strong></div><div class="ob-amount"><strong dir="ltr">${fmt(outstanding(o))}</strong><span>تومان مانده</span></div></div><div class="ob-footer"><span>${next?'سررسید بعدی: '+jText(next.due):'تسویه کامل'}</span><span>${icon('chevron-left')}</span></div></article>`;}
 function obligations(){let list=data.filter(o=>{const st=obligationStatus(o);return (state.filter==='all'||(state.filter==='active'?st!=='paid':st===state.filter))&&(`${o.title} ${o.party}`.toLowerCase().includes(state.query.toLowerCase()));});return `<section class="obligations-page"><div class="ob-list-header"><div class="ob-list-heading"><h2>فهرست تعهدات</h2><p>${fmt(data.length)} تعهد ثبت‌شده</p></div><button class="btn primary ob-add-button" data-nav="add" aria-label="افزودن تعهد جدید">${icon('plus')} <span>تعهد جدید</span></button></div><div class="ob-list-tools"><div class="filters" role="group" aria-label="فیلتر وضعیت تعهدات">${[['all','همه'],['active','فعال'],['overdue','معوق'],['paid','تسویه']].map(([k,t])=>`<button type="button" class="filter ${state.filter===k?'active':''}" data-filter="${k}" aria-pressed="${state.filter===k}">${t}</button>`).join('')}</div><label class="searchbox">${icon('search')}<input id="ob-search" type="search" aria-label="جست‌وجوی تعهدات" placeholder="جست‌وجوی نام تعهد یا بانک" value="${escapeHTML(state.query)}"/></label></div>${list.length?`<div class="ob-grid">${list.map(obCard).join('')}</div>`:`<div class="panel empty">${icon('wallet')}<strong>${data.length?'تعهدی پیدا نشد':'هنوز تعهدی ثبت نکردی'}</strong><p>${data.length?'عبارت جست‌وجو یا فیلتر رو تغییر بده.':'برای شروع، اولین وام یا خرید قسطی رو وارد کن.'}</p>${!data.length?`<button class="btn primary" data-nav="add">${icon('plus')} افزودن اولین تعهد</button>`:''}</div>`}</section>`;}
 function freshDraft(){return {type:'purchase',title:'',party:'',providerId:'',loanKind:'interest',mode:'manual',amount:'',rate:'18',count:'',first:jText(addJMonth(todayJ,1,5),true),rows:[]};}
 function prepareDraft(){if(!state.draft)state.draft=freshDraft();}
@@ -2603,6 +2712,7 @@ function calendar(){
  const month=all.filter(x=>inMonth(x.i.due));const byDay=new Map();for(const x of month){const k=x.i.due;const arr=byDay.get(k)||[];arr.push(x);byDay.set(k,arr);}
  const monthDue=month.reduce((s,x)=>s+x.i.amount,0),monthRemaining=month.reduce((s,x)=>s+x.rem,0),late=month.filter(x=>x.rem>0&&x.i.due<todayISO).length,settled=month.filter(x=>x.rem===0).length;
  const selected=all.filter(x=>x.i.due===state.selectedDay).sort((a,b)=>a.o.title.localeCompare(b.o.title,'fa'));
+ const selectedDue=selected.reduce((sum,x)=>sum+x.i.amount,0),selectedRemaining=selected.reduce((sum,x)=>sum+x.rem,0),selectedPaid=Math.max(0,selectedDue-selectedRemaining);
  const nextDays=[...byDay.entries()].filter(([date,items])=>items.some(x=>x.rem>0)&&date>=todayISO).sort((a,b)=>a[0].localeCompare(b[0])).slice(0,5);
  return `<section class="calendar-v39" aria-label="تقویم اقساط"><div class="calendar-intro"><div><span class="page-eyebrow">برنامه پرداخت‌های من</span><p>روزهای دارای قسط را انتخاب کن؛ جزئیات و ثبت پرداخت پایین تقویم قرار دارند.</p></div><button class="btn calendar-add-shortcut" data-nav="add">${icon('plus')} افزودن تعهد</button></div>
  <div class="calendar-stats"><div><span>تعداد اقساط</span><strong>${fnum(month.length)} <small>قسط</small></strong></div><div class="calendar-stat-focus"><span>مانده سررسیدهای ماه</span><strong>${fmt(monthRemaining)} <small>تومان</small></strong></div><div><span>تسویه‌شده</span><strong>${fnum(settled)} <small>قسط</small></strong></div></div>${late?`<div class="calendar-overdue-note">${icon('info')} ${fnum(late)} قسط معوق از همین ماه وجود دارد.</div>`:''}
@@ -2610,7 +2720,7 @@ function calendar(){
  <div class="weekgrid" aria-label="روزهای هفته">${[['شنبه','ش'],['یکشنبه','ی'],['دوشنبه','د'],['سه‌شنبه','س'],['چهارشنبه','چ'],['پنجشنبه','پ'],['جمعه','ج']].map(([full,short])=>`<span aria-label="${full}"><span class="weekday-full">${full}</span><span class="weekday-short">${short}</span></span>`).join('')}</div>
  <div class="calgrid" role="grid" aria-label="${jmonths[m-1]} ${fnum(y)}">${Array.from({length:week},()=>'<span class="day blank" aria-hidden="true"></span>').join('')}${Array.from({length:len},(_,k)=>{const iso=jISO(y,m,k+1),items=byDay.get(iso)||[],unpaid=items.filter(x=>x.rem>0),paid=items.filter(x=>x.rem===0),overdue=unpaid.some(x=>x.i.due<todayISO),selected=iso===state.selectedDay;return `<button type="button" class="day ${iso===todayISO?'today':''} ${selected?'selected':''} ${overdue?'has-overdue':''} ${unpaid.length?'has-due':''}" data-action="cal-day" data-date="${iso}" aria-pressed="${selected}" aria-label="${fnum(k+1)} ${jmonths[m-1]}؛ ${fnum(items.length)} قسط، ${fnum(unpaid.length)} پرداخت‌نشده"><span class="number">${fnum(k+1)}</span><span class="cal-event-count">${items.length?`${fnum(items.length)} قسط`:''}</span><span class="dots">${unpaid.length?`<i class="dot ${overdue?'overdue':''}"></i>`:''}${paid.length?'<i class="dot paid"></i>':''}</span></button>`}).join('')}</div>
  <div class="cal-legend"><span><i class="dot"></i> پرداخت‌نشده</span><span><i class="dot overdue"></i> معوق</span><span><i class="dot paid"></i> پرداخت‌شده</span></div>
- </div><aside class="calendar-side"><div class="panel calendar-agenda"><div class="panel-head"><div><span class="page-eyebrow">جزئیات روز انتخاب‌شده · ${fnum(selected.length)} قسط</span><h3>${jText(state.selectedDay,true)}</h3></div><button type="button" class="btn subtle" data-action="cal-today">امروز</button></div>${selected.length?`<div class="agenda-list">${selected.map(({o,i,rem,stat})=>`<article class="agenda-item"><div class="agenda-top">${o.providerId?providerMark(o.providerId):typeicon(o.type)}<div><strong>${escapeHTML(o.title)}</strong><small>قسط ${fnum(i.number)} · ${escapeHTML(o.party)}</small></div>${tag(stat)}</div><div class="agenda-bottom"><strong>${fmt(rem>0?rem:i.amount)} <small>تومان ${rem>0?'مانده':'پرداخت‌شده'}</small></strong>${rem>0?`<button type="button" class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button>`:`<button type="button" class="btn" data-action="view" data-ob="${o.id}">جزئیات</button>`}</div></article>`).join('')}</div>`:`<div class="cal-empty">${icon('calendar')}<strong>در این روز قسطی ثبت نشده</strong><span>روزهای علامت‌دار رو انتخاب کن.</span></div>`}</div>
+ </div><aside class="calendar-side"><div class="panel calendar-agenda"><div class="panel-head"><div><span class="page-eyebrow">جزئیات روز انتخاب‌شده · ${fnum(selected.length)} قسط</span><h3>${jText(state.selectedDay,true)}</h3></div><button type="button" class="btn subtle" data-action="cal-today">امروز</button></div><div class="calendar-day-totals" aria-label="خلاصه مبالغ اقساط روز انتخاب‌شده"><div class="calendar-day-total-main"><span>مجموع مبلغ اقساط</span><strong>${fmt(selectedDue)} <small>تومان</small></strong></div><div><span>مانده قابل پرداخت</span><strong>${fmt(selectedRemaining)} <small>تومان</small></strong></div><div><span>پرداخت‌شده</span><strong>${fmt(selectedPaid)} <small>تومان</small></strong></div></div>${selected.length?`<div class="agenda-list">${selected.map(({o,i,rem,stat})=>`<article class="agenda-item"><div class="agenda-top">${o.providerId?providerMark(o.providerId):typeicon(o.type)}<div><strong>${escapeHTML(o.title)}</strong><small>قسط ${fnum(i.number)} · ${escapeHTML(o.party)}</small></div>${tag(stat)}</div><div class="agenda-bottom"><strong>${fmt(rem>0?rem:i.amount)} <small>تومان ${rem>0?'مانده':'پرداخت‌شده'}</small></strong>${rem>0?`<button type="button" class="btn primary" data-action="pay" data-ob="${o.id}" data-inst="${i.id}">ثبت پرداخت</button>`:`<button type="button" class="btn" data-action="view" data-ob="${o.id}">جزئیات</button>`}</div></article>`).join('')}</div>`:`<div class="cal-empty">${icon('calendar')}<strong>در این روز قسطی ثبت نشده</strong><span>روزهای علامت‌دار رو انتخاب کن.</span></div>`}</div>
  ${nextDays.length?`<div class="panel upcoming-agenda"><h3>سررسیدهای آینده این ماه</h3>${nextDays.map(([iso,items])=>`<button type="button" data-action="cal-day" data-date="${iso}"><span>${jText(iso)}</span><strong>${fnum(items.filter(x=>x.rem>0).length)} قسط</strong>${icon('chevron-left')}</button>`).join('')}</div>`:''}</aside></div></section>`;
 }
 function payModal(){const p=state.payment;if(!p)return '';const o=data.find(x=>x.id===p.ob),i=o?.installments.find(x=>x.id===p.inst);if(!o||!i)return '';return `<div class="modal-backdrop" data-action="close-modal"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="pay-title"><div class="modal-head"><h2 id="pay-title">ثبت پرداخت قسط ${fnum(i.number)}</h2><button class="close-btn" data-action="close-modal" aria-label="بستن">${icon('close')}</button></div><div class="row-list"><span class="muted">تعهد</span><strong>${escapeHTML(o.title)}</strong></div><div class="row-list"><span class="muted">مانده قابل پرداخت</span><strong>${fmt(left(o,i))} تومان</strong></div><div class="modal-form" style="margin-top:16px"><div class="field"><label>مبلغ پرداختی (تومان) *</label><input id="pay-amount" value="${escapeHTML(groupedInput(p.amount))}" data-money-input="true" inputmode="numeric" /></div><div class="field"><label>تاریخ پرداخت (شمسی) *</label>${dateFieldButton("pay-date",p.date,"pay")}</div><div class="field"><label>توضیح یا شماره پیگیری</label><input id="pay-note" value="${escapeHTML(p.note)}" placeholder="اختیاری" /></div><div class="warn">پرداخت در سوابق می‌ماند و در صورت اشتباه می‌توانی آن را از تب «تاریخچه پرداخت‌ها» با دلیل ابطال کنی.</div><div class="row-inline"><button class="btn primary" data-action="pay-save">${icon('check')} ثبت پرداخت</button><button class="btn" data-action="close-modal">انصراف</button></div></div></section></div>`;}
