@@ -1,19 +1,15 @@
-Ghestyar — Step 1: Calendar selected-day totals
+Ghestyar 4.6.3 — Step 3: mobile navigation
 
 Implemented:
-- Selecting any calendar day now displays the sum of the full scheduled installment amounts for that day.
-- The same summary also shows the remaining payable amount and the amount already paid.
-- The summary remains visible when a day has no installments and displays zero values.
-- Added responsive styling for narrow mobile screens.
-- Updated the displayed app version to 4.6.1.
+- Five equally sized mobile destinations: dashboard, obligations, calendar, cashflow and reports.
+- Add Obligation moved outside the navigation dock to a separate circular FAB on the physical left.
+- RTL order preserved for the five navigation items.
+- Responsive sizing for narrow screens and safe-area-aware bottom offset.
+- Light/dark styling.
+- Existing data-nav delegation and desktop sidebar behavior retained.
 
 Verification:
-- All four inline JavaScript blocks passed Node.js syntax validation.
-- Confirmed the existing calendar day click handler updates selectedDay and rerenders the calendar.
-- Checked the summary calculation with fully unpaid, partially paid, fully paid, and empty-day examples.
-- A headless browser visual/runtime test could not be completed in this environment because browser navigation was blocked by the execution environment. No claim of full browser QA is made.
-
-Scope:
-- Only index.html and this QA note were changed.
-- No installment, payment, storage, Supabase, reminder, or service-worker data model was modified.
-- This step does not yet include the provider-logo fix, floating navigation redesign, or multi-account cashflow work.
+- Five mobile destinations and separate add action confirmed in markup.
+- Existing route keys preserved.
+- JavaScript syntax checked in the consolidated project after reapplication.
+- Real-device visual verification remains required.
