@@ -1,0 +1,32 @@
+Ghestyar 4.7.0 — Step 4.1: multi-account cashflow foundation
+
+Implemented:
+- Added up to 50 accounts with types bank, cash, wallet and other.
+- Legacy cashSettings migrate to permanent cash-main account without changing its amount or balance date.
+- Legacy income/expense entries and installment payments without accountId are attributed to cash-main.
+- Added account create/edit/archive controls in cashflow page.
+- Main account cannot be archived; at least one active account is required.
+- Accounts with linked ledger entries, active installment payments or non-zero current balance cannot be archived.
+- Income/expense form selects the receiving/payment account.
+- Installment payment form selects the paying account.
+- Account current balances are calculated independently from the snapshot and later linked transactions/payments.
+- Six-month forecast aggregates active accounts and account-linked future income/expenses.
+- Forecast does not claim a reliable total projected balance if any active account has no configured balance snapshot.
+- Account registry is persisted in local storage, cloud snapshots/cache, emergency checkpoints, backup export and restore preview.
+- cashSettings remains synchronized with cash-main for compatibility.
+
+Tests:
+- All four inline JavaScript blocks pass Node.js syntax validation.
+- Legacy payment migration test passed.
+- Legacy cash balance and transaction migration test passed.
+- Two-account balance test passed: main 7,500,000 + wallet 3,000,000 = 10,500,000.
+- Forecast aggregation test passed: opening 12,000,000; forecast income 2,000,000; expense 1,000,000; installments 1,000,000; ending 12,000,000.
+- Invalid account data rejection passed.
+- Static checks confirmed account selectors, modal rendering, local/cloud/backup persistence and restore integration.
+- ZIP integrity check passed.
+
+Not included yet:
+- Transfers between own accounts.
+- User-defined income/expense categories.
+- Automatic bank transaction import.
+- Real-device UI and live Supabase round-trip testing.

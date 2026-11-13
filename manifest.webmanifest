@@ -1,5 +1,5 @@
 {
-  "name": "قسط‌یار | مدیریت اقساط",
+  "name": "قسط‌یار | مدیریت اقساط و هزینه‌ها",
   "short_name": "قسط‌یار",
   "lang": "fa",
   "dir": "rtl",
@@ -7,7 +7,7 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#091229",
+  "background_color": "#f3f6fa",
   "theme_color": "#1768e9",
   "icons": [
     {
@@ -22,5 +22,11 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "description": "مدیریت ساده اقساط، پرداخت‌ها، درآمدها و هزینه‌های شخصی در یک برنامه.",
+  "categories": [
+    "finance",
+    "productivity"
+  ],
+  "orientation": "portrait"
 }

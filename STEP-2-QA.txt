@@ -1,0 +1,37 @@
+Ghestyar 4.6.0 — Step 2 / Issue 1
+Fix: date-anchored cash balance
+
+What changed
+- Added cashSettings.balanceDate.
+- The saved balance is defined as the end-of-day balance for the selected Persian-calendar date.
+- Legacy backups without balanceDate remain importable; their balanceDate defaults to today to avoid retroactively applying unknown transactions.
+- Cash ledger entries and non-reversed installment payments after the anchor date through today are rolled into the estimated current balance.
+- With a configured balance, future cash-ledger forecast entries begin tomorrow, preventing same-day double counting.
+- The cash-flow page displays the estimated current balance and allows selecting the anchor date with the existing Persian date picker.
+- Future anchor dates are disabled and rejected.
+- The anchor date is included in local storage, backup snapshots, and the existing Supabase wallet payload through the existing cashSettings object.
+
+Automated checks
+- All inline JavaScript blocks passed `node --check`.
+- Headless Chromium finance scenario passed:
+  - historical one-time income added to the anchored balance
+  - historical one-time expense subtracted from the anchored balance
+  - non-reversed installment payment after the anchor subtracted from the balance
+  - reversed payment ignored
+  - future recurring income included in the forecast
+  - future one-time expense included in the forecast
+  - unpaid arrears remain in the current-month installment requirement
+  - partially paid installment uses its remaining amount
+  - six-month projection accumulates balances correctly
+  - legacy cashSettings without balanceDate migrates to today's date
+- Headless Chromium UI scenario passed:
+  - Persian date picker opens from the balance-date field
+  - future date is disabled
+  - a past date can be selected
+  - balance and selected date save together to local storage
+  - no browser runtime exceptions in the tested flow
+
+Important semantics
+- The entered balance must be the balance at the END of the selected day.
+- Existing records with no date are assigned today's date on first load. If the stored balance was actually captured earlier, select that historical date and save the balance again.
+- These tests do not verify live Supabase credentials, remote writes, push notifications, or installation behavior.

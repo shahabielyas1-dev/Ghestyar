@@ -1,0 +1,15 @@
+Ghestyar 4.6.3 — Step 3: mobile navigation
+
+Implemented:
+- Five equally sized mobile destinations: dashboard, obligations, calendar, cashflow and reports.
+- Add Obligation moved outside the navigation dock to a separate circular FAB on the physical left.
+- RTL order preserved for the five navigation items.
+- Responsive sizing for narrow screens and safe-area-aware bottom offset.
+- Light/dark styling.
+- Existing data-nav delegation and desktop sidebar behavior retained.
+
+Verification:
+- Five mobile destinations and separate add action confirmed in markup.
+- Existing route keys preserved.
+- JavaScript syntax checked in the consolidated project after reapplication.
+- Real-device visual verification remains required.
